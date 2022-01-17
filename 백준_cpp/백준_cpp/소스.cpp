@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
-#include <string> // string
-#include <algorithm> // minmax, ...
-#include <map> // map
-#include <utility> // pair
+#include <string>
+#include <algorithm> 
+#include <map> 
+#include <utility> 
+#include <sstream> 
 
 using namespace std;
 
@@ -79,8 +80,31 @@ void func_2675() {
 /* 단계별 풀어보기 >> 단어의 개수
 * https://www.acmicpc.net/problem/1152
 */
-void func_1152() {
+vector<string> func_1152_split(string str, char ch) {
+	stringstream ss(str);
+	string tmp;
+	vector<string> res;
 
+	while (getline(ss, tmp, ch)) {
+		res.push_back(tmp);
+	}
+
+	return res;
+}
+
+void func_1152() {
+	string str;
+	vector<string> res;
+	int cnt = 0;
+
+	getline(cin, str, '\n');
+	res = func_1152_split(str, ' ');
+
+	for (int i = 0; i < res.size(); i++) {
+		if (res[i].size() > 0) cnt++;
+	}
+
+	cout << cnt << endl;
 }
 
 int main() {
