@@ -8,6 +8,24 @@
 
 using namespace std;
 
+/*
+*  Custom Function 
+*/
+vector<string> split(string str, char ch) {
+	stringstream ss(str);
+	string tmp;
+	vector<string> res;
+
+	while (getline(ss, tmp, ch)) {
+		if (tmp.size() > 0) {
+			res.push_back(tmp);
+		}
+	}
+
+	return res;
+}
+
+
 /* 단계별 풀어보기 >> 문자열 >> 단어 공부
 * https://www.acmicpc.net/problem/1157
 */
@@ -80,25 +98,13 @@ void func_2675() {
 /* 단계별 풀어보기 >> 문자열 >> 단어의 개수
 * https://www.acmicpc.net/problem/1152
 */
-vector<string> func_1152_split(string str, char ch) {
-	stringstream ss(str);
-	string tmp;
-	vector<string> res;
-
-	while (getline(ss, tmp, ch)) {
-		res.push_back(tmp);
-	}
-
-	return res;
-}
-
 void func_1152() {
 	string str;
 	vector<string> res;
 	int cnt = 0;
 
 	getline(cin, str, '\n');
-	res = func_1152_split(str, ' ');
+	res = split(str, ' ');
 
 	for (int i = 0; i < res.size(); i++) {
 		if (res[i].size() > 0) cnt++;
@@ -169,8 +175,24 @@ void func_5622() {
 /* 단계별 풀어보기 >> 문자열 >> 크로아티아 알파벳
 * https://www.acmicpc.net/problem/2941
 */
+//ljes=njakljes=njakljes=njakljes=njakljes=njakljes=njakljes=njak
 void func_2941() {
+	vector<string> v_str = { "c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z=" };
+	string str;
 
+	cin >> str;
+	for (int i = 0; i < v_str.size(); i++) {
+		while (1) {
+			if (str.find(v_str[i]) == string::npos) {
+				break;
+			}
+			else {
+				str.replace(str.find(v_str[i]), v_str[i].length(), "!");
+			}
+		}
+	}
+
+	cout << str.length() << endl;
 }
 
 /* 단계별 풀어보기 >> 문자열 >> 그룹 단어 체커
@@ -181,7 +203,7 @@ void func_1316() {
 }
 
 int main() {
-	func_5622();
+	func_2941();
 
 	return 0;
 }
