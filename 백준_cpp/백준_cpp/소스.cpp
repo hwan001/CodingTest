@@ -141,7 +141,29 @@ void func_2908() {
 * https://www.acmicpc.net/problem/5622
 */
 void func_5622() {
+	string str;
+	cin >> str;
+	map<char, int> m;
+	int point, sum=0;
 
+	for (int i = 0; i < 26; i++) {	
+		if ('A' + i < 'Z') point = 10;
+		if ('A' + i < 'W') point = 9;
+		if ('A' + i < 'T') point = 8;
+		if ('A' + i < 'P') point = 7;
+		if ('A' + i < 'M') point = 6;
+		if ('A' + i < 'J') point = 5;
+		if ('A' + i < 'G') point = 4;
+		if ('A' + i < 'D') point = 3;
+
+		m['A' + i] = point;
+	}
+
+	for (int i = 0; i < str.length(); i++) {
+		sum += m[str[i]];
+	}
+
+	cout << sum << endl;
 }
 
 /* 단계별 풀어보기 >> 문자열 >> 크로아티아 알파벳
