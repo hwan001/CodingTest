@@ -2,6 +2,10 @@ import collections
 
 
 def func():
-	print("test")
+	print("solution - start")
+	
+	print("solution - end")
 
-func()
+
+if __name__ == "__main__":
+	func()
