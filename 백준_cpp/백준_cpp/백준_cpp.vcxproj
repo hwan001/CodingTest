@@ -140,8 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="공통함수.cpp" />
+    <ClCompile Include="단계별로풀어보기_1차원배열.cpp" />
+    <ClCompile Include="단계별로풀어보기_for문.cpp" />
+    <ClCompile Include="단계별로풀어보기_if문.cpp" />
+    <ClCompile Include="단계별로풀어보기_while문.cpp" />
     <ClCompile Include="단계별로풀어보기_기본수학1.cpp" />
+    <ClCompile Include="단계별로풀어보기_기본수학2.cpp" />
     <ClCompile Include="단계별로풀어보기_문자열.cpp" />
+    <ClCompile Include="단계별로풀어보기_입출력과사칙연산.cpp" />
+    <ClCompile Include="단계별로풀어보기_함수.cpp" />
     <ClCompile Include="소스.cpp" />
   </ItemGroup>
   <ItemGroup>

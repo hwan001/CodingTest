@@ -13,6 +13,31 @@ using namespace std;
 */
 vector<string> split(string, char);
 
+/*
+*  입출력과 사칙연산
+*/
+
+/*
+*  if문
+*/
+
+/*
+*  for문
+*/
+
+/*
+*  while문
+*/
+
+/*
+*  1차원 배열
+*/
+
+/*
+*  함수
+*/
+
+
 /* 
 *  문자열
 */
@@ -29,3 +54,8 @@ void func_1316(); // 그룹단어체커 (작성중)
 */
 void func_1712(); // 손익분기점
 void func_2292(); // 벌집
+void func_1193(); // 분수찾기
+
+/*
+*  기본 수학 2
+*/

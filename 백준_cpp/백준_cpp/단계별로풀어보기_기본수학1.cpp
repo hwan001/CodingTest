@@ -40,3 +40,51 @@ void func_2292() {
 	}
 }
 
+/* 단계별 풀어보기 >> 기본 수학1 >> 분수찾기
+* https://www.acmicpc.net/problem/1193
+*/
+unsigned long long func_1193_sum_of_arithmetic_sequences(int n) {
+	return ( n * (n+1) ) / 2;
+}
+
+string func_1193_create(int n) {
+	// 입력받은 인덱스를 규칙을 기반으로 생성 (입력시마다 생성, 모든 수가 비슷한 시간)
+	// 규칙. 칸 수가 내려갈수록 1개씩 증가 1-> 2 -> 3 -> 4 ... 그리고 a/b 가 a는 증가, b는 감소
+	int lv, pos;
+	int a, b;
+
+	// 계층 구하기
+	for (int i = 0; i < 10000; i++) {
+		if (n <= func_1193_sum_of_arithmetic_sequences(i)) {
+			lv = i;
+			break;
+		}
+	}
+
+	// 계층과 차이나는 위치값 구하기
+	pos = n - func_1193_sum_of_arithmetic_sequences(lv);
+
+	// 시작지점의 값 설정
+	if (lv % 2 == 0) {
+		a = 1;
+		b = lv;
+		pos *= -1;
+	}
+	else {
+		a = lv;
+		b = 1;
+	}
+
+	// 차이나는 값 만큼 보정
+	a += pos;
+	b -= pos;
+
+	return to_string(b) + "/" + to_string(a);
+}
+
+void func_1193() {
+	int a;
+	cin >> a;
+
+	cout << func_1193_create(a) << endl;
+}
