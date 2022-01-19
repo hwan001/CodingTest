@@ -139,7 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="공통함수.cpp" />
+    <ClCompile Include="단계별로풀어보기_기본수학1.cpp" />
+    <ClCompile Include="단계별로풀어보기_문자열.cpp" />
     <ClCompile Include="소스.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
