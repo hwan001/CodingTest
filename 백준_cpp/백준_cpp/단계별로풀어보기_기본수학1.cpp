@@ -169,7 +169,32 @@ void func_2775() {
 * https://www.acmicpc.net/problem/2839
 */
 void func_2839() {
+	int a, b, n, min, tmp, res;
+	bool is_flag;
 
+	cin >> n;
+
+	min = n;
+	res = -1;
+	is_flag = false;
+
+	for (int a = 0; a < n; a++) {
+		for (int b = 0; b < n; b++) {
+			tmp = (3 * a) + (5 * b);
+
+			if (tmp > n) break;
+			if (tmp == n) {
+				if (min >= a + b) {
+					min = a + b;
+					is_flag = true;
+				}
+			}
+		}
+	}
+
+	if (is_flag) res = min;
+
+	cout << res << endl;
 }
 
 
@@ -177,7 +202,47 @@ void func_2839() {
 * https://www.acmicpc.net/problem/10757
 */
 void func_10757() {
+	string str_a, str_b, res;
+	int tmp, len;
+	int a, b;
+	cin >> str_a >> str_b;
 
+	if (str_a.length() >= str_b.length())
+		len = str_a.length();
+	else
+		len = str_b.length();
+
+	tmp = 0;
+	for (int i =  len - 1; i >= 0; i--) {
+		try {
+			a = (str_a[i] - '0');
+		}
+		catch (exception e) {
+			a = 0;
+		}
+
+		try {
+			b = (str_b[i] - '0');
+		}
+		catch (exception e) {
+			b = 0;
+		}
+		cout << a << ", "  << b << endl;
+		res += to_string(((a + b) % 10) + tmp);
+
+		if ((a + b) >= 10) {
+			tmp = 1;
+		}
+		else {
+			tmp = 0;
+		}
+	}
+	if (tmp == 1)
+		res += "1";
+
+	for (int i = res.length() - 1; i >= 0; i--) {
+		cout << res[i];
+	}
 }
 
 
