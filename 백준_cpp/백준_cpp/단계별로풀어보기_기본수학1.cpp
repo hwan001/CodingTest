@@ -117,15 +117,51 @@ void func_2869() {
 * https://www.acmicpc.net/problem/2869
 */
 void func_10250() {
-	
+	int a, h, w, n;
+	int f, no;
+
+	cin >> a;
+
+	for (int i = 0; i < a; i++) {
+		f = 1;
+		no = 1;
+		cin >> h >> w >> n;
+
+		f += (n % h) -1;
+		if (n % h == 0) {
+			f = h;
+			no = n / h;
+		}
+		else {
+			no += (n / h);
+		}
+
+		printf("%d%02d\n", f , no);
+	}
 }
 
 
 /* 단계별 풀어보기 >> 기본 수학 1 >> 부녀회장이 될테야
 * https://www.acmicpc.net/problem/2775
 */
-void func_2775() {
+int func_2775_sum_people(int k, int n) {
+	if (k == 0) return n;
+	if (n == 1) return 1;
+	return func_2775_sum_people(k, n - 1) + func_2775_sum_people(k-1, n);
+}
 
+void func_2775() {
+	int int_k, int_n, int_t;
+	int int_sum = 0;
+
+	cin >> int_t;
+
+	for (int i = 0; i < int_t; i++) {
+		cin >> int_k;
+		cin >> int_n;
+
+		cout << func_2775_sum_people(int_k, int_n) << endl;
+	}
 }
 
 
