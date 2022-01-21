@@ -1,7 +1,7 @@
 #include "header.h"
 
 
-/* 단계별 풀어보기 >> 기본 수학1 >> 손익분기점
+/* 단계별 풀어보기 >> 기본 수학 1 >> 손익분기점
 * https://www.acmicpc.net/problem/1712
 */
 void func_1712() {
@@ -18,7 +18,8 @@ void func_1712() {
 	}
 }
 
-/* 단계별 풀어보기 >> 기본 수학1 >> 벌집
+
+/* 단계별 풀어보기 >> 기본 수학 1 >> 벌집
 * https://www.acmicpc.net/problem/2292
 */
 void func_2292() {
@@ -40,7 +41,8 @@ void func_2292() {
 	}
 }
 
-/* 단계별 풀어보기 >> 기본 수학1 >> 분수찾기
+
+/* 단계별 풀어보기 >> 기본 수학 1 >> 분수찾기
 * https://www.acmicpc.net/problem/1193
 */
 unsigned long long func_1193_sum_of_arithmetic_sequences(int n) {
@@ -87,4 +89,65 @@ void func_1193() {
 	cin >> a;
 
 	cout << func_1193_create(a) << endl;
+}
+
+
+/* 단계별 풀어보기 >> 기본 수학 1 >> 달팽이는 올라가고 싶다
+* https://www.acmicpc.net/problem/2869
+*/
+void func_2869() {
+	long long a, b, v, day;
+	cin >> a >> b >> v;
+
+	if (v <= a) {
+		day = 1;
+	}
+	else {
+		day = (v - b) / (a - b);
+		if ((v - b) % (a - b) > 0) {
+			day++;
+		}
+	}
+
+	cout << day << endl;
+}
+
+
+/* 단계별 풀어보기 >> 기본 수학 1 >> ACM 호텔
+* https://www.acmicpc.net/problem/2869
+*/
+void func_10250() {
+	
+}
+
+
+/* 단계별 풀어보기 >> 기본 수학 1 >> 부녀회장이 될테야
+* https://www.acmicpc.net/problem/2775
+*/
+void func_2775() {
+
+}
+
+
+/* 단계별 풀어보기 >> 기본 수학 1 >> 설탕배달
+* https://www.acmicpc.net/problem/2839
+*/
+void func_2839() {
+
+}
+
+
+/* 단계별 풀어보기 >> 기본 수학 1 >> 큰 수 A+B
+* https://www.acmicpc.net/problem/10757
+*/
+void func_10757() {
+
+}
+
+
+/* 단계별 풀어보기 >> 기본 수학 1 >> Fly me to the Alpha Centauri
+* https://www.acmicpc.net/problem/1011
+*/
+void func_1011() {
+
 }

@@ -173,13 +173,41 @@ void func_2941() {
 void func_1316() {
 	int a;
 	cin >> a;
-	string* arr_str = new string[a];
 
-	// 입력 받은 개수만큼 문자열 입력
+	string* arr_str = new string[a];
+	map<char, int> m;
+	int cnt = 0;
+
 	for (int i = 0; i < a; i++) {
 		cin >> arr_str[i];
 	}
 
-	// 1. 한 글자 씩 검사 -> 전부 
+	char pre_ch;
+	bool is_flag;
 
+	for (int i = 0; i < a; i++) {
+		pre_ch = '0';
+		is_flag = true;
+		for (char ch = 'a'; ch <= 'z'; ch++) {
+			m[ch] = 0;
+		}
+
+		for (int j = 0; j < arr_str[i].length(); j++) {
+			if (m[arr_str[i][j]] != 0) {
+				if (pre_ch != arr_str[i][j]) {
+					is_flag = false;
+					break;
+				}
+			}
+
+			m[arr_str[i][j]]++;
+			pre_ch = arr_str[i][j];
+		}
+
+		if (is_flag) {
+			cnt++;
+		}
+	}
+	
+	cout << cnt;
 }
