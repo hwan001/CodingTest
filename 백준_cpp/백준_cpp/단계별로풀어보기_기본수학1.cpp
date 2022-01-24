@@ -201,47 +201,66 @@ void func_2839() {
 /* 단계별 풀어보기 >> 기본 수학 1 >> 큰 수 A+B
 * https://www.acmicpc.net/problem/10757
 */
+
+vector<int> func_10757_reverseVector(string num) {
+	vector<int> v;
+
+	for (int i = num.length() - 1; i >= 0; i--) {
+		v.push_back( (num[i] - '0'));
+	}
+
+	return v;
+}
+
 void func_10757() {
-	string str_a, str_b, res;
-	int tmp, len;
-	int a, b;
+	string str_a, str_b;
 	cin >> str_a >> str_b;
 
-	if (str_a.length() >= str_b.length())
-		len = str_a.length();
-	else
-		len = str_b.length();
+	vector<int> a, b, c;
+	int int_a, int_b, int_tmp = 0, int_len;
 
-	tmp = 0;
-	for (int i =  len - 1; i >= 0; i--) {
+	a = func_10757_reverseVector(str_a);
+	b = func_10757_reverseVector(str_b);
+
+	if (a.size() >= b.size()) {
+		int_len = a.size();
+	}
+	else {
+		int_len = b.size();
+	}
+
+
+	for (int i = 0; i < int_len; i++) {
 		try {
-			a = (str_a[i] - '0');
+			int_a = a.at(i);
 		}
 		catch (exception e) {
-			a = 0;
+			int_a = 0;
 		}
 
 		try {
-			b = (str_b[i] - '0');
+			int_b = b.at(i);
 		}
 		catch (exception e) {
-			b = 0;
+			int_b = 0;
 		}
-		cout << a << ", "  << b << endl;
-		res += to_string(((a + b) % 10) + tmp);
 
-		if ((a + b) >= 10) {
-			tmp = 1;
+		c.push_back((int_a + int_b + int_tmp) % 10);
+
+		if ((int_a + int_b + int_tmp) >= 10) {
+			int_tmp = 1;
 		}
 		else {
-			tmp = 0;
+			int_tmp = 0;
 		}
 	}
-	if (tmp == 1)
-		res += "1";
 
-	for (int i = res.length() - 1; i >= 0; i--) {
-		cout << res[i];
+	if (int_tmp) {
+		c.push_back(1);
+	}
+
+	for (int i = c.size() - 1; i >= 0; i--) {
+		cout << c.at(i);
 	}
 }
 
