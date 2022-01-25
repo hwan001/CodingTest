@@ -51,7 +51,16 @@
     <ClCompile Include="단계별로풀어보기_재귀.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="실버_문제풀이.cpp">
+    <ClCompile Include="실버티어_문제풀이.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="대회_2022중앙대CHAC_OC.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="문제집_단기간성장.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="문제집_DFS_BFS_필수문제.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

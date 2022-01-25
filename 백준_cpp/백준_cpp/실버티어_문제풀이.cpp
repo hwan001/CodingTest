@@ -1,7 +1,7 @@
 #include "header.h"
 
 
-/* k번째 소수
+/* k번째 소수 (실버 2, 소수 판정)
 * https://www.acmicpc.net/problem/15965
 */
 void func_15965() {
@@ -18,3 +18,4 @@ void func_15965() {
         }
     }
 }
+

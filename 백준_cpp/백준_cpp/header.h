@@ -154,7 +154,6 @@ void func_1436(); // 영화감독 숌
 
 
 
-
 /*
 *  브론즈 티어 문제 풀이
 */
@@ -169,3 +168,27 @@ void func_15965(); // k번째 소수
 /*
 *  골드 티어 문제 풀이
 */
+
+
+
+/* 
+*  2022 중앙대학교 CHAC Open Contest
+*  https://www.acmicpc.net/contest/view/767
+*/
+void func_CHAC_A(); // 정답
+void func_CHAC_B(); // 시간초과, 오답
+void func_CHAC_D(); // 오답
+
+
+/*
+*  문제집 > 단기간 성장 - redbin0471
+*   https://www.acmicpc.net/workbook/view/4349
+*/
+void func_12865(); // 평범한 배낭 (골드5)
+
+
+/*
+*  문제집 > DFS+BFS 필수 문제 - njw1204 
+*   https://www.acmicpc.net/workbook/view/1983
+*/
+void func_1260(); // DFS와 BFS
