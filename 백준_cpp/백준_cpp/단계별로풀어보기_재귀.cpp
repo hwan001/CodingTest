@@ -38,9 +38,43 @@ void func_10870() {
 * https://www.acmicpc.net/problem/2447
 */
 
+void func_2447_starPrint(int n, int a, int b) {
+	int n_copy = n;
+	int int_squared = 0;
+
+	if (n == 1) return;
+
+	for (int i = 0; i< 8; i++) {
+		if (n_copy == 1) {
+			int_squared = i-1;
+			break;
+		}
+		n_copy /= 3;
+	}
+
+	int remove_a = pow(3, int_squared);
+	int remove_b = (pow(3, int_squared) * 2) - 1;
+
+	func_2447_starPrint(n / 3, remove_a, remove_b);
+
+	for (int i = a; i < b; i++) {
+		for (int j = a; j < b; j++) {
+			// 가운데 공백
+			if ((i >= remove_a && i <= remove_b) && (j >= remove_a && j <= remove_b))
+			{
+				cout << " ";
+			}
+			else
+				cout << "*";
+		}
+		cout << "\n";
+	}
+}
 
 void func_2447() {
-
+	int a;
+	cin >> a;
+	func_2447_starPrint(a, 0, a);
 }
 
 
