@@ -20,6 +20,7 @@ void func_1978() {
     cout << cnt;
 }
 
+
 /* 단계별 풀어보기 >> 기본 수학 2 >> 소수
 * https://www.acmicpc.net/problem/2581
 */
@@ -40,6 +41,7 @@ void func_2581() {
         cout << min;
     }
 }
+
 
 /* 단계별 풀어보기 >> 기본 수학 2 >> 소인수분해
 * https://www.acmicpc.net/problem/11653
@@ -76,6 +78,7 @@ void func_11653() {
     }
 }
 
+
 /* 단계별 풀어보기 >> 기본 수학 2 >> 소수 구하기
 * https://www.acmicpc.net/problem/1929
 */
@@ -96,6 +99,22 @@ void func_1929() {
 * https://www.acmicpc.net/problem/4948
 */
 void func_4948() {
+    int int_N, cnt;
+    bool* arr = Sieve_of_Eratosthenes(123456 * 2);
+
+    do {
+        cin >> int_N;
+        cnt = 0;
+        
+        
+        for (int i = int_N + 1; i <= int_N*2; i++){
+            if (arr[i]) {
+                cnt++;
+            }
+        }
+
+        if(int_N != 0) cout << cnt << endl;
+    } while (int_N != 0);
 
 }
 
@@ -104,7 +123,42 @@ void func_4948() {
 * https://www.acmicpc.net/problem/9020
 */
 void func_9020() {
+    int int_a, int_N, int_sum;
+    bool* arr = Sieve_of_Eratosthenes(20000);
+    int tmp_a, tmp_b, tmp_min;
+    vector<int> v;
 
+    cin >> int_a;
+    for (int i = 0; i < int_a; i++) {
+        cin >> int_N;
+        
+        // 초기화
+        int_sum = 0;
+        v.clear();
+
+        // 해당 수보다 작은 소수 모으기
+        for (int j = 2; j < int_N; j++) {
+            if (arr[j]) {
+                v.push_back(j);
+            }
+        }
+
+        tmp_a = 0;
+        tmp_b = 0;
+        tmp_min = int_N;
+
+        for (int j = 0; j < v.size(); j++) {
+            for (int k = 0; k < v.size(); k++) {
+                if (int_N == v.at(j) + v.at(k) && tmp_min > abs(v.at(j) - v.at(k))) {
+                    tmp_a = v.at(j);
+                    tmp_b = v.at(k);
+                    tmp_min = abs(v.at(j) - v.at(k));
+                }
+            }
+        }
+
+        if (tmp_a + tmp_b != 0) cout << tmp_a << " " << tmp_b << endl;
+    }
 }
 
 
@@ -128,7 +182,6 @@ void func_1085() {
 
     cout << min;
 }
-
 
 
 /* 단계별 풀어보기 >> 기본 수학 2 >> 네 번째 점
@@ -167,7 +220,28 @@ void func_3009() {
 * https://www.acmicpc.net/problem/4153
 */
 void func_4153() {
+    // 아이디어 : 피타고라스 정리 활용
+    int a, b, c;
+    int pow_a, pow_b, pow_c, pow_sum;
 
+    while (1) {
+        cin >> a >> b >> c;
+
+        pow_a = pow(a, 2);
+        pow_b = pow(b, 2);
+        pow_c = pow(c, 2);
+        pow_sum = pow_a + pow_b + pow_c;
+
+        if (pow_sum == 0)
+            break;
+
+        if (pow_a == pow_sum - pow_a || pow_b == pow_sum - pow_b || pow_c == pow_sum - pow_c) {
+            cout << "right" << endl;
+        }
+        else {
+            cout << "wrong" << endl;
+        }
+    }
 }
 
 
@@ -175,6 +249,15 @@ void func_4153() {
 * https://www.acmicpc.net/problem/3053
 */
 void func_3053() {
+    // cmath 내부 pi : M_PI (cmath include 전 #define _USE_MATH_DEFINES 필요)
+    int r;
+    cin >> r;
+
+    // 유클리드 기하학에서의 넓이
+    printf("%.6f\n", const_pi() * pow(r, 2));
+
+    // 택시 기하학 에서의 넓이 : 대각선 길이가 r인 마름모의 넓이
+    printf("%.6f\n", pow(2 * r, 2) / 2);
     
 }
 
