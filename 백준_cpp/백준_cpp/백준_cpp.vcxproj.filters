@@ -51,6 +51,9 @@
     <ClCompile Include="단계별로풀어보기_재귀.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="실버_문제풀이.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
