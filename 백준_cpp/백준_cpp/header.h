@@ -47,6 +47,7 @@ void func_10869(); // 사칙연산
 void func_10430(); // 나머지
 void func_2588(); // 곱셈
 
+// 2022-01-26 새로 추가됨
 void func_10926(); // ??!
 void func_18108(); // 1998년생인 내가 태국에서는 2541년생?!
 
@@ -121,7 +122,7 @@ void func_10250(); // ACM 호텔
 void func_2775(); // 부녀회장이 될테야
 void func_2839(); // 설탕배달
 void func_10757(); // 큰 수 A+B
-void func_1011(); // Fly me to the Alpha Centauri
+void func_1011(); // Fly me to the Alpha Centauri [작성중]
 
 /*
 *  기본 수학 2
@@ -143,17 +144,17 @@ void func_1002(); // 터렛
 */
 void func_10872(); // 팩토리얼
 void func_10870(); // 피보나치 수 5
-void func_2447(); // 별 찍기 -10
-void func_11729(); // 하노이 탑 이동 순서
+void func_2447(); // 별 찍기 -10 [작성중]
+void func_11729(); // 하노이 탑 이동 순서 [작성중]
 
 /*
 *  브루트 포스
 */
 void func_2798(); // 블랙잭
-void func_2231(); // 분해합
-void func_7568(); // 덩치
-void func_1018(); // 체스판 다시 칠하기
-void func_1436(); // 영화감독 숌
+void func_2231(); // 분해합 [작성중]
+void func_7568(); // 덩치 [작성중]
+void func_1018(); // 체스판 다시 칠하기 [작성중]
+void func_1436(); // 영화감독 숌 [작성중]
 
 
 
@@ -180,18 +181,18 @@ void func_15965(); // k번째 소수
 */
 void func_CHAC_A(); // 정답
 void func_CHAC_B(); // 시간초과, 오답
-void func_CHAC_D(); // 오답
+void func_CHAC_D(); // 오답 
 
 
 /*
 *  문제집 > 단기간 성장 - redbin0471
 *   https://www.acmicpc.net/workbook/view/4349
 */
-void func_12865(); // 평범한 배낭 (골드5)
+void func_12865(); // 평범한 배낭 (골드5) [작성중]
 
 
 /*
 *  문제집 > DFS+BFS 필수 문제 - njw1204 
 *   https://www.acmicpc.net/workbook/view/1983
 */
-void func_1260(); // DFS와 BFS
+void func_1260(); // DFS와 BFS [작성중]
