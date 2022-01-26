@@ -63,6 +63,9 @@
     <ClCompile Include="문제집_DFS_BFS_필수문제.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="단계별로풀어보기_브루트포스.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
