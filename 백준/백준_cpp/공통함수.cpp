@@ -66,20 +66,20 @@ int is_prime_number_sqrt(ll input)
 }
 
 /*
-* input : int m
+* input : ll m
 * output : 1부터 m까지의 소수 여부를 sizeof(bool) * (m+1)크기의 bool * 형태로 반환한다.
 * 사용 시 반환된 bool array에 해당 자연수를 조회하면 소수 여부를 알 수 있다.
 */
-bool *Sieve_of_Eratosthenes(int m) {
+bool *Sieve_of_Eratosthenes(ll m) {
     bool* arr = new bool[m + 1];
 
     memset(arr, 1, sizeof(bool) * (m+1));
     arr[0] = false;
     arr[0] = false;
 
-    for (int i = 2; i < m + 1; i++) {
+    for (ll i = 2; i < m + 1; i++) {
         if (arr[i] == true) {
-            for (int j = i * 2; j < m + 1; j += i) {
+            for (ll j = i * 2; j < m + 1; j += i) {
                 arr[j] = false;
             }
         }

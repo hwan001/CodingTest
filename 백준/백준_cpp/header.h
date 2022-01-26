@@ -28,7 +28,7 @@ typedef unsigned long long ll;
 vector<string> split(string, char);
 int is_prime_number_custom(ll);
 int is_prime_number_sqrt(ll);
-bool *Sieve_of_Eratosthenes(int);
+bool *Sieve_of_Eratosthenes(ll);
 double const_pi();
 
 
