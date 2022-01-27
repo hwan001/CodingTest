@@ -4,9 +4,11 @@
 *  https://www.acmicpc.net/problem/1260
 */
 void func_1260_DFS() {
+
 }
 
 void func_1260_BFS() {
+
 }
 
 void func_1260() {

@@ -46,19 +46,59 @@ void func_2798() {
 	cout << res << endl;
 }
 
+
+/* 단계별 풀어보기 > 브루트포스 > 분해합 (브론즈 2)
+* https://www.acmicpc.net/problem/2231
+*/
+
+int func_2231_create_decompose(int a) {
+	int len, res = a;
+
+	len = to_string(a).length();
+
+	for (int i = len; a > 0; i--) {
+		res += a / pow(10, i);
+		a %= (int)pow(10, i);
+	}
+
+	return res;
+}
+
+void func_2231() {
+	int a, key;
+	cin >> a;
+
+	map<int, int> m;
+
+	for (int i = 1; i < a; i++) {
+		key = func_2231_create_decompose(i);
+		
+		if(!m[key])
+			m[key] = i;
+	}
+
+	cout << m[a];
+}
+
+
+/* 단계별 풀어보기 > 브루트포스 > 덩치 (실버 5)
+* https://www.acmicpc.net/problem/7568
+*/
+void func_7568() {
+
+}
+
 /*
-void func_2231(); // 분해합
-void func_7568(); // 덩치
 void func_1018(); // 체스판 다시 칠하기
 void func_1436(); // 영화감독 숌
 */
+
 
 // DFS BFS > 바이러스 실버3
 void func_2606() {
 	// 트리 구현
 	// 방문 여부 체크
 	// 탐색 알고리즘 
-
 }
 
 

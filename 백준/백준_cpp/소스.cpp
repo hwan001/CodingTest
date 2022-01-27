@@ -40,7 +40,7 @@ void func_test() {
     }
 }
 
-void (*func)() = func_1260;
+void (*func)() = func_2231;
 
 int main() {
     func();
