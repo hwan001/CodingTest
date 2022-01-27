@@ -85,26 +85,80 @@ void func_2231() {
 * https://www.acmicpc.net/problem/7568
 */
 void func_7568() {
+	int int_case;
+	int cnt, grade;
+	int* bulk;
 
+	cin >> int_case;
+
+	map<char, int *> m_input;
+	
+	// 입력
+	for (int i = 0; i < int_case; i++) {
+		bulk = new int[2];
+
+		cin >> bulk[0] >> bulk[1];
+
+		m_input['a' + i] = bulk;
+	}
+
+	// 점수 매기기
+	for (int i = 0; i < int_case; i++) {
+		cnt = 1;
+
+		for (int j = 0; j < int_case; j++) {
+			// 덩치 : 키도 크고, 몸무게도 무거운 사람 수
+			if (m_input['a' + i][0] < m_input['a' + j][0] && m_input['a' + i][1] < m_input['a' + j][1]) {
+				cnt++;
+			}
+		}
+
+		// 점수 기록
+		cout << cnt << " ";
+	}
+
+	for (int i = 0; i < int_case; i++) {
+		delete m_input['a' + i];
+	}
+}
+void func_7568_2() {
+	int int_case, cnt;
+	cin >> int_case;
+	int** arr = new int*[int_case];
+	int* bulk;
+
+	for (int i = 0; i < int_case; i++) {
+		bulk = new int[2];
+		cin >> bulk[0] >> bulk[1];
+		arr[i] = bulk;
+	}
+
+	for (int i = 0; i < int_case; i++) {
+		cnt = 1;
+		for (int j = 0; j < int_case; j++) {
+			if (arr[i][0] < arr[j][0] && arr[i][1] < arr[j][1]) {
+				cnt++;
+			}
+		}
+		cout << cnt << " ";
+	}
+}
+
+/* 단계별 풀어보기 > 브루트포스 > 체스판 다시 칠하기 (실버 5)
+* https://www.acmicpc.net/problem/1018
+*/
+void func_1018() {
+	
 }
 
 /*
-void func_1018(); // 체스판 다시 칠하기
 void func_1436(); // 영화감독 숌
 */
 
 
-// DFS BFS > 바이러스 실버3
+// DFS BFS > 바이러스 (실버3)
 void func_2606() {
 	// 트리 구현
 	// 방문 여부 체크
 	// 탐색 알고리즘 
 }
-
-
-// 경쟁률 작년 12: 1
-// 1차는 상용 중급 골드 ? , 2차는 중상급 플래 ?
-// 알고리즘 : 
-// sql : 
-// web : html css javascript 이해 운용
-// 포트폴리오 내부 github velog
