@@ -269,5 +269,26 @@ void func_10757() {
 * https://www.acmicpc.net/problem/1011
 */
 void func_1011() {
+	int int_case;
+	int x, y;
+	int res;
 
+	cin >> int_case;
+
+	for (int i = 0; i < int_case; i++) {
+		cin >> x >> y;
+		res = x;
+		for (int j = 1; j < x - y / 2; j++) {
+			
+			if(res + (j * 2) < y) res += (j * 2);
+			if (res + j < y) res += j;
+			if (res + (j * 2) > y) j--;
+
+			if (res == y) {
+				cout << j << "\n";
+				break;
+			}
+		}
+		cout << res << "\n";
+	}
 }

@@ -1,6 +1,6 @@
 #include "header.h"
 
-void (*func)() = func_7568;
+void (*func)() = func_1011;
 
 int main() {
     func();
