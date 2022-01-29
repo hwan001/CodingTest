@@ -37,7 +37,6 @@ void func_10870() {
 /* 단계별 풀어보기 > 재귀 > 별 찍기 -10 (실버 1, 분할정복)
 * https://www.acmicpc.net/problem/2447
 */
-
 void func_2447_starPrint(int n, int a, int b) {
 	int n_copy = n;
 	int int_squared = 0;

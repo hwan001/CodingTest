@@ -270,25 +270,31 @@ void func_10757() {
 */
 void func_1011() {
 	int int_case;
-	int x, y;
-	int res;
+	ll x, y, res, distance, level;
 
 	cin >> int_case;
 
 	for (int i = 0; i < int_case; i++) {
 		cin >> x >> y;
-		res = x;
-		for (int j = 1; j < x - y / 2; j++) {
-			
-			if(res + (j * 2) < y) res += (j * 2);
-			if (res + j < y) res += j;
-			if (res + (j * 2) > y) j--;
+		distance = y - x;
 
-			if (res == y) {
-				cout << j << "\n";
-				break;
+		if (distance > 0 && distance <= 3) {
+			res = distance;
+		}
+		else {
+			level = (int)sqrt(distance);
+
+			if (((level + 1) * (level + 1)) - (level+1) < distance && distance < ((level + 1) * (level + 1))) {
+				res = 2 * level+1;
+			}
+			else if (distance == level * level ) {
+				res = 2 * level -1;
+			}
+			else {
+				res = 2 * level;
 			}
 		}
+
 		cout << res << "\n";
 	}
 }
