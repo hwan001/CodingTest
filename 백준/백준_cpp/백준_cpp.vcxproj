@@ -150,6 +150,7 @@
     <ClCompile Include="단계별로풀어보기_브루트포스.cpp" />
     <ClCompile Include="단계별로풀어보기_입출력과사칙연산.cpp" />
     <ClCompile Include="단계별로풀어보기_재귀.cpp" />
+    <ClCompile Include="단계별로풀어보기_정렬.cpp" />
     <ClCompile Include="단계별로풀어보기_함수.cpp" />
     <ClCompile Include="대회_2022중앙대CHAC_OC.cpp" />
     <ClCompile Include="문제집_DFS_BFS_필수문제.cpp" />
