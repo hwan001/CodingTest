@@ -97,3 +97,17 @@ double const_pi() {
     return atan(1) * 4;
 }
 
+
+/*
+*   input : ll a, b;
+*   output : ll c;
+*   GCD(최대공약수)를 유클리드 호제법, 재귀로 구함
+*/
+ll gcd_recursion(ll a, ll b) {
+    if (a % b == 0) {
+        return b;
+    }
+    else {
+        return gcd_recursion(b, a % b);
+    }
+}
