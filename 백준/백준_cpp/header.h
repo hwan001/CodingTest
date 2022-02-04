@@ -9,7 +9,7 @@
 #include <utility> 
 #include <sstream> 
 #include <cmath> 
-
+#include <stack> 
 
 /*
 * Namespace

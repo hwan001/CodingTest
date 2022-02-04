@@ -1479,8 +1479,18 @@ void func_18870() {
 * https://www.acmicpc.net/problem/1260
 */
 
-void func_1260_dfs(int x) {
-	
+void func_1260_dfs(int startnode, map<int, vector<int>> adjacency_list, bool *visit ) {
+	stack<int> s;
+
+	s.push(startnode);
+
+	// 스택에 값이 있으면 반복
+	while (!s.empty()) {
+		// 인접 노드의 방문 여부를 어떻게 확인 ?
+		if (visit[][]) {
+				
+		}
+	}
 }
 
 void func_1260() {
@@ -1489,32 +1499,25 @@ void func_1260() {
 
 	cin >> n >> m >> start_node;
 
-	// 노드 개수만큼 동적 그래프 생성
-	int** graph = new int* [n];
+	map<int, vector<int>> graph;
 
-	for (int i = 0; i < n; i++) {
-		graph[i] = new int[m];
-	}
-
-	// 전부 -1로 초기화
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			graph[i][j] = 0;
-		}
-	}
-
-	// 간선 개수 만큼 받기
+	// 인접 리스트 생성  row : n, col : m
 	for (int i = 0; i < m; i++) {
 		cin >> u >> v;
-		graph[u][v] = graph[v][u] = 1; // 양방향
+
+		graph[u].push_back(v);
 	}
 
 	// 출력
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			cout << graph[i][j] << " ";
+	for (auto node : graph) {
+		cout << node.first << " : ";
+		for (auto nd :  node.second) {
+			cout << nd << " ";
 		}
-		cout << endl;
+		cout << "\n";
 	}
 
+	func_1260_dfs(start_node, graph);
 }
+
+

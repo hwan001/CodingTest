@@ -30,9 +30,6 @@
     <ClCompile Include="단기간성장.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="문제집_DFS_BFS_필수문제.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="단계별로풀어보기.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>

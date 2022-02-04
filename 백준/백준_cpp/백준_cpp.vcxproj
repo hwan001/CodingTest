@@ -142,7 +142,6 @@
     <ClCompile Include="공통함수.cpp" />
     <ClCompile Include="단계별로풀어보기.cpp" />
     <ClCompile Include="대회_2022중앙대CHAC_OC.cpp" />
-    <ClCompile Include="문제집_DFS_BFS_필수문제.cpp" />
     <ClCompile Include="단기간성장.cpp" />
     <ClCompile Include="소스.cpp" />
     <ClCompile Include="실버.cpp" />
