@@ -1479,45 +1479,100 @@ void func_18870() {
 * https://www.acmicpc.net/problem/1260
 */
 
-void func_1260_dfs(int startnode, map<int, vector<int>> adjacency_list, bool *visit ) {
-	stack<int> s;
-
-	s.push(startnode);
-
-	// 스택에 값이 있으면 반복
-	while (!s.empty()) {
-		// 인접 노드의 방문 여부를 어떻게 확인 ?
-		if (visit[][]) {
-				
-		}
-	}
-}
-
-void func_1260() {
-	int n, m, start_node;
-	int u, v;
-
-	cin >> n >> m >> start_node;
-
-	map<int, vector<int>> graph;
-
-	// 인접 리스트 생성  row : n, col : m
-	for (int i = 0; i < m; i++) {
-		cin >> u >> v;
-
-		graph[u].push_back(v);
-	}
-
-	// 출력
+void func_1260_graphPrint(map<int, vector<int>> graph) {
 	for (auto node : graph) {
 		cout << node.first << " : ";
-		for (auto nd :  node.second) {
+		for (auto nd : node.second) {
 			cout << nd << " ";
 		}
 		cout << "\n";
 	}
-
-	func_1260_dfs(start_node, graph);
 }
 
+void func_1260_dfs_recursion(int n, map<int, vector<int>> adjacency_list, bool* visited) {
+	cout << "start\nCurrent Node : " << n <<  "";
 
+	// 시작노드의 방문 여부를 체크
+	visited[n] = true;
+
+	for (auto node : adjacency_list[n]) {
+		// 노드가 방문이 되어있는지 확인
+		cout << "\nN : " << n << ", Node : " << node << ", Visited : " << visited[node] << " ";
+		if (!visited[node]) {
+			cout << "-> Next node : " << node << "\n";
+			// 방문 안된 노드의 키값을 넣음
+			func_1260_dfs_recursion(node, adjacency_list, visited);
+		}
+	}
+	cout << "\nend";
+}
+
+void func_1260_dfs_stack() {
+
+}
+
+void func_1260_bfs_recursion() {
+
+}
+
+void func_1260_bfs_queue() {
+
+}
+
+void func_1260() {
+	int n, m, start_node, u, v;
+	
+	cin >> n >> m >> start_node;
+
+	map<int, vector<int>> graph;
+
+	bool *visited = new bool[n+1];
+	memset(visited, 0, sizeof(bool) * (n+1));
+
+	for (int i = 0; i < m; i++) {
+		cin >> u >> v;
+		graph[u].push_back(v);
+		graph[v].push_back(u);
+	}
+
+	//func_1260_graphPrint(graph);
+
+	func_1260_dfs_recursion(start_node, graph, visited);
+}
+
+void func_1260_matrix() {
+	int n, m, start_node, u, v;
+
+	cin >> n >> m; // >> start_node;
+
+	// 인접행렬 생성
+	int** graph = new int* [n];
+	for (int i = 0; i < n; i++) {
+		graph[i] = new int[n];
+	}
+
+	// 인접행렬 초기화
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			graph[i][j] = 0;
+		}
+	}
+
+	// 간선 입력
+	for (int i = 0; i < m; i++) {
+		cin >> u >> v;
+		u--;
+		v--;
+		// 무방향 그래프
+		graph[u][v] = graph[v][u] = 1;
+	}
+
+
+	// 인접행렬 초기화
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << graph[i][j] << " ";
+		}
+		cout << "\n";
+	}
+}
