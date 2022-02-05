@@ -1490,33 +1490,48 @@ void func_1260_graphPrint(map<int, vector<int>> graph) {
 }
 
 void func_1260_dfs_recursion(int n, map<int, vector<int>> adjacency_list, bool* visited) {
-	cout << "start\nCurrent Node : " << n <<  "";
-
+	//cout << "start\nCurrent Node : " << n <<  "";
 	// 시작노드의 방문 여부를 체크
 	visited[n] = true;
+	cout << n << " ";
 
 	for (auto node : adjacency_list[n]) {
 		// 노드가 방문이 되어있는지 확인
-		cout << "\nN : " << n << ", Node : " << node << ", Visited : " << visited[node] << " ";
+		//cout << "\nN : " << n << ", Node : " << node << ", Visited : " << visited[node] << " ";
 		if (!visited[node]) {
-			cout << "-> Next node : " << node << "\n";
+			//cout << "-> Next node : " << node << "\n";
 			// 방문 안된 노드의 키값을 넣음
 			func_1260_dfs_recursion(node, adjacency_list, visited);
 		}
 	}
-	cout << "\nend";
+	//cout << "\nend";
 }
 
 void func_1260_dfs_stack() {
 
 }
 
-void func_1260_bfs_recursion() {
+void func_1260_bfs_queue(int n, map<int, vector<int>> graph, bool* visited) {
+	queue<int> q;
+	int now_node;
 
-}
+	visited[n] = true;
+	q.push(n);
 
-void func_1260_bfs_queue() {
+	while (!q.empty()) {
+		now_node = q.front();
+		q.pop();
+		cout << now_node << " ";
 
+		for (auto node : graph[now_node]) {
+			if (!visited[node]) {
+				visited[node] = true;
+				q.push(node);
+			}
+		}
+
+	}
+	
 }
 
 void func_1260() {
@@ -1535,9 +1550,15 @@ void func_1260() {
 		graph[v].push_back(u);
 	}
 
-	//func_1260_graphPrint(graph);
+	for (auto node : graph) {
+		sort(graph[node.first].begin(), graph[node.first].end());
+	}
 
 	func_1260_dfs_recursion(start_node, graph, visited);
+	cout << "\n";
+
+	memset(visited, 0, sizeof(bool) * (n + 1));
+	func_1260_bfs_queue(start_node, graph, visited);
 }
 
 void func_1260_matrix() {
@@ -1575,4 +1596,6 @@ void func_1260_matrix() {
 		}
 		cout << "\n";
 	}
+
+
 }
