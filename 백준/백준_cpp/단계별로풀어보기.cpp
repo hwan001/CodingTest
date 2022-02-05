@@ -1617,7 +1617,6 @@ void func_1260_matrix() {
 }
 
 
-
 /*  바이러스
 *   https://www.acmicpc.net/problem/2606
 */
