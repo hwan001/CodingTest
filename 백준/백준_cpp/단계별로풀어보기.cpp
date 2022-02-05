@@ -1475,10 +1475,9 @@ void func_18870() {
 *  ***************************
 */
 
-/* DFS와 BFS
-* https://www.acmicpc.net/problem/1260
+/*  DFS와 BFS
+*   https://www.acmicpc.net/problem/1260
 */
-
 void func_1260_graphPrint(map<int, vector<int>> graph) {
 	for (auto node : graph) {
 		cout << node.first << " : ";
@@ -1489,29 +1488,22 @@ void func_1260_graphPrint(map<int, vector<int>> graph) {
 	}
 }
 
-void func_1260_dfs_recursion(int n, map<int, vector<int>> adjacency_list, bool* visited) {
-	//cout << "start\nCurrent Node : " << n <<  "";
-	// 시작노드의 방문 여부를 체크
+void func_1260_dfs_recursion(int n, vector<int>* graph, bool* visited) {
 	visited[n] = true;
 	cout << n << " ";
 
-	for (auto node : adjacency_list[n]) {
-		// 노드가 방문이 되어있는지 확인
-		//cout << "\nN : " << n << ", Node : " << node << ", Visited : " << visited[node] << " ";
+	for (auto node : graph[n]) {
 		if (!visited[node]) {
-			//cout << "-> Next node : " << node << "\n";
-			// 방문 안된 노드의 키값을 넣음
-			func_1260_dfs_recursion(node, adjacency_list, visited);
+			func_1260_dfs_recursion(node, graph, visited);
 		}
 	}
-	//cout << "\nend";
 }
 
 void func_1260_dfs_stack() {
 
 }
 
-void func_1260_bfs_queue(int n, map<int, vector<int>> graph, bool* visited) {
+void func_1260_bfs_queue(int n, vector<int>* graph, bool* visited) {
 	queue<int> q;
 	int now_node;
 
@@ -1529,9 +1521,28 @@ void func_1260_bfs_queue(int n, map<int, vector<int>> graph, bool* visited) {
 				q.push(node);
 			}
 		}
-
 	}
-	
+}
+
+void func_1260_bfs_queue_matrix(int n, int** graph, bool* visited) {
+	queue<int> q;
+	int now_node;
+
+	visited[n] = true;
+	q.push(n);
+
+	while (!q.empty()) {
+		now_node = q.front();
+		q.pop();
+		cout << now_node << " ";
+
+		for(int i=0; i < sizeof(graph[n]); i++) {
+			if (!visited[i]) {
+				visited[i] = true;
+				q.push(i);
+			}
+		}
+	}
 }
 
 void func_1260() {
@@ -1539,7 +1550,9 @@ void func_1260() {
 	
 	cin >> n >> m >> start_node;
 
-	map<int, vector<int>> graph;
+	// map<int, vector<int>> graph;
+	
+	vector<int> *graph = new vector<int>[n+1];
 
 	bool *visited = new bool[n+1];
 	memset(visited, 0, sizeof(bool) * (n+1));
@@ -1550,8 +1563,8 @@ void func_1260() {
 		graph[v].push_back(u);
 	}
 
-	for (auto node : graph) {
-		sort(graph[node.first].begin(), graph[node.first].end());
+	for (int i = 1; i <= n; i++) {
+		sort(graph[i].begin(), graph[i].end());
 	}
 
 	func_1260_dfs_recursion(start_node, graph, visited);
@@ -1564,13 +1577,16 @@ void func_1260() {
 void func_1260_matrix() {
 	int n, m, start_node, u, v;
 
-	cin >> n >> m; // >> start_node;
+	cin >> n >> m >> start_node;
 
 	// 인접행렬 생성
 	int** graph = new int* [n];
 	for (int i = 0; i < n; i++) {
 		graph[i] = new int[n];
 	}
+
+	bool* visited = new bool[n + 1];
+	memset(visited, 0, sizeof(bool) * (n + 1));
 
 	// 인접행렬 초기화
 	for (int i = 0; i < n; i++) {
@@ -1589,7 +1605,7 @@ void func_1260_matrix() {
 	}
 
 
-	// 인접행렬 초기화
+	// 인접행렬 출력
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			cout << graph[i][j] << " ";
@@ -1597,5 +1613,65 @@ void func_1260_matrix() {
 		cout << "\n";
 	}
 
+	func_1260_bfs_queue_matrix(start_node, graph, visited);
+}
+
+
+
+/*  바이러스
+*   https://www.acmicpc.net/problem/2606
+*/
+
+static int func_2606_cnt;
+
+void func_2606_dfs(int start, vector<int> *graph, bool* visited) {
+	visited[start] = true;
+	//cout << start << " ";
+
+	func_2606_cnt++;
+
+	for (auto node : graph[start]) {
+		if (!visited[node]) {
+			func_2606_dfs(node, graph, visited);
+		}
+	}
+}
+
+void func_2606() {
+	int n, m, u, v;
+
+	cin >> n;
+	cin >> m;
+
+	vector<int> *graph = new vector<int>[n+1];
+
+	// 노드 개수 +1개
+	bool* visited = new bool[n+1];
+	memset(visited, 0, sizeof(bool) * (n+1));
+
+	func_2606_cnt = 0;
+
+	// 간선 입력
+	for (int i = 0; i < m; i++) {
+		cin >> u >> v;
+		
+		graph[u].push_back(v);
+		graph[v].push_back(u);
+	}
+
+	for (int i = 1; i <= n; i++) {
+		sort(graph[i].begin(), graph[i].end());
+	}
+
+	func_2606_dfs(1, graph, visited);
+
+	cout << func_2606_cnt -1 << "\n";
+}
+
+
+/*  단지번호붙이기
+*   https://www.acmicpc.net/problem/2667
+*/
+void func_2667() {
 
 }

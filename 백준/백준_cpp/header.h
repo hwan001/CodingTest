@@ -35,6 +35,7 @@ double const_pi();
 ll gcd_recusion(ll, ll);
 
 
+
 /*
 *  입출력과 사칙연산
 */
@@ -175,6 +176,17 @@ void func_10814(); // 나이순 정렬
 void func_18870(); // 좌표 압축
 
 
+/*
+*   DFS와 BFS
+*   https://www.acmicpc.net/step/24
+*/
+void func_1260(); // DFS와 BFS 
+void func_2606(); // 바이러스
+void func_2667(); // 단지번호붙이기
+
+
+
+
 
 /*
 *  브론즈 티어 문제 풀이
@@ -207,10 +219,3 @@ void func_CHAC_D(); // 오답
 *   https://www.acmicpc.net/workbook/view/4349
 */
 void func_12865(); // 평범한 배낭 (골드5) [작성중]
-
-
-/*
-*  문제집 > DFS+BFS 필수 문제 - njw1204 
-*   https://www.acmicpc.net/workbook/view/1983
-*/
-void func_1260(); // DFS와 BFS [작성중]
