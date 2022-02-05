@@ -1671,6 +1671,56 @@ void func_2606() {
 /*  단지번호붙이기
 *   https://www.acmicpc.net/problem/2667
 */
+void func_2667_HouseComplex_Detection(int n, int** map) {
+	bool is_comp = false;
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (map[i][j]) {
+				is_comp = true;
+			}
+
+			if (is_comp) {
+			}
+		}
+	}
+}
+
+vector<int> *func_2667_Convert_adjMatrix_to_adjList(int n, int** matrix) {
+	vector<int> * adjlist = new vector<int>[n+1];
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (matrix[i][j] == 1 && i != j) {
+				adjlist[i+1].push_back(j + 1);
+			}
+		}
+
+		sort(adjlist[i+1].begin(), adjlist[i+1].end());
+	}
+
+	return adjlist;
+}
+
 void func_2667() {
+	int n;
+	string str;
+
+	cin >> n;
+
+	int** map = new int* [n];
+	for (int i = 0; i < n; i++) {
+		str = "";
+		map[i] = new int[n];
+
+		cin >> str;
+		for (int j = 0; j < str.length(); j++) {
+			map[i][j] = str[j] - '0';
+		}
+	}
+
+	
+	func_2667_HouseComplex_Detection(n, map);
+
 
 }
