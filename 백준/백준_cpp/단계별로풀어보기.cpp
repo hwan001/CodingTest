@@ -1724,3 +1724,143 @@ void func_2667() {
 
 
 }
+
+
+
+/*  미로탐색
+*   https://www.acmicpc.net/problem/2178
+*/
+
+class func_2178_node {
+public:
+	int x;
+	int y;
+	int value;
+	int visited;
+};
+
+int func_2178_BFS(int n, int m, func_2178_node **_map, int *start_node, int *end_node) {
+	// BFS 탐색을 위한 큐 생성 현재 노드 저장
+	queue<func_2178_node> q;
+	func_2178_node tmp_node, now_node;
+
+	// 상0, 우1, 하2, 좌3 
+	int** direction = new int*[4];
+	for (int i = 0; i < 4; i++) {
+		direction[i] = new int[2];
+
+		if (i == 0) {
+			direction[i][0] = 0;
+			direction[i][1] = -1;
+		}
+		if (i == 1) {
+			direction[i][0] = 1;
+			direction[i][1] = 0;
+		}
+		if (i == 2) {
+			direction[i][0] = 0;
+			direction[i][1] = 1;
+		}
+		if (i == 3) {
+			direction[i][0] = -1;
+			direction[i][1] = 0;
+		}
+
+		//cout << i << " - " << direction[i][0] << ", " << direction[i][1] << "\n";
+	}
+
+
+	// 시작노드의 방문 여부 변경
+	_map[start_node[0]][start_node[1]].visited = 1;
+	// 시작노드 넣기
+	q.push(_map[start_node[0]][start_node[1]]);
+
+
+	// 큐에 값이 있으면 탐색 시작
+	while (!q.empty()) {
+		// 현재 큐의 값 가져오기 + pop
+		now_node = q.front();
+		q.pop();
+
+		// 인접 노드 탐색 (시계방향으로 탐색)
+		for (int i = 0; i < 4; i++) {
+			// 현재 좌표가 좌우를 넘어가는지 확인 (넘어가면 continue)
+			if (now_node.x + direction[i][0] <= 0 || now_node.x + direction[i][0] > n) {
+				continue;
+			}
+
+			// 현재 좌표가 상하를 넘어가는지 확인 (넘어가면 continue)
+			if (now_node.y + direction[i][1] <= 0 || now_node.y + direction[i][1] > m) {
+				continue;
+			}
+
+			// 이동한 값이 맵 안에 있으면 노드 이동
+			tmp_node = _map[now_node.x + direction[i][0]][now_node.y + direction[i][1]];
+
+			// 값이 1이 아닌지 검사, 아니면 continue;
+			if (tmp_node.value == 0) {
+				continue;
+			}
+
+			// 값이 1이고, 방문 여부가 없는지 검사 (방문했으면 다음거)
+			if (tmp_node.visited) {
+				continue;
+			}
+
+			// 인접 노드가 맵 안에 있고, 이동이 가능하며, 방문한 적이 없다면 큐에 등록하고 방문여부 바꾸고 탐색횟수 증가
+			_map[tmp_node.x][tmp_node.y].visited = _map[now_node.x][now_node.y].visited + 1;
+			q.push(_map[tmp_node.x][tmp_node.y]);
+
+			//cout << "tmp_node[" << tmp_node.x << "][" << tmp_node.y << "] "<< _map[tmp_node.x][tmp_node.y].visited << " -> 탐색 완료 \n";
+		}
+
+		// 방문 상태 출력
+		/*
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				cout << _map[i][j].visited << "";
+			}
+			cout << "\n";
+		}
+		cout << "\n";
+		*/
+	}
+
+	return _map[n][m].visited;
+}
+
+void func_2178() {
+	int n, m;
+	int* start_node = new int[2];
+	int* end_node = new int[2];
+	string str_input;
+
+	cin >> n >> m;
+
+	start_node[0] = 1;
+	start_node[1] = 1;
+	end_node[0] = n;
+	end_node[1] = m;
+
+	// 노드 맵 초기화
+	func_2178_node** map = new func_2178_node*[n+1];
+	for (int i = 1; i <= n; i++) {
+		map[i] = new func_2178_node[m+1];
+	}
+
+	// 입력 및 초기화
+	for (int i = 1; i <= n; i++) {
+		cin >> str_input;
+		for (int j = 1; j <= m; j++) {
+			map[i][j].x = i;
+			map[i][j].y = j;
+			map[i][j].value = str_input[j-1] - '0';
+			map[i][j].visited = 0;
+		}
+	}
+
+	cout << func_2178_BFS(n, m, map, start_node, end_node) << "\n";
+
+}
+
+

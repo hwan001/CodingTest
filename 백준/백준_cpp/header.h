@@ -184,7 +184,7 @@ void func_1260(); // DFS와 BFS
 void func_2606(); // 바이러스
 void func_2667(); // 단지번호붙이기
 
-
+void func_2178(); // 미로 탐색
 
 
 
