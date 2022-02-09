@@ -1864,3 +1864,85 @@ void func_2178() {
 }
 
 
+
+
+/*  유기농 배추
+*   https://www.acmicpc.net/problem/1012
+*/
+class func_1012_node {
+public:
+	int x;
+	int y;
+	int value;
+	int visited;
+};
+
+
+void func_1012_bfs(int n, func_1012_node **map, bool* visited) {
+	queue<func_1012_node> q;
+	
+	
+	
+}
+
+void func_1012() {
+	int test_case;
+	int n, m, k;
+	int u, v;
+	int cnt;
+	bool* visited;
+	func_1012_node** map;
+
+	cin >> test_case;
+	
+	for (int a = 0; a < test_case; a++) {
+		cin >> m >> n >> k;
+
+		// 값 초기화
+		map = new func_1012_node *[n];
+		cnt = 0;
+
+		// Map 생성 및 초기화
+		for (int i = 0; i < n; i++) {
+			map[i] = new func_1012_node[m];
+		}
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				map[i][j].x = i;
+				map[i][j].y = j;
+				map[i][j].value = 0;
+				map[i][j].visited = 0;
+			}
+		}
+
+		// Map 업데이트
+		for (int j = 0; j < k; j++) {
+			cin >> u >> v;
+			map[u][v].value = 1;
+		}
+
+		// 방문 기록 확인하면서 Map 탐색
+
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				/*
+				if (!map[i][j].visited) {
+					func_1012_bfs(1, map, visited);
+					cnt++;
+				}
+				*/
+				cout << map[i][j].value << "";
+			}
+			cout << "\n";
+		}
+
+		cout << cnt << "\n";
+		
+		// map 정리
+		for (int j = 0; j <= n; j++) {
+			delete map[j];
+		}
+		delete map;
+	}
+}
