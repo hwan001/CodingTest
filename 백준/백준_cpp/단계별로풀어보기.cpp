@@ -1946,3 +1946,92 @@ void func_1012() {
 		delete map;
 	}
 }
+
+
+/*  토마토
+*   https://www.acmicpc.net/problem/7576
+*/
+class func_7576_tomato {
+public:
+	int x;
+	int y;
+	int visited;
+	int value;
+	bool is_count;
+};
+
+bool func_7576_count_Box(int n, int m, func_7576_tomato** box) {
+	int sum = 0;
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (box[i][j].is_count) {
+				sum++;
+			}
+		}
+	}
+	if (sum == n * m) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int func_7576_bfs(int n, int m, func_7576_tomato** box, vector<int*> start) {
+	queue<func_7576_tomato> q;
+
+}
+
+void func_7576() {
+	int m, n, tmp;
+	vector<int*> start;
+
+	// 노드 개수
+	cin >> m >> n;
+
+	// 노드 생성
+	func_7576_tomato** box = new func_7576_tomato*[n];
+	for (int i = 0; i < n; i++) {
+		box[i] = new func_7576_tomato[m];
+	}
+
+	// 초기화
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			box[i][j].x = i;
+			box[i][j].y = j;
+			box[i][j].visited = 0;
+			box[i][j].value = 0;
+			box[i][j].is_count = false;
+		}
+	}
+
+	// 입력값 받기 + 입력에 따른 값 설정
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			tmp = box[i][j].value;
+			cin >> tmp;
+
+			if (tmp != 0){
+				// 0이 아니면 카운트가 가능(0이면 세지 않음)
+				box[i][j].is_count = true;
+			}
+			if (tmp == 1) {
+				//입력 값이 1이면 시작 좌표를 기록 이 값에 대해서 bfs
+
+			}
+		}
+	}
+
+	
+	// BFS로 visit은 몇번만에 변하는지 카운트 + 변하면 count = true;
+	func_7576_bfs(n, m, box, start);
+
+	// 카운트가 가능한 상자 수와 전체 상자 수가 같으면
+	if (!func_7576_count_Box(n, m, box)) {
+		cout << -1 << "\n";
+	}
+
+
+}
