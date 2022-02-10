@@ -1923,7 +1923,6 @@ void func_1012() {
 		}
 
 		// 방문 기록 확인하면서 Map 탐색
-
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				/*
@@ -1957,35 +1956,95 @@ public:
 	int y;
 	int visited;
 	int value;
-	bool is_count;
 };
 
-bool func_7576_count_Box(int n, int m, func_7576_tomato** box) {
-	int sum = 0;
-
+void func_7576_print(int n, int m, func_7576_tomato** box) {
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			if (box[i][j].is_count) {
-				sum++;
-			}
+			cout << box[i][j].value;
 		}
-	}
-	if (sum == n * m) {
-		return true;
-	}
-	else {
-		return false;
+		cout << "\n";
 	}
 }
 
-int func_7576_bfs(int n, int m, func_7576_tomato** box, vector<int*> start) {
-	queue<func_7576_tomato> q;
+void func_7576_bfs(int n, int m, func_7576_tomato** box, queue<func_7576_tomato> q) {
+	func_7576_tomato now_tomato, tmp_tomato;
 
+	// 방향 정의 (시계방향)
+	int** direc = new int*[4];
+	int _x, _y;
+	for (int i = 0; i < 4; i++) {
+		direc[i] = new int[2];
+
+		// 상
+		if (i == 0) {
+			_x = 0;
+			_y = -1;
+		}
+		// 우
+		if (i == 1) {
+			_x = 1;
+			_y = 0;
+		}
+		// 하
+		if (i == 2) {
+			_x = 0;
+			_y = 1;
+		}
+		// 좌
+		if (i == 3) {
+			_x = -1;
+			_y = 0;
+		}
+
+		direc[i][0] = _x;
+		direc[i][1] = _y;
+	}
+
+	// bfs 탐색 시작 
+	while (!q.empty	()) {
+		now_tomato = q.front();
+		q.pop();
+
+		// 각 방향별 탐색
+		for (int i = 0; i < 4; i++) {
+			// 이동한 범위가 토마토 상자 내부인지 검사 (x축)
+			if (now_tomato.x + direc[i][0] < 0 || now_tomato.x + direc[i][0] >= n) {
+				continue;
+			}
+			// 이동한 범위가 토마토 상자 내부인지 검사 (y축)
+			if (now_tomato.y + direc[i][1] < 0 || now_tomato.y + direc[i][1] >= m) {
+				continue;
+			}
+
+			tmp_tomato = box[now_tomato.x + direc[i][0]][now_tomato.y + direc[i][1]];
+
+			// 해당 위치가 벽인지 검사
+			if (tmp_tomato.value != 0) {
+				continue;
+			}
+
+			// 해당 위치에 숙성되지 않은 토마토가 있으면 숙성 시키고 몇 일차에 숙성시켰는지 입력 후 큐에 등록
+			box[tmp_tomato.x][tmp_tomato.y].value = 1;
+			box[tmp_tomato.x][tmp_tomato.y].visited = now_tomato.visited + 1;
+			q.push(box[tmp_tomato.x][tmp_tomato.y]);
+		}
+
+		cout << "\n";
+		func_7576_print(n, m, box);
+	}
+
+	// 메모리 정리
+	for (int i = 0; i < 4; i++) {
+		delete direc[i];
+	}
+	delete direc;
 }
 
 void func_7576() {
-	int m, n, tmp;
-	vector<int*> start;
+	bool is_flag;
+	int m, n, tmp, max;
+	queue<func_7576_tomato> q;
 
 	// 노드 개수
 	cin >> m >> n;
@@ -2003,35 +2062,49 @@ void func_7576() {
 			box[i][j].y = j;
 			box[i][j].visited = 0;
 			box[i][j].value = 0;
-			box[i][j].is_count = false;
 		}
 	}
 
-	// 입력값 받기 + 입력에 따른 값 설정
+	// 입력값 받기, 입력에 따른 값 설정
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			tmp = box[i][j].value;
 			cin >> tmp;
-
-			if (tmp != 0){
-				// 0이 아니면 카운트가 가능(0이면 세지 않음)
-				box[i][j].is_count = true;
-			}
+			box[i][j].value = tmp;
+			
+			//입력 값이 1이면 큐에 등록
 			if (tmp == 1) {
-				//입력 값이 1이면 시작 좌표를 기록 이 값에 대해서 bfs
-
+				q.push(box[i][j]);
 			}
 		}
 	}
 
-	
-	// BFS로 visit은 몇번만에 변하는지 카운트 + 변하면 count = true;
-	func_7576_bfs(n, m, box, start);
+	func_7576_bfs(n, m, box, q);
+	func_7576_print(n, m, box);
 
-	// 카운트가 가능한 상자 수와 전체 상자 수가 같으면
-	if (!func_7576_count_Box(n, m, box)) {
-		cout << -1 << "\n";
+	max = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			// 숙성안된 토마토가 있으면 -1
+			if (box[i][j].value == 0) {
+				max = -1;
+				break;
+			}
+			// 최대값 찾아서 갱신
+			if (max < box[i][j].visited) {
+				max = box[i][j].visited;
+			}
+		}
+		if (max == -1) {
+			break;
+		}
 	}
 
+	cout << max << "\n";
+	
+	// 박스 정리
+	for (int i = 0; i < n; i++) {
+		delete box[i];
+	}
 
+	// return 0;
 }
