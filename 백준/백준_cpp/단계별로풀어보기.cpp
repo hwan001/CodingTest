@@ -68,14 +68,12 @@ void func_18108() {
 *  ************************
 */
 
-/*
-void func_1330(); // 두 수 비교하기
-void func_9498(); // 시험 성적
-void func_2753(); // 윤년
-void func_14681(); // 사분면 고르기
-void func_2884(); // 알람 시계
-*/
 
+//void func_1330(); // 두 수 비교하기
+//void func_9498(); // 시험 성적
+//void func_2753(); // 윤년
+//void func_14681(); // 사분면 고르기
+//void func_2884(); // 알람 시계
 
 
 
@@ -99,7 +97,6 @@ void func_2438(); // 별 찍기 - 1
 void func_2439(); // 별 찍기 - 2
 void func_10871(); // X보다 작은 수
 */
-
 
 
 
@@ -1620,7 +1617,6 @@ void func_1260_matrix() {
 /*  바이러스
 *   https://www.acmicpc.net/problem/2606
 */
-
 static int func_2606_cnt;
 
 void func_2606_dfs(int start, vector<int> *graph, bool* visited) {
@@ -1702,29 +1698,129 @@ vector<int> *func_2667_Convert_adjMatrix_to_adjList(int n, int** matrix) {
 	return adjlist;
 }
 
-void func_2667() {
-	int n;
-	string str;
+int func_2667_bfs(int cnt, int n, queue<pair<int, int>> q, int **map, int ** v) {
+	int _x, _y, a=0;
+	pair<int, int> now, tmp;
 
-	cin >> n;
+	int** direc = new int* [4];
+	for (int i = 0; i < 4; i++) {
+		direc[i] = new int[2];
+		if (i == 0) {
+			_x = 0;
+			_y = -1;
+		}
+		else if (i == 1) {
+			_x = 1;
+			_y = 0;
+		}
+		else if (i == 2) {
+			_x = 0;
+			_y = 1;
+		}
+		else if (i == 3) {
+			_x = -1;
+			_y = 0;
+		}
+		direc[i][0] = _x;
+		direc[i][1] = _y;
+	}
 
-	int** map = new int* [n];
-	for (int i = 0; i < n; i++) {
-		str = "";
-		map[i] = new int[n];
+	while (!q.empty()) { 
+		now = q.front();
+		q.pop();
+		if (v[now.first][now.second] != 1) {
+			v[now.first][now.second] = 1;
+			a++;
+		}
 
-		cin >> str;
-		for (int j = 0; j < str.length(); j++) {
-			map[i][j] = str[j] - '0';
+		for (int i = 0; i < 4; i++) {
+			_x = now.first + direc[i][0];
+			_y = now.second + direc[i][1];
+
+			if (_x < 0 || _x >= n) {
+				continue;
+			}
+			if (_y < 0 || _y >= n) {
+				continue;
+			}
+			
+			if (map[_x][_y] == 0) {
+				continue;
+			}
+
+			if (v[_x][_y] == 1) {
+				continue;
+			}
+
+			// 방문한적 없는 좌표인데 값이 1보다 크면 현재 카운트로 덮어쓰기 및 방문처리
+			if (map[_x][_y] >= 1) {
+				v[_x][_y] = 1;
+				map[_x][_y] = cnt;
+				q.push({_x, _y});
+				//cout << _x << ", " << _y << "\n";
+				a++;
+			}
 		}
 	}
 
-	
-	func_2667_HouseComplex_Detection(n, map);
+	for (int i = 0; i < 4; i++) {
+		delete direc[i];
+	}
 
-
+	return a;
 }
 
+void func_2667() {
+	int n, cnt =0;
+	string str;
+	queue<pair<int, int>> q;
+	vector<int> m;
+	int tmp_m;
+
+	cin >> n;
+
+	int** v = new int* [n];
+	for (int i = 0; i < n; i++) {
+		v[i] = new int[n];
+		for (int j = 0; j < n; j++) {
+			v[i][j] = 0;
+		}
+	}
+
+	int** _map = new int* [n];
+	for (int i = 0; i < n; i++) {
+		str = "";
+		_map[i] = new int[n];
+
+		cin >> str;
+		for (int j = 0; j < n; j++) {
+			_map[i][j] = str[j] - '0';
+		}
+	}
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (_map[i][j] == 1) {
+				q.push({ i, j });
+				
+				tmp_m = func_2667_bfs(cnt+1, n, q, _map, v);
+				if (tmp_m != 0) {
+					m.push_back(tmp_m);
+					cnt++;
+				}
+			}
+			
+		}
+	}
+
+	sort(m.begin(), m.end());
+
+	cout << cnt << "\n";
+	for (int i = 0; i < cnt; i++) {  
+		cout << m[i] << "\n";
+	}
+
+}
 
 
 /*  미로탐색
@@ -1865,7 +1961,6 @@ void func_2178() {
 
 
 
-
 /*  유기농 배추
 *   https://www.acmicpc.net/problem/1012
 */
@@ -1876,7 +1971,6 @@ public:
 	int value;
 	int visited;
 };
-
 
 void func_1012_bfs(int n, func_1012_node **map, bool* visited) {
 	queue<func_1012_node> q;
@@ -2079,7 +2173,6 @@ void func_7576() {
 	}
 
 	func_7576_bfs(n, m, box, q);
-	func_7576_print(n, m, box);
 
 	max = 0;
 	for (int i = 0; i < n; i++) {
@@ -2108,3 +2201,4 @@ void func_7576() {
 
 	// return 0;
 }
+
