@@ -570,7 +570,7 @@ void func_2775() {
 * https://www.acmicpc.net/problem/2839
 */
 void func_2839() {
-	int a, b, n, min, tmp, res;
+	int n, min, tmp, res;
 	bool is_flag;
 
 	cin >> n;
@@ -1200,7 +1200,7 @@ void func_2231() {
 */
 void func_7568() {
 	int int_case;
-	int cnt, grade;
+	int cnt;
 	int* bulk;
 
 	cin >> int_case;
@@ -1346,8 +1346,8 @@ void func_10989() {
 * https://www.acmicpc.net/problem/2108
 */
 void func_2108() {
-	int a, sum = 0;
-	double tmp;
+	int a;
+	double tmp, sum = 0;
 	double aver, max;
 	int min_val, max_val;
 
@@ -1381,7 +1381,7 @@ void func_2108() {
 
 	// 2. 중앙값 
 	int cnt = 0;
-	int index = floor(a / 2);
+	int index = (int)floor(a / 2);
 
 	if (a % 2 == 0)
 		cout << (v.at(index) + v.at(index + 1)) / 2 << "\n";
@@ -1969,75 +1969,145 @@ public:
 	int x;
 	int y;
 	int value;
-	int visited;
+	bool visited;
 };
 
-void func_1012_bfs(int n, func_1012_node **map, bool* visited) {
-	queue<func_1012_node> q;
-	
-	
-	
+int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map) {
+	int a = 0, _x, _y;
+	func_1012_node now;
+	int** direction = new int* [4];
+	for (int i = 0; i < 4; i++) {
+		direction[i] = new int[2];
+		if (i == 0) {
+			_x = 0;
+			_y = -1;
+		}
+		else if (i == 1) {
+			_x = 1;
+			_y = 0;
+		}
+		else if (i == 2) {
+			_x = 0;
+			_y = 1;
+		}
+		else if (i == 3) {
+			_x = -1;
+			_y = 0;
+		}
+
+		direction[i][0] = _x;
+		direction[i][1] = _y;
+	}
+
+	while (!q.empty()) {
+		now = q.front();
+		q.pop();
+		if (_map[now.x][now.y].visited != true) {
+			cout << now.x << now.y << "\n";
+			_map[now.x][now.y].visited = true;
+			a++;
+		}
+
+		for (int i = 0; i < 4; i++) {
+			_x = now.x + direction[i][0];
+			_y = now.y + direction[i][1];
+
+			if (_x < 0 || _x >= m) {
+				continue;
+			}
+			if (_y < 0 || _y >= n) {
+				continue;
+			}
+
+			if (_map[_x][_y].value == 0) {
+				continue;
+			}
+
+			if (_map[_x][_y].visited != true) {
+				//cout << _x << ", " << _y << "\n";
+				q.push(_map[_x][_y]);
+				a++;
+			}
+		}
+	}
+
+	for (int i = 0; i < 4; i++) {
+		delete direction[i];
+	}
+
+	return a;
 }
 
 void func_1012() {
-	int test_case;
+	int test_case, tmp_res;
 	int n, m, k;
 	int u, v;
 	int cnt;
-	bool* visited;
-	func_1012_node** map;
+	func_1012_node** _map;
+	queue<func_1012_node> q;
 
 	cin >> test_case;
 	
 	for (int a = 0; a < test_case; a++) {
 		cin >> m >> n >> k;
 
-		// 값 초기화
-		map = new func_1012_node *[n];
 		cnt = 0;
-
-		// Map 생성 및 초기화
+		// map 생성
+		_map = new func_1012_node *[n];
 		for (int i = 0; i < n; i++) {
-			map[i] = new func_1012_node[m];
+			_map[i] = new func_1012_node[m];
 		}
 
+		// map 초기화
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				map[i][j].x = i;
-				map[i][j].y = j;
-				map[i][j].value = 0;
-				map[i][j].visited = 0;
+				_map[i][j].x = i;
+				_map[i][j].y = j;
+				_map[i][j].value = 0;
+				_map[i][j].visited = 0;
 			}
 		}
 
 		// Map 업데이트
 		for (int j = 0; j < k; j++) {
 			cin >> u >> v;
-			map[u][v].value = 1;
+			_map[v][u].value = 1;
+		}
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				cout << _map[i][j].value;
+			}
+			cout << "\n";
 		}
 
 		// 방문 기록 확인하면서 Map 탐색
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				/*
-				if (!map[i][j].visited) {
-					func_1012_bfs(1, map, visited);
-					cnt++;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				// 만약 _map[i][j].value == 1이면 bfs 실행(bfs 결과가 0이아니면 그래프 개수 카운팅)
+				if (_map[i][j].value == 1) {
+					q.push(_map[i][j]);
+
+					tmp_res = func_1012_bfs(n, m, q, _map);
+					if (tmp_res != 0) {
+						cnt++;
+						cout << "find " << cnt << "\n";
+					}
 				}
-				*/
-				cout << map[i][j].value << "";
+
+				//cout << _map[i][j].value << "";
 			}
-			cout << "\n";
+			//cout << "\n";
 		}
 
 		cout << cnt << "\n";
 		
 		// map 정리
-		for (int j = 0; j <= n; j++) {
-			delete map[j];
+		for (int j = 0; j < n; j++) {
+			delete _map[j];
 		}
-		delete map;
 	}
+
 }
 
 
@@ -2136,7 +2206,6 @@ void func_7576_bfs(int n, int m, func_7576_tomato** box, queue<func_7576_tomato>
 }
 
 void func_7576() {
-	bool is_flag;
 	int m, n, tmp, max;
 	queue<func_7576_tomato> q;
 
@@ -2202,3 +2271,7 @@ void func_7576() {
 	// return 0;
 }
 
+
+/*  토마토
+*   https://www.acmicpc.net/problem/7576
+*/
