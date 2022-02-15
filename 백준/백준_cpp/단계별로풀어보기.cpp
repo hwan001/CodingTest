@@ -1972,12 +1972,68 @@ public:
 	bool visited;
 };
 
-int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map) {
-	int a = 0, _x, _y;
+
+
+int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map, int** direction) {
+	int a=0, _x, _y;
 	func_1012_node now;
-	int** direction = new int* [4];
+
+	while (!q.empty()) {
+		now = q.front();
+		q.pop();
+
+		if (_map[now.x][now.y].visited != true) {
+			//cout << now.x << now.y << "\n";
+			_map[now.x][now.y].visited = true;
+			//a++;
+		}
+
+		for (int i = 0; i < 4; i++) {
+			_x = now.x + direction[i][0];
+			_y = now.y + direction[i][1];
+
+			if (_x < 0 || _x >= n) {
+				continue;
+			}
+			if (_y < 0 || _y >= m) {
+				continue;
+			}
+
+			// 값이 0이면 무시
+			if (_map[_x][_y].value == 0) {
+				continue;
+			}
+
+			// value가 0이 아닌데, 방문이 되어 있으면 무시
+			if (_map[_x][_y].visited == true) {
+				continue;
+			}
+
+			//cout << " <- next : " << _x << ", " << _y << "\n";
+
+			_map[_x][_y].visited = true;
+			q.push(_map[_x][_y]);
+			a++;
+		}
+	}
+
+	return a;
+}
+
+void func_1012() {
+	int test_case, tmp_res;
+	int n, m, k;
+	int u, v;
+	int cnt;
+	int _x, _y;
+	bool is_flag;
+	func_1012_node** _map;
+	queue<func_1012_node> q;
+
+	// 4방향 정의
+	int** _direction = new int* [4];
 	for (int i = 0; i < 4; i++) {
-		direction[i] = new int[2];
+		_direction[i] = new int[2];
 		if (i == 0) {
 			_x = 0;
 			_y = -1;
@@ -1995,56 +2051,10 @@ int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map)
 			_y = 0;
 		}
 
-		direction[i][0] = _x;
-		direction[i][1] = _y;
+		_direction[i][0] = _x;
+		_direction[i][1] = _y;
 	}
 
-	while (!q.empty()) {
-		now = q.front();
-		q.pop();
-		if (_map[now.x][now.y].visited != true) {
-			cout << now.x << now.y << "\n";
-			_map[now.x][now.y].visited = true;
-			a++;
-		}
-
-		for (int i = 0; i < 4; i++) {
-			_x = now.x + direction[i][0];
-			_y = now.y + direction[i][1];
-
-			if (_x < 0 || _x >= m) {
-				continue;
-			}
-			if (_y < 0 || _y >= n) {
-				continue;
-			}
-
-			if (_map[_x][_y].value == 0) {
-				continue;
-			}
-
-			if (_map[_x][_y].visited != true) {
-				//cout << _x << ", " << _y << "\n";
-				q.push(_map[_x][_y]);
-				a++;
-			}
-		}
-	}
-
-	for (int i = 0; i < 4; i++) {
-		delete direction[i];
-	}
-
-	return a;
-}
-
-void func_1012() {
-	int test_case, tmp_res;
-	int n, m, k;
-	int u, v;
-	int cnt;
-	func_1012_node** _map;
-	queue<func_1012_node> q;
 
 	cin >> test_case;
 	
@@ -2052,13 +2062,13 @@ void func_1012() {
 		cin >> m >> n >> k;
 
 		cnt = 0;
-		// map 생성
-		_map = new func_1012_node *[n];
+		is_flag = false;
+		
+		// map 생성 및 초기화
+		_map = new func_1012_node * [n];
 		for (int i = 0; i < n; i++) {
 			_map[i] = new func_1012_node[m];
 		}
-
-		// map 초기화
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
 				_map[i][j].x = i;
@@ -2069,29 +2079,62 @@ void func_1012() {
 		}
 
 		// Map 업데이트
-		for (int j = 0; j < k; j++) {
+		for (int i = 0;i < k; i++) {
 			cin >> u >> v;
-			_map[v][u].value = 1;
+			_map[u][v].value = 1;
 		}
 
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				cout << _map[i][j].value;
-			}
-			cout << "\n";
-		}
+		// 그래프 출력
+		//for (int i = 0; i < n; i++) {
+		//	for (int j = 0; j < m; j++) {
+		//		cout << _map[i][j].value;
+		//	}
+		//	cout << "\n";
+		//}
 
+		cnt = 0;
 		// 방문 기록 확인하면서 Map 탐색
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
 				// 만약 _map[i][j].value == 1이면 bfs 실행(bfs 결과가 0이아니면 그래프 개수 카운팅)
 				if (_map[i][j].value == 1) {
+					//cout << i << ", " << j << "\n";
+
+					// 주변에 1개라도 1인지 체크
+					is_flag = false;
+					for (int int_direc = 0; int_direc < 4; int_direc++) {
+						_x = i + _direction[int_direc][0];
+						_y = j + _direction[int_direc][1];
+
+						// 1인 노드 주변이 하나라도 1이면 플래그
+						if (_x < 0 || _x >= n) {
+							continue;
+						}
+						if (_y < 0 || _y >= m) {
+							continue;
+						}
+						
+						if (_map[_x][_y].value == 1) {
+							is_flag = true;
+							break;
+						}
+					}
+
+					// 주변이 다 0이고 현재 노드 방문한적 없으면 단독노드
+					if (!is_flag && _map[i][j].visited == 0) {
+						cnt++;
+						_map[i][j].visited = 1;
+						//cout << "Alone Node\n";
+						continue;
+					}
+
+					// 단독노드가 아니면 bfs
 					q.push(_map[i][j]);
 
-					tmp_res = func_1012_bfs(n, m, q, _map);
+					tmp_res = func_1012_bfs(n, m, q, _map, _direction);
 					if (tmp_res != 0) {
 						cnt++;
-						cout << "find " << cnt << "\n";
+						//cout << "visit : " << tmp_res  << " find : " << cnt << "\n";
 					}
 				}
 
@@ -2102,10 +2145,25 @@ void func_1012() {
 
 		cout << cnt << "\n";
 		
-		// map 정리
+
+		//// 그래프 출력
+		//for (int i = 0; i < n; i++) {
+		//	for (int j = 0; j < m; j++) {
+		//		cout << _map[i][j].visited;
+		//	}
+		//	cout << "\n";
+		//}
+
+
+		//// 메모리 정리
 		for (int j = 0; j < n; j++) {
 			delete _map[j];
 		}
+	}
+
+	////
+	for (int i = 0; i < 4; i++) {
+		delete _direction[i];
 	}
 
 }
