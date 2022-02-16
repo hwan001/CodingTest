@@ -76,6 +76,75 @@ void func_18108() {
 //void func_2884(); // 알람 시계
 
 
+/* 오븐 시계
+* https://www.acmicpc.net/problem/2525
+*/
+void func_2525() {
+	int a, b, c;
+	cin >> a >> b >> c;
+
+	b = b + c;
+	if (b < 0) {
+		b = 0;
+	}
+	while (b >= 60) {
+		b -= 60;
+		a += 1;
+	}
+
+	if (a < 0) {
+		a = 0;
+	}
+	while (a >= 24) {
+		a -= 24;
+	}
+
+	cout << a << " " << b << "\n";
+}
+
+/* 주사위 세개
+* https://www.acmicpc.net/problem/2480
+*/
+void func_2480() {
+	map<int, int> m;
+	int a, res=0, k_max = 0, v_max = 0;
+
+	for (int i = 0; i < 3; i++) {
+		cin >> a;
+		m[a]++;
+
+		// key max
+		if (k_max < a) {
+			k_max = a;
+		}
+		// value max
+		if (v_max < m[a]) {
+			v_max = m[a];
+		}
+	}
+
+	// 아래조건에 해당되는 게 없으면 그냥 최대 주사위 값이 kmax임
+	for (auto v : m) {
+		// 같은 눈 이 1개가 아니고, 최대 개수와 현재 번호의 개수가 같으면
+		if (v_max != 1 && v_max == v.second) {
+			k_max = v.first; // 그 떄의 키값(주사위 눈)을 저장
+		}
+	}
+
+	if (v_max == 3) {
+		res = 10000 + k_max * 1000;
+	}
+	if (v_max == 2) {
+		res = 1000 + k_max * 100;
+	}
+	if (v_max == 1) {
+		res = k_max * 100;
+	}
+
+	cout << res << "\n";
+}
+
+
 
 
 /*
@@ -1119,40 +1188,49 @@ void func_11729() {
 * https://www.acmicpc.net/problem/2798
 */
 void func_2798() {
-	int n, m, sum, min, res = 0;
+	cin.tie(NULL);
+	cin.sync_with_stdio(false);
+
+	int n, m, min, res = 0, sum = 0;
 	cin >> n >> m;
-	int* card = new int[n];
+	int * card = new int[n];
 	bool is_flag;
 
 	for (int i = 0; i < n; i++) {
 		cin >> card[i];
 	}
 
-	sum = 0;
 	min = m;
 	is_flag = true;
 
-	if (is_flag) {
-		for (int i = 0; i < n - 1; i++) {
-			if (is_flag) {
-				for (int j = i + 1; j < n; j++) {
-					if (is_flag) {
-						for (int k = j + 1; k < n; k++) {
-							sum = card[i] + card[j] + card[k];
-							//cout << "i : " << i << ", j : " << j << ", k : " << k << ", sum : " << sum << endl;
+	//for (int i = 0; i < n - 1; i++) {
+	//	if (!is_flag) break;
+	//	for (int j = i + 1; j < n; j++) {
+	//		if (!is_flag) break;
+	//		for (int k = j + 1; k < n; k++) {
+	//			sum = card[i] + card[j] + card[k];
+	//			//cout << "i : " << i << ", j : " << j << ", k : " << k << ", sum : " << sum << endl;
+	//			if (sum == m) is_flag = false;
+	//			if (min > m - sum && m >= sum) {
+	//				min = m - sum;
+	//				res = sum;
+	//			}
+	//		}
+	//	}	
+	//}
 
-							if (sum == m) {
-								is_flag = false;
-							}
+	for (int i = 0; i < n - 1 && is_flag; i++) {
+		for (int j = i + 1; j < n && is_flag; j++) {
+			for (int k = j + 1; k < n && is_flag; k++) {
+				sum = card[i] + card[j] + card[k];
+				//cout << "i : " << i << ", j : " << j << ", k : " << k << ", sum : " << sum << endl;
+				if (sum == m) is_flag = false;
 
-							if (min > m - sum && m >= sum) {
-								min = m - sum;
-								res = sum;
-							}
-
-						}
-					}
+				if (min > m - sum && m >= sum) {
+					min = m - sum;
+					res = sum;
 				}
+
 			}
 		}
 	}
@@ -1261,15 +1339,116 @@ void func_7568_2() {
 /* 체스판 다시 칠하기 (실버 5)
 * https://www.acmicpc.net/problem/1018
 */
-void func_1018() {
 
+int func_1018_bitmask(char **_map) {
+	int cnt_1 = 0, cnt_2 = 0;
+	char filter_1[8][8] = {
+		{0, 1, 0, 1, 0, 1, 0, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0},
+		{0, 1, 0, 1, 0, 1, 0, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0},
+		{0, 1, 0, 1, 0, 1, 0, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0},
+		{0, 1, 0, 1, 0, 1, 0, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0}
+	};
+	char filter_2[8][8] = {
+		{1, 0, 1, 0, 1, 0, 1, 0},
+		{0, 1, 0, 1, 0, 1, 0, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0},
+		{0, 1, 0, 1, 0, 1, 0, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0},
+		{0, 1, 0, 1, 0, 1, 0, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0}, 
+		{0, 1, 0, 1, 0, 1, 0, 1}
+	};
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if ( !(_map[i][j]^filter_1[i][j]) ) {
+				cnt_1++;
+			}
+			if (!(_map[i][j] ^ filter_2[i][j])) {
+				cnt_2++;
+			}
+		}
+	}
+
+	if (cnt_1 >= cnt_2) return cnt_2;
+	else return cnt_1;
 }
+
+void func_1018() {
+	int n, m;
+	int min, cnt;
+	string tmp;
+	cin >> n >> m;
+
+	char** tmp_map = new char* [8];
+	for (int i = 0; i < 8; i++) {
+		tmp_map[i] = new char[8];
+	}
+	char** bwmap = new char* [n];
+	for (int i = 0; i < n; i++) {
+		bwmap[i] = new char[m];
+	}
+
+	for (int i = 0; i < n; i++) {
+		cin >> tmp;
+		for (int j = 0; j < m; j++) {
+			if (tmp[j] == 'B') {
+				bwmap[i][j] = 1;
+			}
+			else {
+				bwmap[i][j] = 0;
+			}
+		}
+	}
+
+	//cout << "출력\n";
+	cnt = 0;
+	min = 64;
+	for (int i = 0; i <= n - 8; i++) {
+		for (int j = 0; j <= m - 8; j++) {
+			//cout << i << ", " << j << " 출력\n";
+			for (int a = i, aa = 0; a < i + 8; a++, aa++) {
+				for (int b = j, bb = 0; b < j + 8; b++, bb++) {
+					//cout << (int)bwmap[a][b];
+					tmp_map[aa][bb] = bwmap[a][b];
+				}
+				//cout << "\n";
+			}
+			cnt = func_1018_bitmask(tmp_map);
+			if (cnt < min) {
+				min = cnt;
+			}
+		}
+		//cout << "\n\n";
+	}
+	cout << min << "\n";
+}
+
 
 /* 영화감독 숌 (실버 )
 * https://www.acmicpc.net/problem/1436
 */
 void func_1436() {
+	int n, cnt=0;
+	string tmp;
 
+	cin >> n;
+
+	for (int i = 666; i < 2100000000; i++) {
+		tmp = to_string(i);
+		if (tmp.find("666") != string::npos) {
+			cnt++;
+
+			if (cnt > 10000) break;
+			if (cnt == n) {
+				cout << cnt << "번쨰 수 : " << tmp << "\n";
+			}
+		}
+	}
 }
 
 
@@ -1464,12 +1643,46 @@ void func_18870() {
 }
 
 
+/*
+*  ************************************
+*  단계별 풀어보기 > 동적 계획법 1
+*  ************************************
+*/
+
+/* 피보나치 함수
+* https://www.acmicpc.net/problem/1003
+*/
+void func_1003() {
+	int test_case;
+	cin >> test_case;
+	
+	vector<pair<int, int>> f;
+	// 0번째 원소 개수 - 0번 1, 0
+	f.push_back({ 1, 0 });
+	// 1번째 원소 개수 - 1번 0, 1
+	f.push_back({ 0, 1 });
+
+	for (int i = 2; i <= 40; i++) {
+		f.push_back({f.at(i-1).first + f.at(i-2).first, f.at(i-1).second + f.at(i-2).second});
+		//cout << f.at(i).first << ", " << f.at(i).second << "\n";
+	}
+
+	int* n = new int[test_case];
+	for (int i = 0; i < test_case; i++) {
+		cin >> n[i];
+		cout << f.at(n[i]).first << " " << f.at(n[i]).second << "\n";
+	}
+}
+
+
+
+
 
 
 /*
-*  ***************************
+*  ********************************
 *  단계별 풀어보기 > DFS와 BFS
-*  ***************************
+*  ********************************
 */
 
 /*  DFS와 BFS
