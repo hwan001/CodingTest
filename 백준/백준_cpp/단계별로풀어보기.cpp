@@ -1604,27 +1604,90 @@ void func_2108() {
 * https://www.acmicpc.net/problem/1427
 */
 void func_1427() {
+	vector<char> v;
+	string str;
+	cin >> str;
 
+	for (int i = 0; i < str.length(); i++) {
+		v.push_back(str[i]);
+	}
+
+	sort(v.begin(), v.end());
+	reverse(v.begin(), v.end());
+
+	for (auto v_tmp : v) {
+		cout << v_tmp;
+	}
 }
 
 /* 좌표 정렬하기
 * https://www.acmicpc.net/problem/11650
 */
 void func_11650() {
+	int a, b, test_case;
+	vector<pair<int, int>> v; 
+	pair<int, int> p;
 
+	cin >> test_case;
+	for (int i = 0; i < test_case; i++) {
+		cin >> a >> b;
+		v.push_back({a, b});
+	}
+
+	sort(v.begin(), v.end());
+
+	for (auto v_tmp : v) {
+		cout << v_tmp.first << " "  << v_tmp.second << "\n";
+	}
 }
 
 /* 좌표 정렬하기 2
 * https://www.acmicpc.net/problem/11651
 */
 void func_11651() {
+	int a, b, test_case;
+	vector<pair<int, int>> v;
+	pair<int, int> p;
 
+	cin >> test_case;
+	for (int i = 0; i < test_case; i++) {
+		cin >> a >> b;
+		v.push_back({ b, a });
+	}
+
+	sort(v.begin(), v.end());
+
+	for (auto v_tmp : v) {
+		cout << v_tmp.second << " " << v_tmp.first << "\n";
+	}
 }
 
 /* 단어 정렬
 * https://www.acmicpc.net/problem/1181
 */
 void func_1181() {
+	map<int, vector<string>> m;
+	int test_case, str_len, str_len_max=0;
+	string str;
+	cin >> test_case;
+
+	for (int i = 0; i < test_case; i++) {
+		cin >> str;
+		str_len = str.length();
+		m[str_len].push_back(str);
+		if (str_len > str_len_max)	str_len_max = str_len;
+	}
+
+	for (int i = 1; i <= str_len_max; i++) {
+		sort(m[i].begin(), m[i].end());
+		m[i].erase(unique(m[i].begin(), m[i].end()), m[i].end());
+	}
+
+	for (int i = 1; i <= str_len_max; i++) {
+		for (auto v : m[i]) {
+			cout << v << "\n";
+		}
+	}
 
 }
 
@@ -1632,14 +1695,52 @@ void func_1181() {
 * https://www.acmicpc.net/problem/10814
 */
 void func_10814() {
+	int test_case;
+	cin >> test_case;
 
+	int age;
+	string name;
+	map<int, vector<string>> m;
+
+	for (int i = 0; i < test_case; i++) {
+		cin >> age >> name;
+		m[age].push_back(name);
+	}
+
+	for (auto m_tmp : m) {
+		for (auto m_name : m_tmp.second) {
+			cout << m_tmp.first << " " << m_name << "\n";
+		}
+	}
 }
 
 /* 좌표 압축
 * https://www.acmicpc.net/problem/18870
 */
 void func_18870() {
+	int test_case;
+	cin >> test_case;
 
+	int tmp;
+	map<int, int> m;
+	vector<int> v_origin;
+
+	for (int i = 0; i < test_case; i++) {
+		cin >> tmp;
+		v_origin.push_back(tmp);
+	}
+
+	vector<int> v_sort(v_origin);
+	sort(v_sort.begin(), v_sort.end());
+	v_sort.erase(unique(v_sort.begin(), v_sort.end()), v_sort.end());
+
+	for (int i = 0; i < v_sort.size(); i++) {
+		m[v_sort[i]] = i;
+	}
+
+	for (auto v_tmp : v_origin) {
+		cout << m[v_tmp] << " ";
+	}
 }
 
 
@@ -1675,6 +1776,12 @@ void func_1003() {
 }
 
 
+/* 신나는 함수 실행
+* https://www.acmicpc.net/problem/9184
+*/
+void func_9184() {
+
+}
 
 
 
