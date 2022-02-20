@@ -1772,6 +1772,46 @@ void func_9184() {
 }
 
 
+/*
+*  **************************************
+*  단계별 풀어보기 > 그리디 알고리즘
+*  **************************************
+*/
+
+/* 동전 0 (실버 3)
+* https://www.acmicpc.net/problem/11047
+*/
+void func_11047() {
+	int n, k, tmp;
+	map<int, int> m;
+	map<int, int>::reverse_iterator reiter;
+
+	cin >> n >> k;
+	
+	for (int i = 0; i < n; i++) {
+		cin >> tmp;
+		m[tmp] = 0;
+	}
+
+	for(reiter = m.rbegin(); reiter != m.rend(); reiter++) {
+		while (reiter->first <= k) {
+			cout << "coin : " << reiter->first << "\n";
+			m[reiter->first]++;
+			k -= reiter->first;
+		}
+
+		if (k <= 0) break;
+	}
+
+	tmp = 0;
+	for (reiter = m.rbegin(); reiter != m.rend(); reiter++) {
+		if (reiter->second > 0) {
+			tmp += reiter->second;
+		}
+	}
+
+	cout << tmp << "\n";
+}
 
 
 /*
