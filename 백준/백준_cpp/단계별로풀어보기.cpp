@@ -60,8 +60,6 @@ void func_18108() {
 
 
 
-
-
 /* 
 *  ************************
 *  단계별로 풀어보기 > if문
@@ -1526,18 +1524,18 @@ void func_10989() {
 */
 void func_2108() {
 	int a;
-	double tmp, sum = 0;
-	double aver, max;
-	int min_val, max_val;
+	double tmp, sum, aver, max, min_val, max_val;
 
 	cin >> a;
-	map<int, int> m;
-	map<int, int>::iterator iter;
-	vector<int> v;
+	map<double, int> m;
+	vector<double> v, v_mode;
 
-	// 값 받아서 키로 넣고 sum 누적
+	// 입력, 벡터 추가, map 개수 증가, 합계
+	sum = 0;
 	for (int i = 0; i < a; i++) {
 		cin >> tmp;
+
+		v.push_back(tmp);
 
 		if (m[tmp] == 0) {
 			m[tmp] = 1;
@@ -1549,49 +1547,39 @@ void func_2108() {
 		sum += tmp;
 	}
 
-	for (auto num : m) {
-		v.push_back(num.first);
-	}
-
 	// 1. 산술평균, 소수점 이하 첫째 자리 반올림 값 
-	aver = (double)sum / a;
-	printf("%.0f\n", aver);
-	//cout <<sum << ", " << a << ", " << aver << "\n";
+	aver = accumulate(v.begin(), v.end(), 0.0) / v.size();
+	printf("%.0f\n", aver<=0&&aver>-1?(int)aver:aver);
 
-	// 2. 중앙값 
+	// 2. 중앙값  - 중앙에 위치한 값
 	int cnt = 0;
 	int index = (int)floor(a / 2);
+	sort(v.begin(), v.end());
 
-	if (a % 2 == 0)
-		cout << (v.at(index) + v.at(index + 1)) / 2 << "\n";
-	else
-		cout << v.at(index) << "\n";
+	cout << v.at(index) << "\n";
 
-	// 3. 최빈값 , 여러개일 경우 2번째로 작은 값
-	// 키값 으로 정렬 후 find 하여 나온게 여러개면 count 세기
-	max = -4000;
-
+	// 3. 최빈값 - 제일 많이 나온 값
+	max = 0;
 	for (auto num : m) {
 		if (num.second > max) {
 			max = num.second;
 		}
 	}
-
+	//cout << "최빈값 " << max << "\n";
 	cnt = 0;
 	for (auto num : m) {
 		if (num.second == max) {
-			cnt++;
-		}
-		if (cnt == 1) {
-			tmp = num.first;
-		}
-		if (cnt == 2) {
-			cout << num.first << "\n";
-			break;
+			v_mode.push_back(num.first);
 		}
 	}
-	if (cnt == 1) {
-		cout << tmp << "\n";
+	
+	if (v_mode.size() > 1) {
+		sort(v_mode.begin(), v_mode.end());
+		cout << v_mode.at(1) << "\n";
+	}
+	else
+	{
+		cout << v_mode.at(0) << "\n";
 	}
 
 	// 4. 범위 -> 가장 작은 값 ~ 가장 큰 값

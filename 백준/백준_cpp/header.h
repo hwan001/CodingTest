@@ -11,7 +11,7 @@
 #include <cmath> 
 #include <stack> 
 #include <queue> 
-
+#include <numeric>
 
 /*
 * Namespace
