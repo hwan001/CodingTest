@@ -1771,6 +1771,20 @@ void func_9184() {
 
 }
 
+/* 01타일 (실버 3)
+* https://www.acmicpc.net/problem/1904
+*/
+void func_1904() {
+
+}
+
+/* 파도반 수열 (실버 3)
+* https://www.acmicpc.net/problem/9461
+*/
+void func_9461() {
+
+}
+
 /* 평범한 배낭
 * https://www.acmicpc.net/problem/12865
 */
@@ -2344,7 +2358,7 @@ public:
 	bool visited;
 };
 
-int func_1012_bfs_backup(int n, int m, queue<func_1012_node> q , func_1012_node **_map, int** direction) {
+int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map, int** direction) {
 	int a=0, _x, _y;
 	func_1012_node now;
 
@@ -2546,7 +2560,7 @@ void func_1012() {
 }
 
 
-/*  토마토
+/*  토마토 (골드 5)
 *   https://www.acmicpc.net/problem/7576
 */
 class func_7576_tomato {
@@ -2707,6 +2721,9 @@ void func_7576() {
 }
 
 
-/*  토마토
-*   https://www.acmicpc.net/problem/7576
+/*  토마토 (골드 5)
+*   https://www.acmicpc.net/problem/7569
 */
+void func_7569() {
+
+}

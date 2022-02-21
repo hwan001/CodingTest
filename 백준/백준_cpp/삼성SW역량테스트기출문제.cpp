@@ -9,8 +9,32 @@ void func_12100() {}
 // 뱀 (골드 5)
 void func_3190() {}
 
-// 시험 감독 (브론즈 2)
-void func_13458() {}
+/* 시험 감독(브론즈 2)
+*  https://www.acmicpc.net/problem/13458
+*/
+void func_13458() {
+	double n, tmp, b, c, sum;
+	double sub_supervisor;
+
+	cin >> n;
+	sum = 0;
+	vector<double> exam_room;
+
+	for (int i = 1; i <= n; i++) {
+		cin >> tmp;
+		exam_room.push_back(tmp);
+	}
+
+	cin >> b >> c;
+
+	for (auto exam : exam_room) {
+		if (exam - b <= 0) continue;
+		sum += ceil((exam - b) / c);
+	}
+
+	//cout << sum + n << "\n";
+	printf("%0.lf\n", sum + n);
+}
 
 // 주사위 굴리기 (골드 4)
 void func_14499() {}
