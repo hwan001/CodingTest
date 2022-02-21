@@ -27,10 +27,10 @@
     <ClCompile Include="대회_2022중앙대CHAC_OC.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="단기간성장.cpp">
+    <ClCompile Include="단계별로풀어보기.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="단계별로풀어보기.cpp">
+    <ClCompile Include="삼성SW역량테스트기출문제.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1771,6 +1771,13 @@ void func_9184() {
 
 }
 
+/* 평범한 배낭
+* https://www.acmicpc.net/problem/12865
+*/
+void func_12865() {
+
+}
+
 
 /*
 *  **************************************
@@ -1812,6 +1819,23 @@ void func_11047() {
 
 	cout << tmp << "\n";
 }
+
+/* 회의실 배정 (실버 2)
+* https://www.acmicpc.net/problem/1931
+*/
+void func_1931(){
+	int test_case;
+	int a, b;
+
+	cin >> test_case;
+
+	for (int i = 0; i < test_case; i++) {
+		cin >> a >> b;
+	}
+
+	
+}
+
 
 
 /*
@@ -2320,9 +2344,7 @@ public:
 	bool visited;
 };
 
-
-
-int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map, int** direction) {
+int func_1012_bfs_backup(int n, int m, queue<func_1012_node> q , func_1012_node **_map, int** direction) {
 	int a=0, _x, _y;
 	func_1012_node now;
 
@@ -2368,7 +2390,7 @@ int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map,
 	return a;
 }
 
-void func_1012() {
+void func_1012_backup() {
 	int test_case, tmp_res;
 	int n, m, k;
 	int u, v;
@@ -2513,6 +2535,13 @@ void func_1012() {
 	for (int i = 0; i < 4; i++) {
 		delete _direction[i];
 	}
+
+}
+
+void func_1012() {
+	int test_case;
+	cin >> test_case;
+
 
 }
 
