@@ -212,7 +212,8 @@ void func_7576(); // 토마토
 *  실버 티어 문제 풀이
 */
 void func_15965(); // k번째 소수
-
+void func_1004(); // 어린왕자
+void func_1019(); // 책 페이지
 
 /* 
 *  2022 중앙대학교 CHAC Open Contest
