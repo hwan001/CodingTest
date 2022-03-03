@@ -1849,6 +1849,36 @@ void func_1931(){
 	
 }
 
+/* ATM (½Ç¹ö 3)
+* https://www.acmicpc.net/problem/11399
+*/
+void func_11399() {
+	int test_case;
+	int a, sum=0;
+	
+	vector<int> v;
+
+	cin >> test_case;
+
+	for (int i = 0; i < test_case; i++) {
+		cin >> a;
+		v.push_back(a);
+	}
+
+	sort(v.begin(), v.end());
+
+	for (int i = 0; i < test_case; i++) {
+		for (int j = 0; j <= i; j++) {
+			sum += v[j];
+		}
+	}
+
+	cout << sum << "\n";
+
+}
+
+
+
 
 
 /*
