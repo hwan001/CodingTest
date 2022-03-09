@@ -1,6 +1,5 @@
 #include "header.h"
 
-
 /* k번째 소수 (실버 2, 소수 판정)
 * https://www.acmicpc.net/problem/15965
 */
@@ -19,7 +18,6 @@ void func_15965() {
     }
 }
 
-
 /* 어린왕자 (실버 3)
 * https://www.acmicpc.net/problem/1004
 */
@@ -32,7 +30,6 @@ bool func_1004_isInCircle(pair<int, int> coord, int c1, int c2, int r) {
         return false;
     }
 }   
-
 
 void func_1004() {
     int test_case, n, cnt;

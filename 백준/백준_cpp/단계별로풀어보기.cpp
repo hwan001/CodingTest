@@ -1168,8 +1168,22 @@ void func_2447() {
 /* 하노이 탑 이동 순서
 * https://www.acmicpc.net/problem/11729
 */
-void func_11729() {
+int func_11729_hanoi(int n, int from, int to) {
+	if (n == 1){
+		cout << from << " " << to << "\n";
+		return 0;
+	}
+	func_11729_hanoi(n - 1, from, 6 - from - to);
+	cout << from << " " << to << "\n";
+	func_11729_hanoi(n - 1, 6 - from - to, to);
+}
 
+void func_11729() {
+	int n;
+	cin >> n;
+
+	cout << (1 << n) -1 << "\n"; 
+	func_11729_hanoi(n, 1, 3);
 }
 
 
