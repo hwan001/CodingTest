@@ -287,3 +287,51 @@ void func_1019() {
     cout << "\n답지 - ";
     func_1019_v3(n);
 }
+
+
+/* 숨바꼭질 (실버 1)
+* https://www.acmicpc.net/problem/1697
+*/
+void func_1697_bfs(int k, queue<int> q, int *visited) {
+    int now;
+
+    while (!q.empty()) {
+        now = q.front();
+        q.pop(); 
+        
+        //cout << "now : " << now << ", visited : " << visited[now] << "\n";
+
+        if (now == k) {
+            break;
+        }
+
+        if (visited[now - 1] == 0 && (now - 1) >= 0) {
+            visited[now - 1] = visited[now] + 1;
+            q.push(now-1);
+        }
+
+        if ( (now+1) < 100000 && visited[now + 1] == 0) {
+            visited[now + 1] = visited[now] + 1;
+            q.push(now+1);
+        }
+        
+        if ( (now * 2) <= 100000 && visited[now * 2] == 0) {
+                visited[now * 2] = visited[now] + 1;
+                q.push(now * 2);
+        }
+    }
+}
+
+void func_1697() {
+    int n, k;
+    cin >> n >> k;
+    int* visited = new int[100000];
+    memset(visited, 0, sizeof(int) * 100000);
+    queue<int> q;
+
+    q.push(n);
+    visited[n] = 1;
+    func_1697_bfs(k, q, visited);
+
+    cout << visited[k] - 1 << "\n";
+}

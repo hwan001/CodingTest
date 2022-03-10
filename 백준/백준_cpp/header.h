@@ -214,6 +214,8 @@ void func_7576(); // 토마토
 void func_15965(); // k번째 소수
 void func_1004(); // 어린왕자
 void func_1019(); // 책 페이지
+void func_1697(); // 숨바꼭질
+
 
 /* 
 *  2022 중앙대학교 CHAC Open Contest
