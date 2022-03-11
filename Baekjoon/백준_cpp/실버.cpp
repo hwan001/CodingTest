@@ -109,3 +109,24 @@ void func_1697() {
     cout << visited[k] - 1 << "\n";
 }
 
+/* 카드2 (실버 4)
+* https://www.acmicpc.net/problem/2164
+*/
+void func_2164() {
+    queue<int> q;
+    int n;
+
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        q.push(i);
+    }
+
+    while (q.size() > 1) {
+        q.pop();
+        q.push(q.front());
+        q.pop();
+    }
+
+    cout << q.front() << "\n";
+
+}

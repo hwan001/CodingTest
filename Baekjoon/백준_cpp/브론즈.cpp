@@ -41,9 +41,7 @@ void func_1009() {
     }
 }
 
-
-
-/* 검증수 (브론즈 5, 클래스)
+/* 검증수 (브론즈 5)
 * https://www.acmicpc.net/problem/2475
 */
 void func_2475() {
@@ -59,7 +57,7 @@ void func_2475() {
     cout << accumulate(input.begin(), input.end(), 0) % 10;
 }
 
-/* 음계 (브론즈 2, 클래스)
+/* 음계 (브론즈 2)
 * https://www.acmicpc.net/problem/2920
 */
 void func_2920() {
@@ -84,4 +82,52 @@ void func_2920() {
     else
         cout << "mixed\n";
 
+}
+
+/* 팰린드롬수 (브론즈 1)
+* https://www.acmicpc.net/problem/1259
+*/
+void func_1259() {
+    string a;
+    int len, tmp_left, tmp_right;
+    bool flag;
+
+    while (1) {
+        cin >> a;
+
+        flag = false;
+
+        if (stoi(a) == 0)
+            break;
+
+        len = a.length();
+        tmp_right = ceil(len / 2);
+        if (len % 2 == 0) {
+            tmp_left = tmp_right - 1;
+        }
+        else {
+            tmp_left = tmp_right;
+        }
+
+        for (int i = 0; i < len; i++) {
+            if (tmp_left < 0) break;
+
+            if (tmp_right >= len) break;
+
+            if (a[tmp_left] != a[tmp_right]) {
+                flag = false;
+                break;
+            }
+
+            if (a[tmp_left] == a[tmp_right]) {
+                flag = true;
+            }
+
+            tmp_left--;
+            tmp_right++;
+        }
+
+        if (flag) cout << "yes\n";
+        else cout << "no\n";
+    }
 }
