@@ -213,25 +213,115 @@ void func_4344(); // 평균은 넘겠지
 /* 정수 N개의 합
 * https://www.acmicpc.net/problem/15596
 */
-void func_15596() {
+ll func_15596_sum(vector<int>& a) {
+	long long ans = 0;
 
+	for (int i = 0; i < a.size(); i++) {
+		ans += a.at(i);
+	}
+
+	return ans;
+}
+void func_15596() {
+	int a;
+	vector<int> v;
+	cin >> a;
+	v.push_back(a);
+	cout << func_15596_sum(v);
 }
 
 /* 셀프 넘버
 * https://www.acmicpc.net/problem/4673
 */
-void func_4673() {
+int func_4673_selfnumber(int a) {
+	int digit = to_string(a).size(), tmp = 0, a_copy = a, sum = a;
+	int* arr = new int[digit];
 
+	for (int i = 0; i < digit; i++) {
+		tmp = pow(10, (digit - (i + 1)));
+		arr[i] = a_copy / tmp;
+		a_copy %= tmp;
+	}
+
+	for (int i = 0; i < digit; i++) {
+		sum += arr[i];
+	}
+
+	return sum;
+}
+
+void func_4673() {
+	int a = 10000;
+
+	cin.tie(NULL);
+	cin.sync_with_stdio(false);
+
+	int* arr = new int[a];
+	for (int i = 0; i < a; i++) {
+		arr[i] = 0;
+	}
+
+	for (int i = 0; i < a; i++) {
+		arr[func_4673_selfnumber(i) - 1]++;
+	}
+
+	for (int i = 0; i < a; i++) {
+		if (arr[i] == 0) {
+			cout << i + 1 << endl;
+		}
+	}
 }
 
 /* 한수
 * https://www.acmicpc.net/problem/1065
 */
-void func_1065() {
+bool func_1065_hansu(int a) {
+	bool is_flag = false;
+	int tmp, cnt = 0;
+	int digit = to_string(a).size();
 
+	if (digit > 2) {
+		int* arr = new int[digit];
+
+		for (int i = 0; i < digit; i++) {
+			tmp = pow(10, (digit - (i + 1)));
+			arr[i] = a / tmp;
+			a %= tmp;
+		}
+
+		int now_dif = 0;
+		int pre_dif = arr[0] - arr[1];
+
+		for (int i = 0; i < digit - 1; i++) {
+			now_dif = arr[i] - arr[i + 1];
+			if (now_dif == pre_dif) cnt++;
+			pre_dif = now_dif;
+		}
+
+		if (digit - 1 == cnt) {
+			is_flag = true;
+		}
+	}
+	else {
+		is_flag = true;
+	}
+	return is_flag;
 }
 
+void func_1065() {
+	int a = 0, cnt = 0;
 
+	cin.tie(NULL);
+	cin.sync_with_stdio(false);
+
+	cin >> a;
+
+	for (int i = 1; i <= a; i++) {
+		if (func_1065_hansu(i)) cnt++;
+	}
+
+	cout << cnt << endl;
+}
 
 
 /*
@@ -1780,9 +1870,55 @@ void func_1003() {
 /* 신나는 함수 실행
 * https://www.acmicpc.net/problem/9184
 */
-void func_9184() {
+int func_9184_w(int dp[51][51][51], int a, int b, int c) {
+	// a, b, c 중 하나라도 0보다 작거나 같으면 1
+	if (a <= 0 || b <= 0 || c <= 0) {
+		return 1;
+	}
 
+	//하나라도 20이상이면 20, 20, 20 호출		
+	if (a > 20 || b > 20 || c > 20){
+		return func_9184_w(dp, 20, 20, 20);
+	}
+
+	// 같은 변수는 한번만 초기화
+	if (dp[a][b][c] != 0) {
+		return dp[a][b][c];
+	}
+
+	if (a < b && b < c) { 
+		dp[a][b][c] = func_9184_w(dp, a, b, c - 1) + func_9184_w(dp, a, b - 1, c - 1) - func_9184_w(dp, a, b - 1, c);
+		//dp[a][b][c] = dp[a][b][c - 1] + dp[a][b - 1][c - 1] - dp[a][b-1][c];
+	}
+	else {
+		dp[a][b][c] = func_9184_w(dp, a - 1, b, c) + func_9184_w(dp, a - 1, b - 1, c) + func_9184_w(dp, a - 1, b, c - 1) - func_9184_w(dp, a - 1, b - 1, c - 1);
+		//dp[a][b][c] = dp[a-1][b][c] + dp[a-1][b-1][c] + dp[a-1][b][c-1] - dp[a-1][b-1][c-1];
+	}
+
+	return dp[a][b][c];
 }
+
+void func_9184() {
+	int a, b, c;
+	int dp[51][51][51] = {0, };
+
+	while (1) {
+		cin >> a >> b >> c;
+
+		if (a == -1 && b == -1 && c == -1) {
+			break;
+		}
+		else{
+			if (a <= 0 || b <= 0 || c <= 0) {
+				cout << "w(" << a << ", " << b << ", " << c << ") = 1\n";
+			}
+			else {
+				cout << "w(" << a << ", " << b << ", " << c << ") = " << func_9184_w(dp, a, b, c) << "\n";
+			}
+		}
+	}
+}
+
 
 /* 01타일 (실버 3)
 * https://www.acmicpc.net/problem/1904

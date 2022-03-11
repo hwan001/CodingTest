@@ -33,6 +33,12 @@
     <ClCompile Include="삼성SW역량테스트기출문제.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="골드.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="브론즈.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
