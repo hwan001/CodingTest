@@ -131,3 +131,40 @@ void func_1259() {
         else cout << "no\n";
     }
 }
+
+
+/* 이항 계수 (브론즈 1)
+* https://www.acmicpc.net/problem/11050
+*/
+int func_11050_factorial(int n) {
+    if (n <= 1) return 1;
+    return n * func_11050_factorial(n-1);
+}
+
+void func_11050() {
+    int n, k;
+    cin >> n >> k;
+
+    cout << func_11050_factorial(n) / (func_11050_factorial(n-k) * func_11050_factorial(k));
+}
+
+
+/* Hashing (브론즈 2)
+* https://www.acmicpc.net/problem/15829
+*/
+void func_15829() {
+    int str_len;
+    cin >> str_len;
+    string str;
+    cin >> str;
+
+    int a, r = 31, M = 1234567891;
+    ll sum = 0;
+
+    for (int i = 0; i < str_len; i++) {
+        a = (str[i] - 'a') + 1;
+        sum += a * pow(r, i);
+    }
+
+    cout << sum % M << "\n";
+}

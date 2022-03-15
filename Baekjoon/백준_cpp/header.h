@@ -12,6 +12,9 @@
 #include <stack> 
 #include <queue> 
 #include <numeric>
+#include <functional> 
+#include <locale>
+#include <cctype>
 
 /*
 * Namespace
@@ -33,7 +36,6 @@ int is_prime_number_sqrt(ll);
 bool *Sieve_of_Eratosthenes(ll);
 double const_pi();
 ll gcd_recusion(ll, ll);
-
 
 
 /*
@@ -214,6 +216,9 @@ void func_1009(); // 분산처리 (브론즈 3)
 void func_2475(); // 검증수 (브론즈 5)
 void func_2920(); // 음계 (브론즈 2)
 void func_1259(); // 팰린드롬수 (브론즈 1)
+void func_11050(); // 이항 계수1 (브론즈 1)
+void func_15829(); // Hashing (브론즈 2)
+
 /*
 *  실버 티어 문제 풀이
 */
@@ -221,6 +226,11 @@ void func_15965(); // k번째 소수
 void func_1004(); // 어린왕자 
 void func_1697(); // 숨바꼭질 (실버 1)
 void func_2164(); // 카드2 (실버 4)
+void func_11866(); // 요세푸스 문제 (실버 4)
+void func_18111(); // 마인크래프트 (실버 2)
+void func_10773(); // 제로 (실버 4)
+void func_9012(); // 괄호 (실버 4)
+void func_2609(); // 최대공약수와 최소공배수 (실버 5)
 
 /*
 *  골드 티어 문제 풀이

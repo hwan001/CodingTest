@@ -130,3 +130,384 @@ void func_2164() {
     cout << q.front() << "\n";
 
 }
+
+
+/*요세푸스 문제 (실버 4)
+* https://www.acmicpc.net/problem/11866
+*/
+void func_11866() {
+    int n, k, cnt;
+    queue<int> q;
+    
+    cin >> n >> k;
+    for (int i = 0; i < n; i++) {
+        q.push(i+1);
+    }
+
+    cout << "<";
+    cnt = 1;
+    while (!q.empty()) {
+        if (cnt % k != 0) {
+            q.push(q.front());
+            q.pop();
+            cnt++;
+        }
+        else {
+            if (q.size() == 1)
+                cout << q.front();
+            else
+                cout << q.front() << ", ";
+
+            q.pop();
+            cnt = 1;
+        }
+    }
+    cout << ">";
+}
+
+
+/* 마인크래프트 (실버 2)
+*  https://www.acmicpc.net/problem/18111
+*/
+void func_18111_v1() {
+    int n, m, inventory, height, time = 0;
+    double sum = 0;
+
+    cin >> n >> m >> inventory;
+
+    // 맵 입력
+    int** map = new int*[n];
+    for (int i = 0; i < n; i++) {
+        map[i] = new int[m];
+        for (int j = 0; j < m; j++) {
+            cin >> map[i][j];
+            sum += map[i][j];
+        }
+    }
+
+    // 전체 높이 결정 (인벤토리 기준)
+    if (inventory > 0) {
+        height = round(sum / (n * m));
+    }
+    else {
+        height = floor(sum / (n * m));
+    }
+    
+    // 땅 다듬기
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (map[i][j] == height)
+                continue;
+
+            if (map[i][j] > height) {
+                while (map[i][j] != height) {
+                    time += 2;
+                    map[i][j] -= 1;
+                    inventory++;
+                }
+            }
+            else {
+                while (map[i][j] != height) {
+                    time += 1;
+                    map[i][j] += 1;
+                    inventory--;
+                }
+            }
+
+        }
+    }
+
+    cout << time << " " << height << "\n";
+}
+
+int func_18111_getTime(int height, int n, int m, int inventory, int **map) {
+    int time = 0, tmp_map;
+    bool flag = true;
+
+    cout << "height : " << height << ", inven : " << inventory << " -> "; 
+    
+    // 블록 회수 (높이 낮추기)
+    for (int i = 0; i < n && flag; i++) {
+        for (int j = 0; j < m && flag; j++) {
+            tmp_map = map[i][j];
+            //cout << tmp_map << " ";
+
+            if (tmp_map == height)
+                continue;
+
+            // 높으면 회수
+            if (tmp_map > height) {
+                while (tmp_map != height) {
+                    time += 2;
+                    tmp_map -= 1;
+                    inventory++;
+                }
+            }
+        }
+    }
+    
+    // 블록 설치 (높이 높이기) - 부족하면 flag == false
+    for (int i = 0; i < n && flag; i++) {
+        for (int j = 0; j < m && flag; j++) {
+            tmp_map = map[i][j];
+            //cout << tmp_map << " ";
+
+            if (tmp_map == height)
+                continue;
+
+            if (tmp_map < height) {
+                while (tmp_map != height) {
+                    if (inventory > 0) {
+                        inventory--;
+                    }
+                    else {
+                        flag = false;
+                    }
+
+                    if (!flag)
+                        break;
+
+                    time += 1;
+                    tmp_map += 1;
+                }
+
+                if (!flag || tmp_map != height) {
+                    flag = false;
+                    cout << " inventory empty ";
+                    break;
+                }
+            }
+        }
+    }
+
+    if (!flag) {
+        time = 0;
+    }
+
+    cout << "time : " << time << "\n";
+    return time;
+}
+
+void func_18111_v3() {
+    int n, m, inventory, height=-1, time = 0, tmp, min = 2100000000, max=0;
+    double sum = 0;
+
+    cin >> n >> m >> inventory;
+
+    // 맵 입력
+    int** map = new int* [n];
+    for (int i = 0; i < n; i++) {
+        map[i] = new int[m];
+        for (int j = 0; j < m; j++) {
+            cin >> map[i][j];
+            // sum += map[i][j];
+            if (max < map[i][j]) {
+                max = map[i][j];
+            }
+        }
+    }
+    
+    for (int i = 0; i <= max; i++) {
+        tmp = func_18111_getTime(i, n, m, inventory, map);
+        //cout << " 중간결과 :  " << tmp << ", " << min;
+        
+        if (min >= tmp && tmp > 0) {
+            //cout << "- find \n";
+            // 동일한 시간이 있다면 높이가 높은 거 선택
+            if (min == tmp && height > i) continue;
+
+            min = tmp;
+            height = i;
+        }
+        else {
+            //cout << "\n";
+        }
+    }
+
+    if (min == 2100000000 || height == -1) {
+        min = 0;
+        height = 0;
+    }
+
+    cout << min << " " << height << "\n";
+}
+
+void func_18111() {
+    int n, m, inventory, min = 2100000000, max = 0;
+    int height = -1, time = 0, tmp_block, time_min= 2100000000;
+    double sum = 0;
+
+    cin >> n >> m >> inventory;
+
+    // 맵 입력
+    int** map = new int* [n];
+    for (int i = 0; i < n; i++) {
+        map[i] = new int[m];
+        for (int j = 0; j < m; j++) {
+            cin >> map[i][j];
+
+            if (max < map[i][j]) {
+                max = map[i][j];
+            }
+
+            if (min > map[i][j]) {
+                min = map[i][j];
+            }
+        }
+    }
+
+    //cout << "min : " << min << ", max : " << max << "\n";
+
+    int build_block, remove_block;
+
+    // 맵의 최소 블록 높이부터 가장 높은 블록까지 반복
+    for (int h = min; h <= max; h++) {
+        build_block = 0;
+        remove_block = 0;
+
+        // h에서의 회수할 블록, 설치할 블록 개수 구하기
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                tmp_block = map[i][j];
+
+                // 현재 블록이 h보다 낮으면 설치할 블록 개수 누적
+                if (h > tmp_block) {
+                    build_block += h - tmp_block;
+                }
+
+                // 현재 블록이 h 보다 높으면 회수할 블록 개수 누적
+                if (h < tmp_block) {
+                    remove_block += tmp_block - h;
+                }
+            }
+        }
+
+        //cout << "h : " << h << ", build_block : " << build_block << ", remove_block : " << remove_block << " ";
+
+        // 설치할 블록 개수가 인벤토리와 회수한 블록의합보다 부족한지 검사
+        if (build_block <= remove_block + inventory) {
+            // 시간 계산하기
+            time = remove_block * 2 + build_block;
+
+            // 계산한 시간이 최소 값이면 기록
+            if (time_min >= time) {
+                // 계산한 시간이 최소 값보다 작거나 같고, 높이가 h보다 높으면 기록
+                if (height > h) continue;
+                time_min = time;
+                height = h;
+                //cout << "-> " << height << ", time_min : " << time_min << "";
+            }
+        }
+
+        //cout << "\n";
+    }
+
+
+    cout << time_min << " " << height << "\n";
+}
+
+
+/* 제로 (실버 4)
+*  https://www.acmicpc.net/problem/10773
+*/
+void func_10773() {
+    int test_case, tmp, sum=0;
+    cin >> test_case;
+
+    stack<int> stack_zero;
+
+    for (int i = 0; i < test_case; i++) {
+        cin >> tmp;
+        if (tmp==0) {
+            stack_zero.pop();
+        }
+        else {
+            stack_zero.push(tmp);
+        }
+    }
+    
+    while (!stack_zero.empty()) {
+        sum += stack_zero.top();
+        stack_zero.pop();
+    }
+
+    cout << sum << "\n";
+}
+
+/* 최대공약수와 최소공배수 (실버 5)
+*  https://www.acmicpc.net/problem/2609
+*/
+int func_2609_gcd(int a, int b) {
+    if (a % b == 0) {
+        return b;
+    }
+    else {
+        return func_2609_gcd(b, a % b);
+    }
+}
+
+int func_2609_lcm(int a, int b) {
+    return (a * b) / func_2609_gcd(a, b);
+}
+
+void func_2609(){
+    int a, b;
+    cin >> a >> b;
+
+    cout << func_2609_gcd (a, b) << "\n";
+    cout << func_2609_lcm(a, b) << "\n";
+}
+
+/* 괄호 (실버 4)
+*  https://www.acmicpc.net/problem/9012
+*/
+void func_9012() {
+    int test_case;
+    cin >> test_case;
+
+    string str;
+    map<char, int> m;
+    vector<char> v;
+    bool flag;
+    int count;
+
+    for (int i = 0; i < test_case; i++) {
+        m.clear();
+        v.clear();
+            
+        cin >> str;
+        for (int j = 0; j < str.length(); j++) {
+            m[str[j]]++;
+            v.push_back(str[j]);
+        }
+
+        if (m['('] == m[')']) {
+            count = 0;
+            flag = false;
+            //cout << "same\n";
+            // 열린상태면 +1, 닫힌 상태면 -1, 값이 0보다 작아지면 no, 다돌았는데 0이 아니면 no
+            for (auto v_tmp : v) {
+                //cout << v_tmp << ", " << count << "\n";
+                if (v_tmp == '(') {
+                    count++;
+                }
+                if (v_tmp == ')') {
+                    count--;
+                }
+                if (count < 0) {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag && count == 0) {
+                cout << "YES\n";
+                continue; 
+            }
+
+        }
+
+        cout << "NO\n";
+    }
+}
+
