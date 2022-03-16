@@ -41,6 +41,7 @@ void func_1009() {
     }
 }
 
+
 /* 검증수 (브론즈 5)
 * https://www.acmicpc.net/problem/2475
 */
@@ -56,6 +57,7 @@ void func_2475() {
 
     cout << accumulate(input.begin(), input.end(), 0) % 10;
 }
+
 
 /* 음계 (브론즈 2)
 * https://www.acmicpc.net/problem/2920
@@ -83,6 +85,7 @@ void func_2920() {
         cout << "mixed\n";
 
 }
+
 
 /* 팰린드롬수 (브론즈 1)
 * https://www.acmicpc.net/problem/1259
@@ -152,7 +155,8 @@ void func_11050() {
 /* Hashing (브론즈 2)
 * https://www.acmicpc.net/problem/15829
 */
-void func_15829() {
+// 13 또는 14자리 이상은 못구함, 자료형 한계인듯
+void func_15829_50() {
     int str_len;
     cin >> str_len;
     string str;
@@ -168,3 +172,36 @@ void func_15829() {
 
     cout << sum % M << "\n";
 }
+
+
+void func_15829() {
+    int str_len;
+    cin >> str_len;
+
+    string str;
+    cin >> str;
+
+    ll r, sum = 0, a;
+    int M = 1234567891;
+
+    for (int i = 0; i < str_len; i++) {
+        a = (str[i] - 'a') + 1;
+
+        r = 1;
+        for (int j = 0; j < i; j++) {
+            r *= 31;
+            r %= M;
+        }
+
+        sum += a * r;
+        sum %= M;
+    }
+    
+    cout << sum;
+}
+/*
+50
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+25
+aaaaaaaaaaaaaaaaaaaaaaaaa
+*/

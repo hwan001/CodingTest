@@ -2537,7 +2537,7 @@ public:
 	bool visited;
 };
 
-int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map, int** direction) {
+int func_1012_bfs_v1(int n, int m, queue<func_1012_node> q , func_1012_node **_map, int** direction) {
 	int a=0, _x, _y;
 	func_1012_node now;
 
@@ -2583,7 +2583,7 @@ int func_1012_bfs(int n, int m, queue<func_1012_node> q , func_1012_node **_map,
 	return a;
 }
 
-void func_1012_backup() {
+void func_1012_v1() {
 	int test_case, tmp_res;
 	int n, m, k;
 	int u, v;
@@ -2694,7 +2694,7 @@ void func_1012_backup() {
 					// 단독노드가 아니면 bfs
 					q.push(_map[i][j]);
 
-					tmp_res = func_1012_bfs(n, m, q, _map, _direction);
+					tmp_res = func_1012_bfs_v1(n, m, q, _map, _direction);
 					if (tmp_res != 0) {
 						cnt++;
 						//cout << "visit : " << tmp_res  << " find : " << cnt << "\n";
@@ -2733,9 +2733,108 @@ void func_1012_backup() {
 
 void func_1012() {
 	int test_case;
+	int n, m, k;
+	int u, v;
+	int _x, _y;
+	pair<int, int> dir[4] = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} }; // 상, 우, 하, 좌
+	pair<int, int> tmp_q;
+	int graph_count = 0;
+
+	int** _map;
+	int** _visit;
+	queue<pair<int, int>> q;
+
+
 	cin >> test_case;
+	for (int a = 0; a < test_case; a++) {
+		cin >> m >> n >> k;
+
+		// Map 생성 및 초기화
+		_map = new int* [n];
+		_visit = new int* [n];
+
+		for (int i = 0; i < n; i++) {
+			_map[i] = new int[m];
+			_visit[i] = new int[m];
+
+			memset(_map[i], 0, sizeof(int) * m);
+			memset(_visit[i], 0, sizeof(int) * m);
+
+		}
+
+		// Map 업데이트
+		for (int i = 0; i < k; i++) {
+			cin >> u >> v;
+			_map[v][u] = 1;
+		}
+
+		graph_count = 0;
 
 
+		// Map 탐색
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+
+				// 지도에서 현재 좌표가 1이고 방문한 적이 없으면 현재 좌표를 q에 등록하고 방문 처리
+				if (_map[i][j] == 1 && _visit[i][j] != 1) {
+					//cout << "시작 노드 추가 : {" << i << ", " << j << "}\n";
+					q.push({i, j});
+					_visit[i][j] = 1;
+					
+					graph_count++;
+				}
+
+				// q에 값이 있으면
+				while (!q.empty()) {
+					tmp_q = q.front();
+					q.pop();
+					
+					// 현재 좌표에서 인접한 4방향 좌표를 검사, 위부터 시계방향
+					for (int i = 0; i < 4; i++) {
+						_x = tmp_q.first + dir[i].first;
+						_y = tmp_q.second + dir[i].second;
+
+						// 경계선 검사
+						if (_x >= n || _x < 0)
+							continue;
+
+						if (_y >= m || _y < 0) 
+							continue;
+
+						// 값 검사
+						if (_map[_x][_y] == 0)
+							continue;
+						
+						// 방문여부 검사
+						if (_visit[_x][_y] == 1)
+							continue;
+
+						// 방문기록 남기고 다음 작업대상에 추가
+						_visit[_x][_y] = 1;
+						q.push({_x, _y});
+					}
+				
+				}
+				
+
+				//// 맵 출력
+				//for (int i = 0; i < n; i++) {
+				//	for (int j = 0; j < m; j++) {
+				//		cout << _visit[i][j];
+				//	}	
+				//	cout << "\n";
+				//}
+			}
+		}
+
+		cout << graph_count << "\n";
+
+		// 메모리 해제
+		for (int i = 0; i < n; i++) {
+			free(_map[i]);
+			free(_visit[i]);
+		}
+	}
 }
 
 
@@ -2906,3 +3005,4 @@ void func_7576() {
 void func_7569() {
 
 }
+

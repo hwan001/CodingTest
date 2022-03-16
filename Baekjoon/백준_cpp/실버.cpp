@@ -434,6 +434,7 @@ void func_10773() {
     cout << sum << "\n";
 }
 
+
 /* 최대공약수와 최소공배수 (실버 5)
 *  https://www.acmicpc.net/problem/2609
 */
@@ -457,6 +458,7 @@ void func_2609(){
     cout << func_2609_gcd (a, b) << "\n";
     cout << func_2609_lcm(a, b) << "\n";
 }
+
 
 /* 괄호 (실버 4)
 *  https://www.acmicpc.net/problem/9012
@@ -508,6 +510,64 @@ void func_9012() {
         }
 
         cout << "NO\n";
+    }
+}
+
+
+
+/* 큐 2 (실버 4)
+*  https://www.acmicpc.net/problem/9012
+*/
+void func_18258() {
+    int n, num;
+    cin >> n;
+    
+    string cmd;
+    queue<int> q;
+
+    for (int i = 0; i <= n; i++) {
+        cin >> cmd;
+
+        if (cmd == "push") {
+            cin >> num;
+            q.push(num);
+        }
+        else if (cmd == "pop") {
+            if (q.size() > 0) {
+                cout << q.front() << "\n";
+                q.pop();
+            }
+            else {
+                cout << "-1\n";
+            }
+        }
+        else if (cmd == "front") {
+            if (q.size() > 0) {
+                cout << q.front() << "\n";
+            }
+            else {
+                cout << "-1\n";
+            }
+        }
+        else if (cmd == "back") {
+            if (q.size() > 0) {
+                cout << q.back() << "\n";
+            }
+            else {
+                cout << "-1\n";
+            }
+        }
+        else if (cmd == "empty") {
+            if (q.empty()) {
+                cout << "1\n";
+            }
+            else {
+                cout << "0\n";
+            }
+        }
+        else if (cmd == "size") {
+            cout << q.size() << "\n";
+        }
     }
 }
 
