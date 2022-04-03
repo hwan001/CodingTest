@@ -225,3 +225,158 @@ void func_1019() {
     cout << "\n답지 - ";
     func_1019_v3(n);
 }
+
+
+
+
+/* 적록색약 (골드 5)
+* https://www.acmicpc.net/problem/10026
+*/
+
+void func_10026_printmap(void** _map, int n, int flag) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (!flag)
+                cout << (char **)_map[i][j];
+            else
+                cout << (int **)_map[i][j];
+
+        }
+        cout << "\n";
+    }
+
+    cout << "\n";
+}
+
+void func_10026_bfs(queue<pair<int, int>> q, char **_map, int **visited, int visit_value, int n) {
+    pair<int, int> tmp_coord;
+    int _x, _y;
+    char tmp_color;
+
+    int direct[4][2] = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
+
+    // 좌표 받아서 인접한 같은 값 좌표의 방문 여부를 판단하고, 값이 같고 방문을 안했으면 방문여부를 구분값으로 초기화하고 큐에 추가
+    while (!q.empty()) {
+        tmp_coord = q.front();
+        tmp_color = _map[tmp_coord.first][tmp_coord.second];
+        q.pop();
+
+        // 시계방향 인접 노드 검사
+        for (int i = 0; i < 4; i++) {
+            _x = tmp_coord.first + direct[i][0];
+            _y = tmp_coord.second + direct[i][1];
+
+            // 좌표 검사
+            if (_x >= n || _x < 0)
+                continue;
+            if (_y >= n || _y < 0)
+                continue;
+
+            // 방문 검사 (방문했으면 스킵)
+            if (visited[_x][_y] != 0)
+                continue;
+
+            // 값 검사 (값이 다르면 스킵)
+            if (_map[_x][_y] != tmp_color)
+                continue;
+
+            // 위에 다 통과하면 방문 여부에 현재 value 넣고, q에 해당 좌표값 넣기
+            visited[_x][_y] = visit_value;
+            q.push({_x, _y});
+        }
+    }
+}
+
+void func_10026() {
+    queue<pair<int, int>> q;
+    int visit_value, map_max, map_rg_max;
+    
+    int n;
+    cin >> n;
+    
+    // 일반지도 입력 받고 색맹지도도 생성
+    char** map_origin = new char* [n];
+    char** map_rg = new char* [n];
+    int** map_visit = new int* [n];
+    int** map_rg_visit = new int* [n];
+
+    for (int i = 0; i < n; i++) {
+        map_origin[i] = new char[n];
+        map_rg[i] = new char[n];
+        map_visit[i] = new int[n];
+        map_rg_visit[i] = new int[n];
+
+        memset(map_visit[i], 0, sizeof(int) * n);
+        memset(map_rg_visit[i], 0, sizeof(int) * n);
+    }
+
+    // map 초기화
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++) {
+            cin >> map_origin[i][j];
+            
+            // 색맹용 지도 생성
+            if (map_origin[i][j] == 'R')
+                map_rg[i][j] = 'G';
+            else
+                map_rg[i][j] = map_origin[i][j];
+        }
+    }
+
+    func_10026_printmap(map_origin, n, 0);
+    func_10026_printmap(map_rg, n, 0);
+
+    // 각 좌표를 전부 방문할때 까지 한번씩 bfs 때리기(어차피 방문했으면 안돔)
+    // bfs 한번 끝날때마다 visit_value++;
+    visit_value = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            // 현재 좌표의 구역이 분류되지 않았으면 q에 추가
+            if (map_visit[i][j] == 0) {
+                q.push({i, j});
+                visit_value++;
+            }
+
+            func_10026_bfs(q, map_origin, map_visit, visit_value, n);
+        }
+    }
+
+
+    while (!q.empty()) {
+        q.pop();
+    }
+
+
+    // 색맹용 맵
+    // 각 좌표를 전부 방문할때 까지 한번씩 bfs 때리기(어차피 방문했으면 안돔)
+    // bfs 한번 끝날때마다 visit_value++;
+    visit_value = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (map_rg_visit[i][j] == 0) {
+                q.push({ i, j });
+                visit_value++;
+            }
+
+            func_10026_bfs(q, map_rg, map_rg_visit, visit_value, n);
+        }
+    }
+
+    func_10026_printmap((char **)map_visit, n, 1);
+    func_10026_printmap((char **)map_rg_visit, n, 1);
+
+    map_max = 0;
+    map_rg_max = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (map_max < map_visit[i][j]) {
+                map_max = map_visit[i][j];
+            }
+
+            if (map_rg_max < map_rg_visit[i][j]) {
+                map_rg_max = map_rg_visit[i][j];
+            }
+        }
+    }
+    cout << map_max << " " << map_rg_max << "\n";
+}

@@ -577,5 +577,36 @@ void func_18258() {
 *  https://www.acmicpc.net/problem/1463
 */
 void func_1463() {
+    int min, num;
+
+    cin >> num;
+
+    int* dp = new int[num+2];
+    memset(dp, 0, sizeof(int) * (num+2));
     
+    for (int i = 2; i <= num; i++) {
+        dp[i]++;
+        min = 0;
+
+        if (min > dp[i - 1] || min == 0)
+            min = dp[i - 1];
+
+        if (i % 2 == 0) {
+            if (min > dp[i / 2])
+                min = dp[i / 2];
+        }
+
+        if (i % 3 == 0) {
+            if (min > dp[i / 3])
+                min = dp[i / 3];
+        }
+
+        dp[i] += min;
+    }
+
+    cout << dp[num] << "\n";
 }
+
+/* 1로 만들기 (실버 3)
+*  https://www.acmicpc.net/problem/1463
+*/
