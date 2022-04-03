@@ -571,3 +571,11 @@ void func_18258() {
     }
 }
 
+
+
+/* 1로 만들기 (실버 3)
+*  https://www.acmicpc.net/problem/1463
+*/
+void func_1463() {
+    
+}

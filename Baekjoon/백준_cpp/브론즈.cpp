@@ -199,9 +199,41 @@ void func_15829() {
     
     cout << sum;
 }
-/*
-50
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-25
-aaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+/* 명령 프롬프트 (브론즈 1)
+*  https://www.acmicpc.net/problem/1032
 */
+void func_1032() {
+    int test_case, cnt;
+    string tmp, res = "";
+    vector<string> v;
+
+    cin >> test_case;
+
+    for (int i = 0; i < test_case; i++) {
+        cin >> tmp;
+        v.push_back(tmp);
+    }
+
+    tmp = v.at(0);
+    for (int i = 0; i < tmp.length(); i++) {
+        cnt = 0;
+
+        for (int j = 0; j < test_case; j++) {
+            if (v.at(j)[i] == tmp[i]) {
+                cnt++;
+            }
+        }
+
+        if (cnt == test_case) {
+            res += tmp[i];
+        }
+        else {
+            res += "?";
+        }
+    }
+
+    cout << res << "\n";
+
+}
