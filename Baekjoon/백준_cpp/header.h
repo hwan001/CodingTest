@@ -16,10 +16,12 @@
 #include <locale>
 #include <cctype>
 
+
 /*
 * Namespace
 */
 using namespace std;
+
 
 /*
 * Type Define
@@ -57,6 +59,7 @@ void func_2588(); // 곱셈
 void func_10926(); // ??!
 void func_18108(); // 1998년생인 내가 태국에서는 2541년생?!
 
+
 /*
 *  if문
 */
@@ -69,6 +72,7 @@ void func_2884(); // 알람 시계
 // 2022-02-16 새로 추가됨
 void func_2525(); // 오븐 시계
 void func_2480(); // 주사위 세개
+
 
 /*
 *  for문
@@ -191,12 +195,14 @@ void func_1904(); // 01타일 (실버 3)
 void func_9461(); // 파도반 수열 (실버 3)
 void func_12865(); // 평범한 배낭 (골드5)
 
+
 /*
 *  그리디 알고리즘
 */
 void func_11047(); // 동전 0
 void func_1931(); // 회의실 배정
 void func_11399(); // ATM
+
 
 /*
 *   DFS와 BFS
@@ -209,6 +215,7 @@ void func_1012(); // 유기농 배추
 void func_2178(); // 미로 탐색
 void func_7576(); // 토마토
 
+
 /*
 *  브론즈 티어 문제 풀이
 */
@@ -219,6 +226,7 @@ void func_1259(); // 팰린드롬수 (브론즈 1)
 void func_11050(); // 이항 계수1 (브론즈 1)
 void func_15829(); // Hashing (브론즈 2)
 void func_1032(); // 명령 프롬프트 (브론즈 1)
+
 
 /*
 *  실버 티어 문제 풀이
@@ -234,6 +242,8 @@ void func_9012(); // 괄호 (실버 4)
 void func_2609(); // 최대공약수와 최소공배수 (실버 5)
 void func_18258(); // 큐 2 (실버 4)
 void func_1463(); // 1로 만들기 (실버 3)
+void func_1920(); // 수 찾기 (실버 4)
+void func_4963(); // 섬의 개수 (실버 2)
 
 
 /*
@@ -241,6 +251,7 @@ void func_1463(); // 1로 만들기 (실버 3)
 */
 void func_1019(); // 책 페이지 (골드 1)
 void func_10026(); // 적록색약 (골드 5)
+
 
 /* 
 *  2022 중앙대학교 CHAC Open Contest

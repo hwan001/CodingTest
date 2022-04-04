@@ -233,14 +233,25 @@ void func_1019() {
 * https://www.acmicpc.net/problem/10026
 */
 
-void func_10026_printmap(void** _map, int n, int flag) {
+void func_10026_printmap(string memo, char **_map, int n) {
+    cout << memo << "\n";
+
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            if (!flag)
-                cout << (char **)_map[i][j];
-            else
-                cout << (int **)_map[i][j];
+                cout << _map[i][j];
+        }
+        cout << "\n";
+    }
 
+    cout << "\n";
+}
+
+void func_10026_printmap_int(string memo, int** _map, int n) {
+    cout << memo << "\n";
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << _map[i][j];
         }
         cout << "\n";
     }
@@ -323,8 +334,9 @@ void func_10026() {
         }
     }
 
-    func_10026_printmap(map_origin, n, 0);
-    func_10026_printmap(map_rg, n, 0);
+    
+    func_10026_printmap("map_origin", map_origin, n);
+    func_10026_printmap("map_rg", map_rg, n);
 
     // 각 좌표를 전부 방문할때 까지 한번씩 bfs 때리기(어차피 방문했으면 안돔)
     // bfs 한번 끝날때마다 visit_value++;
@@ -334,7 +346,7 @@ void func_10026() {
             // 현재 좌표의 구역이 분류되지 않았으면 q에 추가
             if (map_visit[i][j] == 0) {
                 q.push({i, j});
-                visit_value++;
+                map_visit[i][j] = ++visit_value;
             }
 
             func_10026_bfs(q, map_origin, map_visit, visit_value, n);
@@ -346,6 +358,8 @@ void func_10026() {
         q.pop();
     }
 
+    func_10026_printmap_int("origin_visit_1", map_visit, n);
+    func_10026_printmap_int("rg_visit_1", map_rg_visit, n);
 
     // 색맹용 맵
     // 각 좌표를 전부 방문할때 까지 한번씩 bfs 때리기(어차피 방문했으면 안돔)
@@ -355,15 +369,15 @@ void func_10026() {
         for (int j = 0; j < n; j++) {
             if (map_rg_visit[i][j] == 0) {
                 q.push({ i, j });
-                visit_value++;
+                map_rg_visit[i][j] = ++visit_value;
             }
 
             func_10026_bfs(q, map_rg, map_rg_visit, visit_value, n);
         }
     }
 
-    func_10026_printmap((char **)map_visit, n, 1);
-    func_10026_printmap((char **)map_rg_visit, n, 1);
+    func_10026_printmap_int("origin_visit_2", map_visit, n);
+    func_10026_printmap_int("rg_visit_2", map_rg_visit, n);
 
     map_max = 0;
     map_rg_max = 0;

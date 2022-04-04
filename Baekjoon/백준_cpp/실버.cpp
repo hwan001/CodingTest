@@ -607,6 +607,161 @@ void func_1463() {
     cout << dp[num] << "\n";
 }
 
-/* 1로 만들기 (실버 3)
-*  https://www.acmicpc.net/problem/1463
+/* 수 찾기 (실버 4)
+*  https://www.acmicpc.net/problem/1920
 */
+
+vector<int> func_1920_An;
+
+int func_1920_isExist(int find_value) {
+    int res = 0;
+    int start_index = 0, end_index = func_1920_An.size();
+    int index = (int)floor((start_index + end_index) / 2);
+
+    while(start_index < end_index) {
+        // 같으면 탈출
+        if (find_value == func_1920_An.at(index)) {
+            res = 1;
+            //cout << "start : " << start_index << ", end : " << end_index << ", index : " << index << ", value : " << v.at(index) << "\n";
+            break;
+        }
+
+        if (start_index == index)
+        {  
+            break;
+        }
+
+        // 찾을 값이 현재 인덱스 값 보다 크면 start를 현재인덱스로 초기화
+        if (find_value > func_1920_An.at(index)) {
+            start_index = index;
+        }
+
+        // 작으면 end를 index로 초기화
+        if (find_value < func_1920_An.at(index)) {
+            end_index = index;
+        }
+
+        // 인덱스 조절
+        index = (int)floor((start_index + end_index) / 2);
+
+        //cout << "start : " << start_index << ", end : " << end_index << ", index : " << index << ", value : " << v.at(index) << "\n";
+    }
+
+    return res;
+}
+
+void func_1920() {
+    int n, m, tmp;
+    vector<int> Am;
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    // An 받기
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> tmp;
+        func_1920_An.push_back(tmp);
+    }
+
+    sort(func_1920_An.begin(), func_1920_An.end());
+
+    // Am 받기
+    cin >> m;
+    for (int i = 0; i < m; i++) {
+        cin >> tmp;
+        Am.push_back(tmp);
+    }
+
+    // 찾기
+    for (auto m_tmp : Am) {
+        cout << func_1920_isExist(m_tmp) << "\n";
+    }
+}
+
+
+
+/* 섬의 개수 (실버 2)
+*  https://www.acmicpc.net/problem/4963
+*/
+
+void func_4963() {
+    int w=1, h=1;
+    queue<pair<int, int>> q;
+    int direc[8][2] = { {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1} };
+    int visit_value, _x, _y;
+    pair<int, int> front;
+
+    while (true) {
+        cin >> w >> h;
+
+        if (w + h == 0)
+            break;
+
+        int** _map = new int* [h];
+        int** visit = new int* [h];
+        for (int i = 0; i < h; i++) {
+            _map[i] = new int[w];
+            visit[i] = new int[w];
+            memset(visit[i], 0, sizeof(int) * w);
+        }
+
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                cin >> _map[i][j];
+            }
+        }
+
+        visit_value = 0;
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                if (visit[i][j] == 0 && _map[i][j] == 1) {
+                    q.push({ i, j });
+                    visit[i][j] = ++visit_value;
+                }
+
+                //bfs
+                while (!q.empty()) {
+                    front = q.front();
+                    q.pop();
+
+                    // 시계방향으로 8방향 조사
+                    for (int i = 0; i < 8; i++) {
+                        _x = front.first + direc[i][0];
+                        _y = front.second + direc[i][1];
+
+                        if (_x >= h || _x < 0) {
+                            continue;
+                        }
+
+                        if (_y >= w || _y < 0) {
+                            continue;
+                        }
+
+                        if (visit[_x][_y] != 0) {
+                            continue;
+                        }
+
+                        if (_map[_x][_y] != 1) {
+                            continue;
+                        }
+
+                        visit[_x][_y] = visit_value;
+                        q.push({ _x, _y });
+                    }
+                }
+            }
+        }
+
+        cout << visit_value << "\n";
+
+        while (!q.empty()) {
+            q.pop();
+        }
+
+        for (int i = 0; i < h; i++) {
+            delete(_map[i]);
+            delete(visit[i]);
+        }
+    }
+}
