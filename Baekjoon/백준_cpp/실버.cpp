@@ -607,8 +607,10 @@ void func_1463() {
     cout << dp[num] << "\n";
 }
 
+
 /* 수 찾기 (실버 4)
 *  https://www.acmicpc.net/problem/1920
+*  정렬, 이진 탐색 구현
 */
 
 vector<int> func_1920_An;
@@ -791,3 +793,74 @@ void func_11726() {
 
     cout << dp[n] << "\n";
 }
+
+
+/* 연결 요소의 개수 (실버 2)
+*  https://www.acmicpc.net/problem/11724
+*/
+
+// dfs 메모리 초과
+void func_11724_dfs(int node, bool* visit, map<int, vector<int>> _map) {
+    visit[node] = true;
+
+    for (auto tmp : _map[node]) {
+        if(visit[tmp] == 0)
+            func_11724_dfs(tmp, visit, _map);
+    }
+}
+
+void func_11724_bfs(bool* visit, map<int, vector<int>> _map, queue<int> q) {
+    int tmp_node;
+
+    while (!q.empty()) {
+        tmp_node = q.front();
+        q.pop();
+
+        for (auto tmp : _map[tmp_node]) {
+            if (!visit[tmp]) {
+                visit[tmp] = 1;
+                q.push(tmp);
+            }
+        }
+    }
+}
+
+void func_11724() {
+    int n, m, u, v, cnt;
+    queue<int> q;
+
+    cin >> n >> m;
+
+    map<int, vector<int>> _map;
+    bool* visit = new bool[n+1];
+    memset(visit, 0, sizeof(bool) * (n+1));
+
+    for (int i = 0; i < m; i++) {
+        cin >> u >> v;
+        _map[u].push_back(v);
+        _map[v].push_back(u);
+    }
+
+    /*cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        if (visit[i] == 0) {
+            func_11724_dfs(i, visit, _map); 
+            cnt++;
+        }
+    }*/
+
+    cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        if (visit[i] == 0) {
+            q.push(i);
+            visit[i] = 1;
+            cnt++;
+            func_11724_bfs(visit, _map, q);
+        }
+    }
+
+
+    cout << cnt << "\n";
+}
+
+

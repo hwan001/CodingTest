@@ -394,3 +394,14 @@ void func_10026() {
     }
     cout << map_max << " " << map_rg_max << "\n";
 }
+
+
+
+/* 벽 부수고 이동하기 (골드 4)
+* https://www.acmicpc.net/problem/2206
+*/
+
+void func_2206() {
+
+
+}

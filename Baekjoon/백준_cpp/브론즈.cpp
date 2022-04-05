@@ -155,7 +155,6 @@ void func_11050() {
 /* Hashing (브론즈 2)
 * https://www.acmicpc.net/problem/15829
 */
-// 13 또는 14자리 이상은 못구함, 자료형 한계인듯
 void func_15829_50() {
     int str_len;
     cin >> str_len;
@@ -172,7 +171,6 @@ void func_15829_50() {
 
     cout << sum % M << "\n";
 }
-
 
 void func_15829() {
     int str_len;
@@ -237,3 +235,5 @@ void func_1032() {
     cout << res << "\n";
 
 }
+
+

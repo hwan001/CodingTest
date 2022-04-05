@@ -245,17 +245,21 @@ void func_1463(); // 1로 만들기 (실버 3)
 void func_1920(); // 수 찾기 (실버 4)
 void func_4963(); // 섬의 개수 (실버 2)
 void func_11726(); // 2 * N 타일링 (실버 2)
+void func_11724(); // 연결 요소의 개수 (실버 2)
+
 
 /*
 *  골드 티어 문제 풀이
 */
 void func_1019(); // 책 페이지 (골드 1)
 void func_10026(); // 적록색약 (골드 5)
+void func_2206(); // 벽부수고 이동하기 (골드4)
 
 
 /* 
 *  2022 중앙대학교 CHAC Open Contest
 *  https://www.acmicpc.net/contest/view/767
+*  대회 문제들은 문제번호가 할당되어짐 -> 재정리 필요
 */
 void func_CHAC_A(); // 정답
 void func_CHAC_B(); // 시간초과, 오답
