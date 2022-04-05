@@ -765,3 +765,29 @@ void func_4963() {
         }
     }
 }
+
+
+
+/* 2 * N 타일링 (실버 2)
+*  https://www.acmicpc.net/problem/11726
+*/
+void func_11726() {
+    int n;
+    cin >> n;
+
+    int* dp = new int[n+1];
+    dp[0] = 0;
+
+    if (n > 0) {
+        dp[1] = 1;
+    }
+
+    if (n > 1) {
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 10007;
+        }
+    }
+
+    cout << dp[n] << "\n";
+}
