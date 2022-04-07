@@ -400,8 +400,166 @@ void func_10026() {
 /* 벽 부수고 이동하기 (골드 4)
 * https://www.acmicpc.net/problem/2206
 */
-
 void func_2206() {
+    int n, m;
+    cin >> n >> m;
+    
+    int** _map = new int* [n];
+    int** visit = new int* [n];
+    for (int i = 0; i < n; i++) {
+        _map[i] = new int[m];
+        visit[i] = new int[m];
+        memset(visit[i], 0, sizeof(int) * m);
+    }
 
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> _map[i][j];
+        }
+    }
 
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cout << _map[i][j];
+        }
+        cout << "\n";
+    }
+
+    
 }
+
+
+
+/*
+5 5
+0 3 0 3 2
+0 0 0 0 5
+0 0 0 0 0
+0 0 0 0 5
+0 0 6 0 0
+
+0 3 8 3 2
+
+
+6 6
+0 3 2 0 1 0
+0 0 1 0 0 0
+0 0 0 1 5 4
+0 0 0 0 0 2
+0 0 0 0 0 0
+0 3 0 0 0 6
+
+0 3 2 3 1 5
+*/
+
+/* 최단경로 (골드 5)
+* https://www.acmicpc.net/problem/1753
+*/
+
+// 인접행렬 다익스트라 -> 4% 메모리 초과
+void func_1753_dijkstra_1(int start, int num, int ** graph, int* visit, int max) {
+    int current;
+
+    int* d = new int[num];
+    for (int i = 0; i < num; i++) {
+        d[i] = max;
+    }
+    d[start - 1] = 0;
+
+    queue<int> q;
+    visit[start - 1] = 1;
+    q.push(start - 1);
+
+    while (!q.empty()) {
+        current = q.front();
+        q.pop();
+
+        for (int i = 0; i < num; i++) {
+            if (graph[current][i] != 0) {
+                if (d[i] > d[current] + graph[current][i]) {
+                    d[i] = d[current] + graph[current][i];
+                }
+
+                if (visit[i] == 0) {
+                    visit[i] = 1;
+                    q.push(i);
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < num; i++) {
+        if (d[i] != max) {
+            cout << d[i] << " ";
+        }
+        else {
+            cout << "INF ";
+        }
+    }
+    cout << "\n";
+}
+
+// 인접리스트 다익스트라 -> 
+void func_1753_dijkstra(int start, int num, vector<pair<int, int>> *graph, int* visit, int max) {
+    int current;
+
+    int* d = new int[num];
+    for (int i = 0; i < num; i++) {
+        d[i] = max;
+    }
+    d[start - 1] = 0;
+
+    queue<int> q;
+    visit[start - 1] = 1;
+    q.push(start - 1);
+
+    while (!q.empty()) {
+        current = q.front();
+        q.pop();
+
+        // 인접 리스트에 포함된 인접 행렬값 다 불러오기
+        for (auto graph_tmp : graph) {
+            if (graph[i] != 0) {
+                if (d[i] > d[current] + graph[current][i]) {
+                    d[i] = d[current] + graph[current][i];
+                }
+
+                if (visit[i] == 0) {
+                    visit[i] = 1;
+                    q.push(i);
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < num; i++) {
+        if (d[i] != max) {
+            cout << d[i] << " ";
+        }
+        else {
+            cout << "INF ";
+        }
+    }
+    cout << "\n";
+}
+
+void func_1753() {
+    int n, m;
+    cin >> n >> m;
+
+    // 인접 리스트 형식
+    vector<pair<int, int>>* adjlist = new vector<pair<int, int>> [n];;
+
+    int* visit = new int[n + 1];
+    memset(visit, 0, sizeof(int) * (n + 1));
+
+    int u, v, a, start_node;
+    cin >> start_node;
+    for (int i = 0; i < m; i++) {
+        cin >> u >> v >> a;
+        adjlist[u - 1].push_back({v - 1, a});
+    }
+
+    func_1753_dijkstra(start_node, n, adjlist, visit, 99999999);
+}
+
