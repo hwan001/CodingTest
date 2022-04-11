@@ -397,7 +397,7 @@ void func_10026() {
 
 
 
-/* 벽 부수고 이동하기 (골드 4)
+/* 벽 부수고 이동하기 (골드 4) - 작성 중 
 * https://www.acmicpc.net/problem/2206
 */
 void func_2206() {
@@ -428,6 +428,30 @@ void func_2206() {
 }
 
 
+/* 최단경로 (골드 5)
+* https://www.acmicpc.net/problem/1753
+
+6 10
+1
+1 2 3
+1 3 2
+1 5 1
+2 3 1
+3 4 1
+3 5 5
+3 6 4
+4 6 2
+6 2 3
+6 5 6
+
+5 5
+1
+1 2 9
+1 3 1
+2 5 1
+3 4 1
+4 2 1
+*/
 
 /*
 5 5
@@ -451,12 +475,19 @@ void func_2206() {
 0 3 2 3 1 5
 */
 
-/* 최단경로 (골드 5)
-* https://www.acmicpc.net/problem/1753
-*/
+void func_1753_print_distance(int num, int* d, int max) {
+    for (int i = 0; i < num; i++) {
+        if (d[i] != max) {
+            cout << d[i] << " ";
+        }
+        else {
+            cout << "INF ";
+        }
+    }
+    cout << "\n";
+}
 
-// 인접행렬 다익스트라 -> 4% 메모리 초과
-void func_1753_dijkstra_1(int start, int num, int ** graph, int* visit, int max) {
+void func_1753_dijkstra_first(int start, int num, int ** graph, int* visit, int max) {
     int current;
 
     int* d = new int[num];
@@ -498,8 +529,7 @@ void func_1753_dijkstra_1(int start, int num, int ** graph, int* visit, int max)
     cout << "\n";
 }
 
-// 인접리스트 다익스트라 -> 
-void func_1753_dijkstra(int start, int num, vector<pair<int, int>> *graph, int* visit, int max) {
+void func_1753_dijkstra_bfs(int start, int num, vector<pair<int, int>> *graph, int* visit, int max) {
     pair<int, int> current;
     
     // 최단거리 리스트 생성 및 초기화
@@ -511,7 +541,8 @@ void func_1753_dijkstra(int start, int num, vector<pair<int, int>> *graph, int* 
 
 
     queue<pair<int, int>> q;
-    
+    int min = max, minIndex = 0;
+
     // 시작 노드 방문 처리와 큐 등록, 시작 노드에서 시작노드로 가는 가중치는 없으므로 0 입력
     visit[start - 1] = 1;
     q.push({start - 1, 0});
@@ -552,12 +583,34 @@ void func_1753_dijkstra(int start, int num, vector<pair<int, int>> *graph, int* 
     cout << "\n";
 }
 
+void func_1753_dijkstra_dfs(int node, vector<pair<int, int>>* graph, int* visit, int *d) {
+    // 방문 여부 체크
+    visit[node] = 1;
+    cout << "current node ; " << (char)(node+'a') << "\n";
+
+    // 갱신 여부확인
+    for (auto tmp : graph[node]) {
+        cout << (char)(tmp.first + 'a') << " " << tmp.second << " " << visit[node] << "\n";
+        
+        if (d[tmp.first] > d[node] + tmp.second) {
+            d[tmp.first] = d[node] + tmp.second;
+        }
+
+        if (!visit[tmp.first]) {
+            func_1753_dijkstra_dfs(tmp.first, graph, visit, d);
+        }
+    }
+
+
+}
+
 bool func_1753_cmp(const pair<int, int>& a, const pair<int, int>& b)
 {
     return a.second < b.second;
 }
 
-void func_1753() {
+// 인접리스트 다익스트라 bfs -> 4% 틀림
+void func_1753_adjlist_bfs() {
     int n, m;
     cin >> n >> m;
 
@@ -586,11 +639,11 @@ void func_1753() {
         cout << "\n";
     }
 
-    func_1753_dijkstra(start_node, n, adjlist, visit, 99999999);
+    func_1753_dijkstra_bfs(start_node, n, adjlist, visit, 99999999);
 }
 
-
-void func_1753_1() {
+// 인접행렬 다익스트라 -> 4% 메모리 초과
+void func_1753_first_adjmatrix() {
     int n, m;
     cin >> n >> m;
 
@@ -610,29 +663,177 @@ void func_1753_1() {
         _map[u - 1][v - 1] = a;
     }
 
-    func_1753_dijkstra_1(start_node, n, _map, visit2, 99999999);
+    func_1753_dijkstra_first(start_node, n, _map, visit2, 99999999);
 }
 
-/*
-6 10
-1
-1 2 3
-1 3 2
-1 5 1
-2 3 1
-3 4 1
-3 5 5
-3 6 4
-4 6 2
-6 2 3
-6 5 6
+// 인접리스트 다익스트라 dfs -> 4% 틀림
+void func_1753_adjlist_dfs() {
+    int n, m, max = 99999999;
+    cin >> n >> m;
 
-5 5
-1
-1 2 9
-1 3 1
-2 5 1
-3 4 1
-4 2 1
+    vector<pair<int, int>>* adjlist = new vector<pair<int, int>>[n];;
 
-*/
+    int* visit = new int[n + 1];
+    memset(visit, 0, sizeof(int) * (n + 1));
+
+    int u, v, a, start_node;
+    cin >> start_node;
+    for (int i = 0; i < m; i++) {
+        cin >> u >> v >> a;
+        adjlist[u - 1].push_back({ v - 1, a });
+        //adjlist[v - 1].push_back({ u - 1, a });
+    }
+
+    for (int i = 0; i < n; i++) {
+        //sort(adjlist[i].begin(), adjlist[i].end(), func_1753_cmp);
+        sort(adjlist[i].begin(), adjlist[i].end());
+        reverse(adjlist[i].begin(), adjlist[i].end());
+
+        /*
+        cout << (char)('a' + i) << " : ";
+        for (auto adjlist_tmp : adjlist[i]) {
+            cout << "{" << (char)('a' + adjlist_tmp.first) << ", " << adjlist_tmp.second << "} ";
+        }
+        cout << "\n";
+        */
+    }
+
+    // 최단거리 리스트 생성 및 초기화
+    int* d = new int[n];
+    for (int i = 0; i < n; i++) {
+        d[i] = max;
+    }
+    d[start_node - 1] = 0;
+
+    func_1753_dijkstra_dfs(start_node-1, adjlist, visit, d);
+
+    func_1753_print_distance(n, d, max);
+}
+
+// O(V^2) 방식 구현 -> 4% 시간 초과
+void func_1753_old() {
+    int n, m, start, max = 99999999;
+    int min = max, current;
+    int u, v, a;
+
+    cin >> n >> m;
+
+    int* visit = new int[n+1];
+    memset(visit, 0, sizeof(int) * (n+1));
+
+    int* d = new int[n];
+    for (int i = 0; i < n; i++) {
+        d[i] = max;
+    }
+
+    vector<pair<int, int>>* adjlist = new vector<pair<int, int>>[n];
+
+    cin >> start;
+    if(start > 0) start--;
+    d[start] = 0;
+
+    // 입력
+    for (int i = 0; i < m; i++) {
+        cin >> u >> v >> a;
+        adjlist[u - 1].push_back({ v - 1, a });
+    }
+
+    // 시작노드의 인접 노드 거리로 갱신
+    for (auto tmp : adjlist[start]) {
+        d[tmp.first] = tmp.second;
+    }
+
+    visit[start] = 1;
+
+    // 다익스트라
+    for (int i = 0; i < n - 1; i++) {
+        min = max;
+        current = 0;
+
+        for (int j = 0; j < n;j++) {
+            if (d[j] < min && !visit[j]) {
+                min = d[j];
+                current = j;
+            }
+        }
+        
+        visit[current] = 1;
+
+        for (auto cur : adjlist[current]){
+            if (!visit[cur.first]) {
+                if (d[current] + cur.second < d[cur.first]) {
+                    d[cur.first] = d[current] + cur.second;
+                }
+            }
+        }   
+    }
+
+    for (int i = 0; i < n; i++) {
+        cout << d[i] << " ";
+    }
+    cout << "\n";
+}
+
+void func_1753_dijkstra_pq(int start, vector<pair<int, int>>* graph, int *d) {
+    int _current, _next, _distance, _nextDistance;
+
+    d[start] = 0;
+    priority_queue<pair<int, int>> pq;
+    pq.push({start, 0});
+    
+    while (!pq.empty()) {
+        _current = pq.top().second;
+        _distance = -pq.top().first;
+
+        pq.pop();
+
+        if (d[_current] < _distance)
+            continue;
+
+        for (int i = 0; i < graph[_current].size(); i++) {
+            _next = graph[_current][i].second;
+            _nextDistance = _distance + graph[_current][i].first;
+
+            if (_nextDistance < d[_next]) {
+                d[_next] = _nextDistance;
+                pq.push({-_nextDistance, _next});
+            }
+        }
+    }
+}
+
+// 우선순위 큐 방식 구현
+void func_1753() {
+    int n, m, start, max = 99999999;
+    int u, v, a;
+
+    cin >> n >> m;
+
+    int* d = new int[n];
+    for (int i = 0; i < n; i++) {
+        d[i] = max;
+    }
+
+    vector<pair<int, int>>* adjlist = new vector<pair<int, int>>[n];
+
+    cin >> start;
+    if (start > 0) start--;
+
+    for (int i = 0; i < m; i++) {
+        cin >> u >> v >> a;
+        adjlist[u - 1].push_back({ a, v - 1 });
+    }
+
+    func_1753_dijkstra_pq(start, adjlist, d);
+
+
+    for (int i = 0; i < n; i++) {
+        if (d[i] == max) {
+            cout << "INF ";
+        }
+        else {
+            cout << d[i] << " ";
+        }
+    }
+    cout << "\n";
+}
