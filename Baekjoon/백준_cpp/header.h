@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cstring>
+#include <string>
 #include <algorithm> 
 #include <map> 
 #include <utility> 
@@ -246,7 +247,8 @@ void func_1920(); // 수 찾기 (실버 4)
 void func_4963(); // 섬의 개수 (실버 2)
 void func_11726(); // 2 * N 타일링 (실버 2)
 void func_11724(); // 연결 요소의 개수 (실버 2)
-
+void func_10816(); // 숫자 카드 2 (실버 4)
+void func_4949(); // 균형잡힌 세상 (실버 4)
 
 /*
 *  골드 티어 문제 풀이

@@ -864,3 +864,78 @@ void func_11724() {
 }
 
 
+
+/* 숫자 카드 2 (실버 4)
+*  https://www.acmicpc.net/problem/10816
+*/
+void func_10816() {
+    int n, m, tmp;
+    map<int, int> n_count;
+    vector<int> vm;
+
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cin >> tmp;
+        n_count[tmp]++;
+    }
+
+    cin >> m;
+
+    for (int i = 0; i < m; i++) {
+        cin >> tmp;
+
+        cout << n_count[tmp] << " ";
+        //vm.push_back(tmp);
+    }
+}
+
+/* 균형잡힌 세상 (실버 4)
+*  https://www.acmicpc.net/problem/4949
+*/
+
+void func_4949() {
+    string str, tmp, rep1 = "()", rep2="[]";
+    int size;
+
+    do {
+        getline(cin, tmp);
+
+        if (tmp == ".") {
+            break;
+        }
+
+        for (int i = 0; i < tmp.length(); i++) {
+            if (tmp[i] == '(' or tmp[i] == ')') {
+                str += tmp[i];
+            }
+
+            if (tmp[i] == '[' or tmp[i] == ']') {
+                str += tmp[i];
+            }
+        }
+        
+        //cout << "str1 : " << str1 << ", str2 : " << str2;
+        size = str.length();
+
+        for (int i = 0; i < size; i++) {
+            if (str.find(rep1) != string::npos) {
+                str.replace(str.find(rep1), rep1.length(), "");
+            }
+            if (str.find(rep2) != string::npos) {
+                str.replace(str.find(rep2), rep2.length(), "");
+            }
+        }
+
+        //cout << "-> str1 : " << str1 << ", str2 : " << str2 << "\n";
+        if (str.length() > 0) {
+            cout << "no\n";
+        }
+        else {
+            cout << "yes\n";
+        }
+
+        str = "";
+        tmp = "";
+    } while (tmp != ".");
+}
