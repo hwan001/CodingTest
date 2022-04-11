@@ -425,7 +425,6 @@ void func_2206() {
         cout << "\n";
     }
 
-    
 }
 
 
@@ -501,37 +500,47 @@ void func_1753_dijkstra_1(int start, int num, int ** graph, int* visit, int max)
 
 // 인접리스트 다익스트라 -> 
 void func_1753_dijkstra(int start, int num, vector<pair<int, int>> *graph, int* visit, int max) {
-    int current;
-
+    pair<int, int> current;
+    
+    // 최단거리 리스트 생성 및 초기화
     int* d = new int[num];
     for (int i = 0; i < num; i++) {
         d[i] = max;
     }
     d[start - 1] = 0;
 
-    queue<int> q;
+
+    queue<pair<int, int>> q;
+    
+    // 시작 노드 방문 처리와 큐 등록, 시작 노드에서 시작노드로 가는 가중치는 없으므로 0 입력
     visit[start - 1] = 1;
-    q.push(start - 1);
+    q.push({start - 1, 0});
+
 
     while (!q.empty()) {
         current = q.front();
         q.pop();
 
-        // 인접 리스트에 포함된 인접 행렬값 다 불러오기
-        for (auto graph_tmp : graph) {
-            if (graph[i] != 0) {
-                if (d[i] > d[current] + graph[current][i]) {
-                    d[i] = d[current] + graph[current][i];
-                }
+        // 현재 작업 노드에서 인접한 노드의 경로 값을 조사해야함
+        // 현재 노드와 인접한 노드를 모두 불러오기 
+        for (auto adj_node : graph[current.first]) {
+            // 인접한 노드로 가는 경로 값과 기존에 계산된 거리값을 비교
+            // 기존 계산된 거리 값 : d[adj_node.first]
+            // 해당 리스트의 비용을 기존 값과 비교하고 더 짧으면 갱신
+            if (d[adj_node.first] > d[current.first] + adj_node.second) {
+                // start에서 i노드의 최단거리 = 현재 노드까지 오는 최단거리 + 인접 노드로 가는 비용
+                d[adj_node.first] = d[current.first] + adj_node.second;
+            }
 
-                if (visit[i] == 0) {
-                    visit[i] = 1;
-                    q.push(i);
-                }
+            // 방문하지 않았으면 방문 여부 체크 후 큐에 등록
+            if (visit[adj_node.first] == 0) {
+                visit[adj_node.first] = 1;
+                q.push(adj_node);
             }
         }
     }
 
+    // 출력
     for (int i = 0; i < num; i++) {
         if (d[i] != max) {
             cout << d[i] << " ";
@@ -541,6 +550,11 @@ void func_1753_dijkstra(int start, int num, vector<pair<int, int>> *graph, int* 
         }
     }
     cout << "\n";
+}
+
+bool func_1753_cmp(const pair<int, int>& a, const pair<int, int>& b)
+{
+    return a.second < b.second;
 }
 
 void func_1753() {
@@ -555,11 +569,70 @@ void func_1753() {
 
     int u, v, a, start_node;
     cin >> start_node;
-    for (int i = 0; i < m; i++) {
+    for (int i = 0; i < m; i++) { 
         cin >> u >> v >> a;
         adjlist[u - 1].push_back({v - 1, a});
+        adjlist[v - 1].push_back({ u - 1, a });
+    }
+    
+    for (int i = 0; i < n; i++) {
+        sort(adjlist[i].begin(), adjlist[i].end(), func_1753_cmp);
+        //reverse(adjlist[i].begin(), adjlist[i].end());
+
+        cout << (char)('a' + i) << " : ";
+        for (auto adjlist_tmp : adjlist[i]) {
+            cout << "{" << (char)('a' + adjlist_tmp.first) << ", " << adjlist_tmp.second << "} ";
+        }
+        cout << "\n";
     }
 
     func_1753_dijkstra(start_node, n, adjlist, visit, 99999999);
 }
 
+
+void func_1753_1() {
+    int n, m;
+    cin >> n >> m;
+
+    int** _map = new int* [n];
+    for (int i = 0; i < n; i++) {
+        _map[i] = new int[n];
+        memset(_map[i], 0, sizeof(int) * n);
+    }
+
+    int* visit2 = new int[n + 1];
+    memset(visit2, 0, sizeof(int) * (n + 1));
+
+    int u, v, a, start_node;
+    cin >> start_node;
+    for (int i = 0; i < m; i++) {
+        cin >> u >> v >> a;
+        _map[u - 1][v - 1] = a;
+    }
+
+    func_1753_dijkstra_1(start_node, n, _map, visit2, 99999999);
+}
+
+/*
+6 10
+1
+1 2 3
+1 3 2
+1 5 1
+2 3 1
+3 4 1
+3 5 5
+3 6 4
+4 6 2
+6 2 3
+6 5 6
+
+5 5
+1
+1 2 9
+1 3 1
+2 5 1
+3 4 1
+4 2 1
+
+*/
