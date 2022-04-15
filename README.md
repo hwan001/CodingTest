@@ -2,7 +2,8 @@
 코딩테스트 문제풀이 코드 정리용 Repository 입니다.   
 <br/>
 **[사용 언어 요약]**
-- 백준 : C++
+- Baekjoon : C++
+- Algorithm : C, C++
 <br/>
 
 **[IDE 및 환경 설정]**
