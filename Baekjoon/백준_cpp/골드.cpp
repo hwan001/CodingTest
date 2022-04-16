@@ -837,3 +837,20 @@ void func_1753() {
     }
     cout << "\n";
 }
+
+
+/* 벽 부수고 이동하기 (골드 2)
+*  https://www.acmicpc.net/problem/1300
+*/
+void func_1300() {
+    // 이거 정렬 떔에 안됨 
+    int n, k, i, j;
+    
+    cin >> n >> k;
+
+    i = (int)(k / n) + 1;
+    j = (int)(k % n) + 1;
+
+    cout << i * j;
+    
+}   

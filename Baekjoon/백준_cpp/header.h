@@ -257,7 +257,8 @@ void func_1019(); // 책 페이지 (골드 1)
 void func_10026(); // 적록색약 (골드 5)
 void func_2206(); // 벽부수고 이동하기 (골드4)
 void func_1753(); // 최단 거리 (골드 5)
-
+void func_1300(); // K번째의 수 (골드 2)
+ 
 /* 
 *  2022 중앙대학교 CHAC Open Contest
 *  https://www.acmicpc.net/contest/view/767
