@@ -1123,8 +1123,172 @@ void func_10866() {
 *  https://www.acmicpc.net/problem/1966
 */
 void func_1966() {
-    int n;
+    int cnt, n, m, tmp, max = 0;
+    queue<pair<int, int>> q; // 우선순위, 들어온 순서(인덱스)
+    vector<int> v;
+    vector<pair<int, int>> res;
 
-    cin >> n;
+    cin >> cnt;
     
+    for (int i = 0; i < cnt; i++) {
+        cin >> n >> m;
+
+        // 입력
+        for (int j = 0; j < n; j++) {
+            cin >> tmp;
+            if (tmp > max) max = tmp;
+            q.push({tmp, j});
+            v.push_back(tmp);
+        }   
+
+        // 인쇄 순서로 res 생성
+        while(!q.empty()) {
+            // 오름차순하고 젤 뒤에거 불러와서 pop
+            sort(v.begin(), v.end());
+            max = v.back();
+            v.pop_back();
+
+            // max 가중치가 나올때까지 큐 재배치
+            while (q.front().first != max) {
+                q.push(q.front());
+                q.pop();
+            }
+
+            // 인쇄
+            res.push_back(q.front());
+            q.pop();
+        }
+
+        // 해당 문서 찾기
+        for (int j = 0; j < res.size(); j++) {
+            if (res.at(j).second == m) {
+                cout << j+1 << "\n";
+                break;
+            }
+        }
+
+
+        // Clear
+        v.clear();
+        res.clear();
+        while (!q.empty()) {
+            q.pop();
+        }
+    }
+
+}
+
+
+/* 스택 수열 (실버 3)
+*  https://www.acmicpc.net/problem/1874
+*/
+void func_1874() {
+    int n, tmp, num_cur, flag;
+    cin >> n;
+
+    vector<int> num_v, stack_v, target_v;
+    vector<char> res_v;
+
+    for (int i = 0; i < n; i++) {
+        cin >> tmp;
+        target_v.push_back(tmp);
+        num_v.push_back(i + 1);
+    }
+
+    reverse(num_v.begin(), num_v.end());
+    
+    // target_arr를 달성하기 위한 오름차순 
+    for (auto tmp_target : target_v) {
+        //cout << "current target : " << tmp_target << " - " << num_v.size() << ", " << stack_v.size()<<"\n";
+        flag = 0;
+
+        if (num_v.size() == 0 && stack_v.size() == 0) {
+            res_v.clear();
+            break;
+        }
+
+        // 현재 타겟이 Stack의 top과 같으면 -하고 다음 걸로
+        if (!stack_v.empty()) {
+            if (tmp_target == stack_v.back()) {
+                stack_v.pop_back();
+                res_v.push_back('-');
+                flag = 1;
+                continue;
+            }
+        }
+
+        while (true) {
+            // num_v 가 비어있지 않으면 하나씩 stack에 추가
+            if (!num_v.empty()) {
+                num_cur = num_v.back();
+                stack_v.push_back(num_cur);
+                res_v.push_back('+');
+                num_v.pop_back();
+
+                // target과 num에서 가져온게 같으면 탈출
+                if (tmp_target == num_cur) {
+                    stack_v.pop_back();
+                    res_v.push_back('-');
+                    flag = 1;
+                    break;
+                }
+                // 다르면 같을 때 까지 계속 추가
+            }
+            // num_v가 비어있으면 (더 이상 가져올 게 없으면)
+            else {
+
+                if (stack_v.empty())
+                    break;
+
+                // 스택에서 찾기
+                while (!stack_v.empty()) {
+                    // stack back이 target이랑 같으면
+                    if (tmp_target == stack_v.back()) {
+                        stack_v.pop_back();
+                        res_v.push_back('-');
+                        flag = 1;
+                        break;
+                    }
+                    // 다르면 또 pop하고 비교
+                    else {
+                        stack_v.pop_back();
+                    }
+                }
+
+                // 스택 다 비우고 못찾았으면 NO
+                if (!flag) {
+                    res_v.clear();
+                    break;
+                }
+            }
+        }
+        //cout << "target end\n";
+    }
+
+    if (res_v.empty()) {
+        cout << "NO\n";
+    }
+    else {
+        for (auto tmp_res : res_v) {
+            cout << tmp_res << "\n";
+        }
+    }
+
+}
+
+
+/* 랜선 자르기 (실버 3)
+*  https://www.acmicpc.net/problem/1654
+*/
+void func_1654() {
+
+}
+
+
+/* 나무 자르기 (실버 3)
+*  https://www.acmicpc.net/problem/2805
+*/
+
+void func_2805() {
+
 }
