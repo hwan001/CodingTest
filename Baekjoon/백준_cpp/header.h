@@ -3,6 +3,10 @@
 */
 #include <iostream>
 #include <vector>
+#include <stack> 
+#include <queue> 
+#include <deque> 
+
 #include <cstring>
 #include <string>
 #include <algorithm> 
@@ -10,8 +14,6 @@
 #include <utility> 
 #include <sstream> 
 #include <cmath> 
-#include <stack> 
-#include <queue> 
 #include <numeric>
 #include <functional> 
 #include <locale>
@@ -249,6 +251,11 @@ void func_11726(); // 2 * N 타일링 (실버 2)
 void func_11724(); // 연결 요소의 개수 (실버 2)
 void func_10816(); // 숫자 카드 2 (실버 4)
 void func_4949(); // 균형잡힌 세상 (실버 4)
+void func_10828(); // 스택 (실버 4)
+void func_10845(); // 큐 (실버 4)
+void func_10866(); // 덱 (실버 4)
+void func_1966(); // 프린터 큐 (실버 3)
+
 
 /*
 *  골드 티어 문제 풀이
@@ -259,6 +266,7 @@ void func_2206(); // 벽부수고 이동하기 (골드4)
 void func_1753(); // 최단 거리 (골드 5)
 void func_1300(); // K번째의 수 (골드 2)
  
+
 /* 
 *  2022 중앙대학교 CHAC Open Contest
 *  https://www.acmicpc.net/contest/view/767

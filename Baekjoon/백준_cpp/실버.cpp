@@ -939,3 +939,192 @@ void func_4949() {
         tmp = "";
     } while (tmp != ".");
 }
+
+
+/* 스택 (실버 4)
+*  https://www.acmicpc.net/problem/10828
+*/
+void func_10828() {
+    int n, num;
+    cin >> n;
+
+    string cmd;
+    stack<int> st;
+
+    for (int i = 0; i < n; i++) {
+        cin >> cmd;
+
+        if (cmd == "push") {
+            cin >> num;
+            st.push(num);
+        }
+        else if (cmd == "pop") {
+            if (st.empty()) {
+                cout << "-1\n";
+            }
+            else {
+                cout << st.top() << "\n";
+                st.pop();
+            }
+        }
+        else if (cmd == "top") {
+            if (st.empty()) {
+                cout << "-1\n";
+            }
+            else {
+                cout << st.top() << "\n";
+            }
+        }
+        else if (cmd == "empty") {
+            if (st.empty()) {
+                cout << "1\n";
+            }
+            else {
+                cout << "0\n";
+            }
+        }
+        else if (cmd == "size") {
+            cout << st.size() << "\n";
+        }
+    }
+
+    while (!st.empty()) {
+        st.pop();
+    }
+}
+
+/* 큐 (실버 4)
+*  https://www.acmicpc.net/problem/10845
+*/
+void func_10845() {
+    int n, num;
+    cin >> n;
+
+    string cmd;
+    queue<int> q;
+
+    for (int i = 0; i < n; i++) {
+        cin >> cmd;
+
+        if (cmd == "push") {
+            cin >> num;
+            q.push(num);
+        }
+        else if (cmd == "pop") {
+            if (q.size() > 0) {
+                cout << q.front() << "\n";
+                q.pop();
+            }
+            else {
+                cout << "-1\n";
+            }
+        }
+        else if (cmd == "front") {
+            if (q.size() > 0) {
+                cout << q.front() << "\n";
+            }
+            else {
+                cout << "-1\n";
+            }
+        }
+        else if (cmd == "back") {
+            if (q.size() > 0) {
+                cout << q.back() << "\n";
+            }
+            else {
+                cout << "-1\n";
+            }
+        }
+        else if (cmd == "empty") {
+            if (q.empty()) {
+                cout << "1\n";
+            }
+            else {
+                cout << "0\n";
+            }
+        }
+        else if (cmd == "size") {
+            cout << q.size() << "\n";
+        }
+    }
+}
+
+
+/* 덱 (실버 4)
+*  https://www.acmicpc.net/problem/10866
+*/
+void func_10866() {
+    int n, num;
+    cin >> n;
+
+    string cmd;
+    deque<int> dq;
+
+    for (int i = 0; i < n; i++) {
+        cin >> cmd;
+
+        if (cmd == "push_front") {
+            cin >> num;
+            dq.push_front(num);
+        }
+        else if (cmd == "push_back") {
+            cin >> num;
+            dq.push_back(num);
+        }
+        else if (cmd == "pop_front") {
+            if (dq.empty()) {
+                cout << "-1\n";
+            }
+            else {
+                cout << dq.front() << "\n";
+                dq.pop_front();
+            }
+        }
+        else if (cmd == "pop_back") {
+            if (dq.empty()) {
+                cout << "-1\n";
+            }
+            else {
+                cout << dq.back() << "\n";
+                dq.pop_back();
+            }
+        }
+        else if (cmd == "front") {
+            if (dq.size() > 0) {
+                cout << dq.front() << "\n";
+            }
+            else {
+                cout << "-1\n";
+            }
+        }
+        else if (cmd == "back") {
+            if (dq.size() > 0) {
+                cout << dq.back() << "\n";
+            }
+            else {
+                cout << "-1\n";
+            }
+        }
+        else if (cmd == "empty") {
+            if (dq.empty()) {
+                cout << "1\n";
+            }
+            else {
+                cout << "0\n";
+            }
+        }
+        else if (cmd == "size") {
+            cout << dq.size() << "\n";
+        }
+    }
+}
+
+/* 프린터 큐 (실버 3)
+*  https://www.acmicpc.net/problem/1966
+*/
+void func_1966() {
+    int n;
+
+    cin >> n;
+    
+}

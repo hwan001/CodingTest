@@ -1,9 +1,10 @@
 #include "header.h"
 
-void (*func)() = func_1300;
+void (*func)() = func_10866;
 
 int main() {
 	while(1) func();
+
 	return 0;
 }
 
