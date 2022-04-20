@@ -131,7 +131,6 @@ void func_2164() {
 
 }
 
-
 /*요세푸스 문제 (실버 4)
 * https://www.acmicpc.net/problem/11866
 */
@@ -164,7 +163,6 @@ void func_11866() {
     }
     cout << ">";
 }
-
 
 /* 마인크래프트 (실버 2)
 *  https://www.acmicpc.net/problem/18111
@@ -406,7 +404,6 @@ void func_18111() {
     cout << time_min << " " << height << "\n";
 }
 
-
 /* 제로 (실버 4)
 *  https://www.acmicpc.net/problem/10773
 */
@@ -434,7 +431,6 @@ void func_10773() {
     cout << sum << "\n";
 }
 
-
 /* 최대공약수와 최소공배수 (실버 5)
 *  https://www.acmicpc.net/problem/2609
 */
@@ -458,7 +454,6 @@ void func_2609(){
     cout << func_2609_gcd (a, b) << "\n";
     cout << func_2609_lcm(a, b) << "\n";
 }
-
 
 /* 괄호 (실버 4)
 *  https://www.acmicpc.net/problem/9012
@@ -512,8 +507,6 @@ void func_9012() {
         cout << "NO\n";
     }
 }
-
-
 
 /* 큐 2 (실버 4)
 *  https://www.acmicpc.net/problem/9012
@@ -571,8 +564,6 @@ void func_18258() {
     }
 }
 
-
-
 /* 1로 만들기 (실버 3)
 *  https://www.acmicpc.net/problem/1463
 */
@@ -607,12 +598,10 @@ void func_1463() {
     cout << dp[num] << "\n";
 }
 
-
 /* 수 찾기 (실버 4)
 *  https://www.acmicpc.net/problem/1920
 *  정렬, 이진 탐색 구현
 */
-
 vector<int> func_1920_An;
 
 int func_1920_isExist(int find_value) {
@@ -680,8 +669,6 @@ void func_1920() {
         cout << func_1920_isExist(m_tmp) << "\n";
     }
 }
-
-
 
 /* 섬의 개수 (실버 2)
 *  https://www.acmicpc.net/problem/4963
@@ -768,8 +755,6 @@ void func_4963() {
     }
 }
 
-
-
 /* 2 * N 타일링 (실버 2)
 *  https://www.acmicpc.net/problem/11726
 */
@@ -793,7 +778,6 @@ void func_11726() {
 
     cout << dp[n] << "\n";
 }
-
 
 /* 연결 요소의 개수 (실버 2)
 *  https://www.acmicpc.net/problem/11724
@@ -864,7 +848,6 @@ void func_11724() {
 }
 
 
-
 /* 숫자 카드 2 (실버 4)
 *  https://www.acmicpc.net/problem/10816
 */
@@ -893,7 +876,6 @@ void func_10816() {
 /* 균형잡힌 세상 (실버 4)
 *  https://www.acmicpc.net/problem/4949
 */
-
 void func_4949() {
     string str, tmp, rep1 = "()", rep2="[]";
     int size;
@@ -939,7 +921,6 @@ void func_4949() {
         tmp = "";
     } while (tmp != ".");
 }
-
 
 /* 스택 (실버 4)
 *  https://www.acmicpc.net/problem/10828
@@ -1048,7 +1029,6 @@ void func_10845() {
         }
     }
 }
-
 
 /* 덱 (실버 4)
 *  https://www.acmicpc.net/problem/10866
@@ -1178,7 +1158,6 @@ void func_1966() {
 
 }
 
-
 /* 스택 수열 (실버 3)
 *  https://www.acmicpc.net/problem/1874
 */
@@ -1276,19 +1255,94 @@ void func_1874() {
 
 }
 
-
 /* 랜선 자르기 (실버 3)
 *  https://www.acmicpc.net/problem/1654
 */
 void func_1654() {
+    unsigned int n, k, right = 0, left = 1, mid, sum, max=0;
 
+    cin >> n >> k;
+
+    unsigned int * arr = new unsigned int[n];
+
+    // 입력
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+
+        if (arr[i] > right) {
+            right = arr[i];
+        }
+    }
+
+    // 이분 탐색
+    while (left <= right) {
+        mid = ((right + left) / 2);
+        sum = 0;
+        //cout << mid << "\n";
+
+        for (int i = 0; i < n; i++) {
+            // 랜선의 길이의 몫들의 합
+            sum += (int)(arr[i] / mid);
+        }
+        //cout << mid << "\n";
+
+        if (sum >= k) {
+            left = mid + 1;
+        }
+
+        if (sum < k) {
+            right = mid - 1;
+        }
+
+    }
+
+    cout << right << "\n";
+    
 }
-
 
 /* 나무 자르기 (실버 3)
 *  https://www.acmicpc.net/problem/2805
 */
-
 void func_2805() {
+    long long n, m, right = 0, left = 1, h, sum;
+
+    cin >> n >> m;
+
+    long long * namu_arr = new long long[n];
+    
+    // 입력
+    for (long long i = 0; i < n; i++) {
+        cin >> namu_arr[i];
+
+        // 입력 받은 나무의 최대 값을 Right로 지정
+        if (namu_arr[i] > right) {
+            right = namu_arr[i];
+        }
+    }
+
+    // 이분 탐색
+    while (left <= right) {
+        h = ((right + left) / 2);
+        sum = 0;
+
+
+        for (long long i = 0; i < n; i++) {
+            if (namu_arr[i] > h) {
+                sum += (namu_arr[i] - h); 
+            }
+        }
+        // cout << "right : " << right << ", left : " << left << ", h : " << h << ", sum : " << sum << ", m : " << m << "\n";
+
+        if (sum >= m) {
+            left = h + 1;
+        }
+
+        if (sum < m) {
+            right = h - 1;
+        }
+
+    }
+
+    cout << right << "\n";
 
 }
