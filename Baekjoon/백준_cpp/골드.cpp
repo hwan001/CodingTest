@@ -404,20 +404,20 @@ void func_2206() {
     int n, m;
     cin >> n >> m;
     
+    // 초기화
     int** _map = new int* [n];
-    int** visit = new int* [n];
     for (int i = 0; i < n; i++) {
         _map[i] = new int[m];
-        visit[i] = new int[m];
-        memset(visit[i], 0, sizeof(int) * m);
     }
 
+    // map 입력
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cin >> _map[i][j];
         }
     }
 
+    // 출력
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cout << _map[i][j];
@@ -425,6 +425,7 @@ void func_2206() {
         cout << "\n";
     }
 
+    // 
 }
 
 
@@ -839,7 +840,7 @@ void func_1753() {
 }
 
 
-/* 벽 부수고 이동하기 (골드 2)
+/* k번째 수 (골드 2)
 *  https://www.acmicpc.net/problem/1300
 */
 void func_1300() {
