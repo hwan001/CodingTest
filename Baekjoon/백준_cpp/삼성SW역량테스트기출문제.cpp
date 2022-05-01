@@ -64,7 +64,7 @@ int func_14502_combination(int n, int r) {
 		return func_14502_combination(n-1, r-1) + func_14502_combination(n-1, r);
 	}
 }
-
+ 
 // bfs
 void func_14502_virusInfect(int n, int m, int **_map, int **_visit, queue<pair<int, int>> q) {
 	pair<int, int> cur;
