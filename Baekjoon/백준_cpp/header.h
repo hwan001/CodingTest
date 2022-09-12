@@ -268,7 +268,7 @@ void func_10026(); // 적록색약 (골드 5)
 void func_2206(); // 벽부수고 이동하기 (골드4)
 void func_1753(); // 최단 거리 (골드 5)
 void func_1300(); // K번째의 수 (골드 2)
- 
+void func_9663(); // N-Queen (골드 4)
 
 /* 
 *  2022 중앙대학교 CHAC Open Contest

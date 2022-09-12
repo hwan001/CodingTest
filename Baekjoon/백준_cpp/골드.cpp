@@ -855,3 +855,141 @@ void func_1300() {
     cout << i * j;
     
 }   
+
+
+/* N-Queen (골드 4)
+*  https://www.acmicpc.net/problem/9663
+*/
+void func_9663_mapset(int **_map, int n) {
+    for (int i = 0; i < n; i++) {
+        memset(_map[i], 0, sizeof(int) * n);
+    }
+}
+
+bool func_9663_check(int **map, int **visit, int n, pair<int, int> cur) {
+    pair<int, int> direc[8] = { {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1} };
+    int _x, _y;
+    pair<int, int> next_node;
+    queue<pair<int, int>> q;
+
+    if (map[cur.second][cur.first] == 0) {
+        map[cur.second][cur.first] = 9;
+        visit[cur.second][cur.first] = 1;
+
+        for (int i = 0; i < 8; i++) {
+            _x = cur.second + direc[i].second;
+            _y = cur.first + direc[i].first;
+
+            //cout << i << "\n";
+
+            q.push({ _x, _y });
+
+            while (!q.empty()) {
+                _x = q.front().first;
+                _y = q.front().second;
+                q.pop();
+
+                // 해당 좌표가 맵 안에 있는지 체크 
+                if (_x >= n || _x < 0 || _y >= n || _y < 0) break;
+
+                // 만약 해당 방향을 진행하면서 퀸을 만나면 return
+                if (map[_x][_y] == 9) {
+                    return false;
+                }
+
+                //cout << i << " - " << _x << " + " << direc[i].second << ", " << _y << " + " << direc[i].first << "\n";
+
+                // 맵 안에 위치한 공간을 방문 표시
+                visit[_x][_y] = 1;
+                map[_x][_y] = 1;
+
+                q.push({ _x + direc[i].second, _y + direc[i].first });
+            }
+        }
+    }
+    else {
+        return false;
+    }
+
+    return true;
+}
+
+void func_9663_dfs() {
+
+}
+
+void func_9663() {
+    int n;
+    cin >> n;
+
+    // create map
+    int** _map = new int*[n];
+    int** _visit = new int* [n];
+
+    for (int i = 0; i < n; i++) {
+        _map[i] = new int[n];
+        _visit[i] = new int[n];
+
+        memset(_map[i], 0, sizeof(int) * n);
+        memset(_visit[i], 0, sizeof(int) * n);
+    }
+
+    int cnt = 0;
+
+    // 시작점 전체 경우 한번씩 탐색 (해당 위치에 퀸을 두고 시작)
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            
+            if (_visit[i][j] == 0 && _map[i][j] == 0) {
+                if (func_9663_check(_map, _visit, n, { i, j })) {
+                    cnt++;
+                }
+            }
+        }
+    }
+
+    cout << cnt << "\n" ;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << _map[i][j];
+        }
+        cout << "\n";
+    }
+    /*
+    cout << "\nmap\n";
+    func_9663_check(_map, _visit, n, {0, 0});
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << _map[i][j];
+        }
+        cout << "\n";
+    }
+
+    cout << "\nmap\n";
+    func_9663_check(_map, _visit, n, {1, 2});
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << _map[i][j];
+        }
+        cout << "\n";
+    }
+
+    cout << "\nmap\n";
+    func_9663_check(_map, _visit, n, {2, 9});
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << _map[i][j];
+        }
+        cout << "\n";
+    }
+
+    cout << "\nmap\n";
+    func_9663_check(_map, _visit, n, {9, 1});
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << _map[i][j];
+        }
+        cout << "\n";
+    }*/
+
+}
