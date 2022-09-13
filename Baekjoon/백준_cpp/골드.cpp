@@ -540,7 +540,6 @@ void func_1753_dijkstra_bfs(int start, int num, vector<pair<int, int>> *graph, i
     }
     d[start - 1] = 0;
 
-
     queue<pair<int, int>> q;
     int min = max, minIndex = 0;
 
@@ -866,7 +865,7 @@ void func_9663_mapset(int **_map, int n) {
     }
 }
 
-bool func_9663_check(int **map, int **visit, int n, pair<int, int> cur) {
+bool func_9663_check(int **map, int n, pair<int, int> cur) {
     pair<int, int> direc[8] = { {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1} };
     int _x, _y;
     pair<int, int> next_node;
@@ -874,7 +873,7 @@ bool func_9663_check(int **map, int **visit, int n, pair<int, int> cur) {
 
     if (map[cur.second][cur.first] == 0) {
         map[cur.second][cur.first] = 9;
-        visit[cur.second][cur.first] = 1;
+        //visit[cur.second][cur.first] = 1;
 
         for (int i = 0; i < 8; i++) {
             _x = cur.second + direc[i].second;
@@ -900,7 +899,7 @@ bool func_9663_check(int **map, int **visit, int n, pair<int, int> cur) {
                 //cout << i << " - " << _x << " + " << direc[i].second << ", " << _y << " + " << direc[i].first << "\n";
 
                 // 맵 안에 위치한 공간을 방문 표시
-                visit[_x][_y] = 1;
+                //visit[_x][_y] = 1;
                 map[_x][_y] = 1;
 
                 q.push({ _x + direc[i].second, _y + direc[i].first });
@@ -914,8 +913,42 @@ bool func_9663_check(int **map, int **visit, int n, pair<int, int> cur) {
     return true;
 }
 
-void func_9663_dfs() {
+int func_9663_dfs(const int n) {
+    // 동적 메모리로 하고 내용 채워주는 기능 작성
+    stack<int**> stack_map;
+    int **_map; // 메모리 할당 필요
+    int cnt, cnt2=0;
 
+    stack_map.push(_map); // 비어있는 맵
+
+    // 0인 곳에 퀸 두고 스택에 넣기 -> 더이상 둘 수 없으면 pop
+    while (!stack_map.empty()) {
+        cnt = 0;
+        _map = stack_map.top();
+        stack_map.pop();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (_map[i][j] == 0) {
+                    if (func_9663_check(_map, n, { i, j })) {
+                        cnt++;
+                    }
+                }
+            }
+        }
+
+        if (cnt == n) {
+            cnt2++;
+            // 계속 같은 케이스가 반복될 수 있음 - > 여기서 뭔가 처리?
+            break;
+        }
+        else {
+            cnt = 0;
+            stack_map.push(_map);
+        }
+    }
+
+    return cnt2;
 }
 
 void func_9663() {
@@ -924,29 +957,32 @@ void func_9663() {
 
     // create map
     int** _map = new int*[n];
-    int** _visit = new int* [n];
+    //int** _visit = new int* [n];
 
     for (int i = 0; i < n; i++) {
         _map[i] = new int[n];
-        _visit[i] = new int[n];
+        //_visit[i] = new int[n];
 
         memset(_map[i], 0, sizeof(int) * n);
-        memset(_visit[i], 0, sizeof(int) * n);
+        //memset(_visit[i], 0, sizeof(int) * n);
     }
 
     int cnt = 0;
 
     // 시작점 전체 경우 한번씩 탐색 (해당 위치에 퀸을 두고 시작)
+    /*
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             
-            if (_visit[i][j] == 0 && _map[i][j] == 0) {
-                if (func_9663_check(_map, _visit, n, { i, j })) {
+            if (_map[i][j] == 0) {
+                if (func_9663_check(_map, n, { i, j })) {
                     cnt++;
                 }
             }
         }
     }
+    */
+    cnt = func_9663_dfs(n);
 
     cout << cnt << "\n" ;
     for (int i = 0; i < n; i++) {
@@ -955,41 +991,5 @@ void func_9663() {
         }
         cout << "\n";
     }
-    /*
-    cout << "\nmap\n";
-    func_9663_check(_map, _visit, n, {0, 0});
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << _map[i][j];
-        }
-        cout << "\n";
-    }
-
-    cout << "\nmap\n";
-    func_9663_check(_map, _visit, n, {1, 2});
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << _map[i][j];
-        }
-        cout << "\n";
-    }
-
-    cout << "\nmap\n";
-    func_9663_check(_map, _visit, n, {2, 9});
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << _map[i][j];
-        }
-        cout << "\n";
-    }
-
-    cout << "\nmap\n";
-    func_9663_check(_map, _visit, n, {9, 1});
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << _map[i][j];
-        }
-        cout << "\n";
-    }*/
 
 }
