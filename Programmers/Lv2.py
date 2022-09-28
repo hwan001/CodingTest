@@ -45,7 +45,7 @@ def solution_42839(numbers):
     cnt = 0
     
     for i in range(0, len(dup_arr_all)):
-        if func1(dup_arr_all[i]):
+        if func_42839(dup_arr_all[i]):
             cnt+=1
             #print(dup_arr_all[i])
             
