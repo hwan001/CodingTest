@@ -99,3 +99,35 @@ def solution_12909(s):
                 list_stack.pop()
             
     return list_stack == []
+
+
+# JadenCase 문자열 만들기
+# https://school.programmers.co.kr/learn/courses/30/lessons/12951
+def solution_12951(s):
+    answer = ""
+    is_first = True
+    
+    for i in range(len(s)):
+        if s[i] == " ":
+            if is_first == False:
+                is_first = True
+            answer += s[i]
+            continue
+            
+        if s[i].isdigit():
+            if is_first:
+                is_first = False
+            answer += s[i]
+            
+            continue
+            
+        if s[i].isalpha():
+            if is_first:
+                answer += s[i].upper()
+                is_first = False
+            else:
+                answer += s[i].lower()
+                
+    print(answer)
+                
+    return answer
