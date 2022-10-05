@@ -993,3 +993,79 @@ void func_9663() {
     }
 
 }
+
+
+
+/* 상범 빌딩 (골드 5)
+*  https://www.acmicpc.net/problem/6593
+*/
+void func_6593() {
+    int L, R, C;
+    cin >> L >> R >> C; // 층, 면적(R*C)
+    
+    // 3차원 배열 메모리 할당  building[L][R][C]; 
+    char*** building = new char **[L];
+    int*** visit = new int** [L];
+
+    for (int i = 0; i < L; i++) {
+        building[i] = new char* [R];
+        visit[i] = new int * [R];
+        
+        for (int j = 0; j < R; j++) {
+            building[i][j] = new char[C];
+            visit[i][j] = new int[C];
+        }
+    }
+
+    // 3차원 배열 입력
+    for (int k = 0; k < L; k++) {
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                cin >> building[k][i][j];
+            }
+        }
+    }
+
+    // bfs
+    queue <vector<int>> q;
+    vector<int> _v, tmp_v;
+    //x, y, z
+    _v.push_back(0);
+    _v.push_back(0);
+    _v.push_back(0);
+    q.push(_v);
+
+    while (!q.empty()) {
+        tmp_v = q.front();
+        q.pop();
+
+        cout << tmp_v.at(0) << " " << tmp_v.at(1) << " " << tmp_v.at(2) << " \n";
+    }
+
+    // 3차원 배열 출력
+    for (int k = 0; k < L; k++) {
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                cout << building[k][i][j];
+            }
+            cout << "\n";
+        }
+        cout << "\n";
+    }
+
+    // 메모리 해제
+    for (int i = 0; i < L; i++) {
+        for (int j = 0; j < R; j++) {
+            delete [] building[i][j];
+            delete [] visit[i][j];
+        }
+    }
+
+    for (int i = 0; i < L; i++) {
+        delete[] building[i];
+        delete[] visit[i];
+    }
+
+    delete[] building;
+    delete[] visit;
+}
