@@ -1325,7 +1325,6 @@ void func_2805() {
         h = ((right + left) / 2);
         sum = 0;
 
-
         for (long long i = 0; i < n; i++) {
             if (namu_arr[i] > h) {
                 sum += (namu_arr[i] - h); 
@@ -1345,4 +1344,90 @@ void func_2805() {
 
     cout << right << "\n";
 
+}
+
+
+/* Contact (실버 1)
+*  https://www.acmicpc.net/problem/1013
+*/
+void func_1013() {
+    long long n, m, right = 0, left = 1, h, sum;
+
+    cin >> n >> m; 
+    // (100+1+ | 01)+
+    
+}
+
+
+/* 그림 (실버 1)
+*  https://www.acmicpc.net/problem/1926
+*/
+void func_1926() {
+    int n, m;
+
+    cin >> n >> m;
+    
+    int** _map = new int*[n];
+    int** _visit = new int* [n];
+
+    for (int i = 0; i < n; i++) {
+        _map[i] = new int[m];
+        _visit[i] = new int[m];
+        memset(_visit[i], 0, sizeof(int) * m);
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> _map[i][j];
+        }
+    }
+
+    // bfs
+    queue<pair<int, int>> _q;
+    pair<int, int> tmp_pair;
+    int direct[4][2] = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
+    int _x, _y, cnt_map = 0, _max = 0, map_size;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (_visit[i][j] == 0 && _map[i][j] == 1) {
+                cnt_map++;
+                map_size = 0;
+                _visit[i][j] = 1;
+                _q.push({ i, j });
+
+                while (!_q.empty()) {
+                    tmp_pair = _q.front();
+                    _q.pop();
+                    map_size++;
+
+                    for (int i = 0; i < 4; i++) {
+                        _x = tmp_pair.first + direct[i][0];
+                        _y = tmp_pair.second + direct[i][1];
+
+                        // 범위를 벗어나면 pass
+                        if (_x < 0 || _x >= n || _y < 0 || _y >= m) 
+                            continue;
+
+                        // 0 >면 pass
+                        if (_map[_x][_y] == 0) 
+                            continue;
+
+                        // 방문했으면 pass
+                        if (_visit[_x][_y] > 0)
+                            continue;
+
+                        _visit[_x][_y] = _visit[tmp_pair.first][tmp_pair.second] + 1;
+
+                        _q.push({ _x, _y });
+                    }
+                }
+
+                if (_max < map_size) {
+                    _max = map_size;
+                }
+            }
+        }
+    }
+
+    cout << cnt_map<< ", " << _max;
 }
