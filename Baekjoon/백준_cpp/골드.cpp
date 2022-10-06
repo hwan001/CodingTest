@@ -907,7 +907,7 @@ bool func_9663_check(int **map, int n, pair<int, int> cur) {
         }
     }
     else {
-        return false;
+    return false;
     }
 
     return true;
@@ -916,8 +916,8 @@ bool func_9663_check(int **map, int n, pair<int, int> cur) {
 int func_9663_dfs(const int n) {
     // 동적 메모리로 하고 내용 채워주는 기능 작성
     stack<int**> stack_map;
-    int **_map; // 메모리 할당 필요
-    int cnt, cnt2=0;
+    int** _map; // 메모리 할당 필요
+    int cnt, cnt2 = 0;
 
     stack_map.push(_map); // 비어있는 맵
 
@@ -956,7 +956,7 @@ void func_9663() {
     cin >> n;
 
     // create map
-    int** _map = new int*[n];
+    int** _map = new int* [n];
     //int** _visit = new int* [n];
 
     for (int i = 0; i < n; i++) {
@@ -973,7 +973,7 @@ void func_9663() {
     /*
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            
+
             if (_map[i][j] == 0) {
                 if (func_9663_check(_map, n, { i, j })) {
                     cnt++;
@@ -984,7 +984,7 @@ void func_9663() {
     */
     cnt = func_9663_dfs(n);
 
-    cout << cnt << "\n" ;
+    cout << cnt << "\n";
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             cout << _map[i][j];
@@ -1001,8 +1001,13 @@ void func_9663() {
 */
 void func_6593() {
     int L, R, C;
+    queue <vector<int>> q;
+    vector<int> start_v, tmp_v, input_v;
+
     cin >> L >> R >> C; // 층, 면적(R*C)
-    
+    if (L == 0 && R == 0 && C == 0){
+        return;
+    }
     // 3차원 배열 메모리 할당  building[L][R][C]; 
     char*** building = new char **[L];
     int*** visit = new int** [L];
@@ -1010,47 +1015,106 @@ void func_6593() {
     for (int i = 0; i < L; i++) {
         building[i] = new char* [R];
         visit[i] = new int * [R];
-        
+        memset(visit[i], 0, sizeof(int) * R);
         for (int j = 0; j < R; j++) {
             building[i][j] = new char[C];
             visit[i][j] = new int[C];
+            memset(visit[i][j], 0, sizeof(int) * C);
         }
     }
-
+    
     // 3차원 배열 입력
     for (int k = 0; k < L; k++) {
         for (int i = 0; i < R; i++) {
             for (int j = 0; j < C; j++) {
                 cin >> building[k][i][j];
+                if (building[k][i][j] == 'S') {
+                    start_v.push_back(k);
+                    start_v.push_back(i);
+                    start_v.push_back(j);
+                }
             }
         }
     }
 
     // bfs
-    queue <vector<int>> q;
-    vector<int> _v, tmp_v;
+    
+    int direct[6][3] = { {0, 1, 0}, {1, 0, 0}, {0, -1, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1}}; // L, R, C
+    int _x, _y, _z;
+
     //x, y, z
-    _v.push_back(0);
-    _v.push_back(0);
-    _v.push_back(0);
-    q.push(_v);
+    visit[start_v.at(0)][start_v.at(1)][start_v.at(2)] = 1;
+    q.push(start_v);
 
     while (!q.empty()) {
         tmp_v = q.front();
         q.pop();
+        
+        for (int i = 0; i < 6; i++) {
+            _x = tmp_v.at(0) + direct[i][0];
+            _y = tmp_v.at(1) + direct[i][1];
+            _z = tmp_v.at(2) + direct[i][2];
+            //cout << "검사 : " << _x << " " << _y << " " << _z << "\n";
+            if (_x >= L || _x < 0 || _y < 0 || _y >= R || _z >= C || _z < 0)
+                continue;
 
-        cout << tmp_v.at(0) << " " << tmp_v.at(1) << " " << tmp_v.at(2) << " \n";
+            //cout << "검사 : " << _x << " " << _y << " " << _z << " -> " << building[_x][_y][_z] << " \n";
+
+            if (building[_x][_y][_z] == '#')
+                continue;
+
+            if (visit[_x][_y][_z] > 0)
+                continue;
+            /*
+            if (building[_x][_y][_z] == 'E') {
+                if (_min > visit[_x][_y][_z]) {
+                    _min = visit[_x][_y][_z];
+                    cout << "E : " << _x << " " << _y << " " << _z << " -> " << building[_x][_y][_z] << ", "<< visit[_x][_y][_z] << " \n";
+                }
+            }
+            */
+            //cout << "통과 : " << _x << " " << _y << " " << _z << " -> " << building[_x][_y][_z] << " \n";
+            
+            input_v.push_back(_x);
+            input_v.push_back(_y);
+            input_v.push_back(_z);
+
+            visit[input_v.at(0)][input_v.at(1)][input_v.at(2)] = visit[tmp_v.at(0)][tmp_v.at(1)][tmp_v.at(2)] + 1;
+            q.push(input_v);
+
+            input_v.clear();
+        }
+        tmp_v.clear();
+        //cout << " \n";
     }
 
     // 3차원 배열 출력
+    int _max = 0, _min=30*30*30;
+    
     for (int k = 0; k < L; k++) {
         for (int i = 0; i < R; i++) {
             for (int j = 0; j < C; j++) {
-                cout << building[k][i][j];
+                cout << visit[k][i][j];
+                if (_max < visit[k][i][j]) {
+                    _max = visit[k][i][j];
+                }
+                if (building[k][i][j] == 'E') {
+                    if (_min > visit[k][i][j]) {
+                        _min = visit[k][i][j];
+                    }
+                }
             }
             cout << "\n";
         }
         cout << "\n";
+    }
+   
+
+    if (_max == 1 || _min == 0) {
+        cout << "Trapped!\n";
+    }
+    else {
+        cout << "Escaped in " << (_min - 1) << " minute(s).\n";
     }
 
     // 메모리 해제
