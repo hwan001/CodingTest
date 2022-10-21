@@ -131,3 +131,43 @@ def solution_12951(s):
     print(answer)
                 
     return answer
+
+
+# Å¸°Ù ³Ñ¹ö
+# https://school.programmers.co.kr/learn/courses/30/lessons/43165
+def solution_43165(numbers, target):
+    answer = 0
+    aa = pow(2, len(numbers))
+    
+    list_tmp = []
+    list_arr = []
+    
+    for n in range(0, aa):
+        tmp = n
+        list_tmp = []
+        
+        while tmp > 0:
+            list_tmp.append(tmp%2)
+            tmp //= 2
+            
+        while len(list_tmp) < len(numbers):
+            list_tmp.append(0)
+         
+        list_arr.append(list(reversed(list_tmp)))
+        
+        
+    int_sum = 0    
+    for tmp in list_arr:      
+        int_sum = 0  
+        
+        for i in range(0, len(numbers)):
+            if tmp[i]:
+                int_sum += -1*numbers[i]
+            else:
+                int_sum += numbers[i]
+        
+        if int_sum == target:
+            answer += 1
+          
+    
+    return answer

@@ -1089,7 +1089,7 @@ void func_6593() {
     }
 
     // 3차원 배열 출력
-    int _max = 0, _min=30*30*30;
+    int _max = 0, _min=31*31*31;
     
     for (int k = 0; k < L; k++) {
         for (int i = 0; i < R; i++) {
