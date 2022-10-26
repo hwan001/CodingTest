@@ -1008,6 +1008,7 @@ void func_6593() {
     if (L == 0 && R == 0 && C == 0){
         return;
     }
+
     // 3차원 배열 메모리 할당  building[L][R][C]; 
     char*** building = new char **[L];
     int*** visit = new int** [L];
@@ -1132,4 +1133,12 @@ void func_6593() {
 
     delete[] building;
     delete[] visit;
+}
+
+
+/* 빙산 (골드 4)
+*  https://www.acmicpc.net/problem/2573
+*/
+void func_2573() {
+
 }
