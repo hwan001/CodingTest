@@ -1140,5 +1140,27 @@ void func_6593() {
 *  https://www.acmicpc.net/problem/2573
 */
 void func_2573() {
+    int n, m;
+    cin >> n >> m;
+
+    // 3차원 배열 메모리 할당  building[L][R][C]; 
+    char** _map = new char* [n];
+    int** visit = new int* [n];
+
+    for (int i = 0; i < n; i++) {
+        _map[i] = new char [m];
+        visit[i] = new int [m];
+        memset(visit[i], 0, sizeof(int) * m);
+    }
+
+    // 2차원 배열 입력
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> _map[i][j];
+            //cout << _map[i][j];
+        }
+        //cout << "\n";
+    }
+
 
 }

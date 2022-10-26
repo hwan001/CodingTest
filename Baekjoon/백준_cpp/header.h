@@ -271,6 +271,10 @@ void func_1753(); // ÃÖ´Ü °Å¸® (°ñµå 5)
 void func_1300(); // K¹øÂ°ÀÇ ¼ö (°ñµå 2)
 void func_9663(); // N-Queen (°ñµå 4)
 void func_6593(); // »ó¹ü ºôµù (°ñµå 5)
+void func_2573(); // ºù»ê (°ñµå 4)
+
+
+
 /* 
 *  2022 Áß¾Ó´ëÇÐ±³ CHAC Open Contest
 *  https://www.acmicpc.net/contest/view/767
