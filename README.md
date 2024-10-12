@@ -1,23 +1,19 @@
-> ## SourceCode  
-> 코딩테스트 문제풀이 코드 정리용 Repository 입니다.  
+## Coding test
 
-> **[사용 언어]**  
-> - Baekjoon : C++  
-> - Algorithm : C++, Python
-> - Programmers : Python, SQL
-> - leetcode : Python
+### Directory
+- cpp, python
+    - Create a C++ build environment in a Docker container.
+	- One binary is used for multiple problem solutions.
+- old (To be delete)
+    - baekjoon : C++
+        > **C++** 
+        > - Windows SDK 10.0  
+        > - c++ 14 Standard
+        > - Disable SDL checks
+    - leetcode(Python), programmers(Python, SQL)
+        > **Python**  
+        > - virtual environment used per project
+        > - python 3.10
 
-> **[C++ 개발 환경 구성]**  
-> - Visual Studio 2022 Community (v143)  
-> - Windows SDK 10.0  
-> - c++ 14 표준  
-> - Python3 프로젝트별 가상환경 사용  
-> - SDL 검사 해제   
-
-> **[Python 개발 환경 구성]**  
-> - VS Code
-> - python 3.10
-
-
-> **[블로그]**  
->   https://hwan001.tistory.com/category/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8
+### Blog
+- https://hwan001.tistory.com/category/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8
