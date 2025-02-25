@@ -1,1 +1,0 @@
-docker run -d cpp_build:latest

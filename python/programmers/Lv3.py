@@ -1,6 +1,4 @@
-from my_package import *
-
-# ´Ü¾î º¯È¯
+# ï¿½Ü¾ï¿½ ï¿½ï¿½È¯
 # https://school.programmers.co.kr/learn/courses/30/lessons/43163
 def bfs_43163(begin, target, words, visited):
     str_end = target

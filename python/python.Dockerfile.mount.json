@@ -1,0 +1,5 @@
+{
+  "volumes": {
+    "/app/python": "./python"
+  }
+}

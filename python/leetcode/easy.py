@@ -1,9 +1,7 @@
 
-
-
 # 1480. Running Sum of 1d Array
 class Solution_1480:
-    def runningSum(self, nums: List[int]) -> List[int]:
+    def runningSum(self, nums: list[int]) ->list[int]:
         sum = 0
         list_res = []
         for i in nums:

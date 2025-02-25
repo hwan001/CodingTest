@@ -1,9 +1,10 @@
-# Àß¶ó¼­ ¹è¿­·Î ÀúÀåÇÏ±â
+# ì˜ë¼ì„œ ë°°ì—´ë¡œ ì €ì¥í•˜ê¸°
 # https://school.programmers.co.kr/learn/courses/30/lessons/120913
 def solution_120913(my_str, n):
     answer = []
+    n = int(n)
     
-    while(len(my_str) > n):
+    while len(my_str) > n:
         answer.append(my_str[:n])
         my_str = my_str[n:]
         
@@ -11,62 +12,63 @@ def solution_120913(my_str, n):
     
     return answer
 
-# ¹®ÀÚ¿­¾È¿¡ ¹®ÀÚ¿­
+
+# ë¬¸ìì—´ ì•ˆì— ë¬¸ìì—´
 # https://school.programmers.co.kr/learn/courses/30/lessons/120908
 def solution_120908(str1, str2):
     return 2 if len(str1.split(str2)) == 1 else 1
 
 
-# ±â»ç´Ü¿øÀÇ ¹«±â
+# ê¸°ì‚¬ë‹¨ì›ì˜ ë¬´ê¸°
 # https://school.programmers.co.kr/learn/courses/30/lessons/136798
 def solution_136798(number, limit, power):
-    import math
     list_knight_power = []
 
     for n in range(1, number+1):
-        list_tmp = []
+        list_tmp = set()
         for x in range(1, int(math.sqrt(n))+1):
             if n % x == 0:
-                list_tmp.append(x)
-                list_tmp.append(n // x)
-        list_knight_power.append(len(set(list_tmp)))
+                list_tmp.add(x)
+                list_tmp.add(n // x)
+        list_knight_power.append(len(list_tmp))
 
     return sum([power if x > limit else x for x in list_knight_power])
 
 
-# ¿Ü°èÇà¼ºÀÇ ³ªÀÌ
+# ì™¸ê³„ì–´ ì‚¬ì „
 # https://school.programmers.co.kr/learn/courses/30/lessons/120834
 def solution_120834(age):
-    dict_age={0:"a", 1:"b", 2:"c", 3:"d", 4:"e", 5:"f", 6:"g", 7:"h", 8:"i", 9:"j"}
+    dict_age = {0: "a", 1: "b", 2: "c", 3: "d", 4: "e", 5: "f", 6: "g", 7: "h", 8: "i", 9: "j"}
     return "".join([dict_age[int(ch)] for ch in str(age)])
 
 
-# °¡Àå °¡±î¿î °°Àº ±ÛÀÚ
+# ê°€ì¥ ê°€ê¹Œìš´ ê°™ì€ ê¸€ì
 # https://school.programmers.co.kr/learn/courses/30/lessons/142086
 def solution_142086(s):
     answer = []
-    dict_str={}
+    dict_str = {}
     
     for i in range(len(s)):
         ch = s[i]
-        try:
+        if ch in dict_str:
             answer.append(i - dict_str[ch])
-        except:
+        else:
             answer.append(-1)
         dict_str[ch] = i
         
     return answer
 
 
-# ±Ö °í¸£±â
+# ê·¤ ê³ ë¥´ê¸°
 # https://school.programmers.co.kr/learn/courses/30/lessons/138476
 def solution_138476(k, tangerine):
     from collections import Counter
     answer = 0
     
-    for x in dict(sorted(Counter(tangerine).items(), key=(lambda x : x[1]), reverse=True)).values():
+    for x in dict(sorted(Counter(tangerine).items(), key=lambda x: x[1], reverse=True)).values():
         k -= x
-        answer+=1
-        if k <= 0: break
+        answer += 1
+        if k <= 0:
+            break
     
     return answer

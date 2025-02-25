@@ -1,76 +1,75 @@
-from my_package import *
-
-# ÃÖ´ñ°ª°ú ÃÖ¼Ú°ª
+# ï¿½Ö´ñ°ª°ï¿½ ï¿½Ö¼Ú°ï¿½
 # https://school.programmers.co.kr/learn/courses/30/lessons/12939
 def solution_12939(s):
     list_s = [int(x) for x in s.split(" ")]
     return f'{min(list_s)} {max(list_s)}'
 
 
-# ¼Ò¼ö Ã£±â
+# ï¿½Ò¼ï¿½ Ã£ï¿½ï¿½
 # https://school.programmers.co.kr/learn/courses/30/lessons/42839
 def func_42839(num):
-    if num <2:
+    if num < 2:
         return 0
-    
+
     j = 2
     for j in range(2, int(num/j)+1):
         if num % j == 0:
             return 0
-        
+
     return 1
+
 
 def solution_42839(numbers):
     answer = 0
-    
+
     arr_num = [x for x in numbers]
     arr_all = []
-    
+
     for i in range(1, len(arr_num)+1):
-        # °¢ ÀÚ¸® ¼ö·Î ³ª¿Ã ¼ö ÀÖ´Â °æ¿ìÀÇ ¼ö
+        # ï¿½ï¿½ ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         result = list(itertools.permutations(arr_num, i))
-        
-        # ÇØ´ç ÀÚ¸® ¼ö ÀÏ °æ¿ì ¿¬»ê
+
+        # ï¿½Ø´ï¿½ ï¿½Ú¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if i == i:
             for tmp in result:
-                # ¹®ÀÚ¿­ Á¶¸³
+                # ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½
                 sum_tmp = ""
                 for tmp_2 in tmp:
                     sum_tmp += tmp_2
-                    
+
                 arr_all.append(int(sum_tmp))
-          
+
     dup_arr_all = list(set(arr_all))
-    #print(dup_arr_all)
+    # print(dup_arr_all)
     cnt = 0
-    
+
     for i in range(0, len(dup_arr_all)):
         if func_42839(dup_arr_all[i]):
-            cnt+=1
-            #print(dup_arr_all[i])
-            
+            cnt += 1
+            # print(dup_arr_all[i])
+
     answer = cnt
     return answer
 
 
-# Ä«Æê
+# Ä«ï¿½ï¿½
 # https://school.programmers.co.kr/learn/courses/30/lessons/42842
 def solution_42842(brown, yellow):
     answer = []
-    
+
     x_y = int(brown / 2) + 2
     xy = brown + yellow
-    
+
     for x in range(1, x_y):
         for y in range(1, x_y):
             if (x + y == x_y) and (x*y == xy):
                 if x >= y:
                     return [x, y]
-        
+
     return answer
 
 
-# ¶¥µû¸Ô±â
+# ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½
 # https://school.programmers.co.kr/learn/courses/30/lessons/12913
 def solution_12913(land):
     answer = 0
@@ -78,17 +77,17 @@ def solution_12913(land):
     for i in range(1, len(land)):
         for j in range(4):
             land[i][j] += max([land[i-1][x] for x in list({0, 1, 2, 3} - {j})])
-        
-    answer= max(land[len(land)-1])
-        
+
+    answer = max(land[len(land)-1])
+
     return answer
 
 
-# ¿Ã¹Ù¸¥ °ýÈ£
+# ï¿½Ã¹Ù¸ï¿½ ï¿½ï¿½È£
 # https://school.programmers.co.kr/learn/courses/30/lessons/12909
 def solution_12909(s):
     list_stack = []
-    
+
     for ch in s:
         if ch == "(":
             list_stack.append(ch)
@@ -97,77 +96,75 @@ def solution_12909(s):
                 return False
             else:
                 list_stack.pop()
-            
+
     return list_stack == []
 
 
-# JadenCase ¹®ÀÚ¿­ ¸¸µé±â
+# JadenCase ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 # https://school.programmers.co.kr/learn/courses/30/lessons/12951
 def solution_12951(s):
     answer = ""
     is_first = True
-    
+
     for i in range(len(s)):
         if s[i] == " ":
             if is_first == False:
                 is_first = True
             answer += s[i]
             continue
-            
+
         if s[i].isdigit():
             if is_first:
                 is_first = False
             answer += s[i]
-            
+
             continue
-            
+
         if s[i].isalpha():
             if is_first:
                 answer += s[i].upper()
                 is_first = False
             else:
                 answer += s[i].lower()
-                
+
     print(answer)
-                
+
     return answer
 
 
-# Å¸°Ù ³Ñ¹ö
+# Å¸ï¿½ï¿½ ï¿½Ñ¹ï¿½
 # https://school.programmers.co.kr/learn/courses/30/lessons/43165
 def solution_43165(numbers, target):
     answer = 0
     aa = pow(2, len(numbers))
-    
+
     list_tmp = []
     list_arr = []
-    
+
     for n in range(0, aa):
         tmp = n
         list_tmp = []
-        
+
         while tmp > 0:
-            list_tmp.append(tmp%2)
+            list_tmp.append(tmp % 2)
             tmp //= 2
-            
+
         while len(list_tmp) < len(numbers):
             list_tmp.append(0)
-         
+
         list_arr.append(list(reversed(list_tmp)))
-        
-        
-    int_sum = 0    
-    for tmp in list_arr:      
-        int_sum = 0  
-        
+
+    int_sum = 0
+    for tmp in list_arr:
+        int_sum = 0
+
         for i in range(0, len(numbers)):
             if tmp[i]:
                 int_sum += -1*numbers[i]
             else:
                 int_sum += numbers[i]
-        
+
         if int_sum == target:
             answer += 1
-          
-    
+
     return answer
